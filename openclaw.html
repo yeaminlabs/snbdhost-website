@@ -1,0 +1,749 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>OpenClaw AI Hosting — SNBD HOST Bangladesh</title>
+  <meta name="description" content="Host your OpenClaw AI assistant on SNBD HOST. Self-hosted AI agents with WhatsApp, Telegram & Discord integration. One-click deploy on NVMe SSD servers." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#e02020',
+            'primary-dark': '#b91c1c',
+            'primary-light': '#fee2e2',
+            dark: '#111827',
+            'slate-nav': '#1e293b',
+            claw: '#6d28d9',
+            'claw-dark': '#5b21b6',
+            'claw-light': '#ede9fe',
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+    .nav-link { transition: color 0.2s; }
+    .nav-link:hover { color: #e02020; }
+    .pricing-card { transition: transform 0.25s, box-shadow 0.25s; }
+    .pricing-card:hover { transform: translateY(-6px); box-shadow: 0 20px 40px rgba(0,0,0,0.12); }
+    .mobile-menu { transition: max-height 0.35s ease, opacity 0.3s; max-height: 0; overflow: hidden; opacity: 0; }
+    .mobile-menu.open { max-height: 600px; opacity: 1; }
+    .gradient-hero {
+      background: linear-gradient(135deg, #fff 0%, #f5f3ff 40%, #fff 100%);
+    }
+    .stat-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .stat-card:hover { transform: translateY(-4px); box-shadow: 0 12px 28px rgba(109,40,217,0.15); }
+    .feature-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .feature-card:hover { transform: translateY(-4px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+    .pulse-dot {
+      animation: pulse-dot 2s infinite;
+    }
+    @keyframes pulse-dot {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.4; }
+    }
+    .float-anim {
+      animation: float 3s ease-in-out infinite;
+    }
+    .float-anim:nth-child(2) { animation-delay: 0.3s; }
+    .float-anim:nth-child(3) { animation-delay: 0.6s; }
+    .float-anim:nth-child(4) { animation-delay: 0.9s; }
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-6px); }
+    }
+    .glow-purple {
+      box-shadow: 0 0 30px rgba(109,40,217,0.2), 0 0 60px rgba(109,40,217,0.08);
+    }
+    .gradient-purple {
+      background: linear-gradient(135deg, #6d28d9 0%, #4c1d95 100%);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+<!-- ========== STICKY NAVBAR ========== -->
+<nav class="fixed top-0 left-0 right-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-0.5 shrink-0">
+        <span class="text-2xl font-black text-gray-900 tracking-tight">SNBD</span>
+        <span class="text-2xl font-black text-primary tracking-tight">HOST</span>
+      </a>
+
+      <!-- Desktop Nav Links -->
+      <div class="hidden lg:flex items-center gap-1">
+        <a href="hosting.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">Hosting</a>
+        <a href="openclaw.html" class="nav-link px-3 py-2 text-sm font-semibold text-primary border-b-2 border-primary">OpenClaw</a>
+        <a href="n8n-automation.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">N8N Automation</a>
+        <a href="domain.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">Domain</a>
+        <a href="servers.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">Servers</a>
+        <a href="support.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">Support</a>
+        <a href="offers.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600">Offers <span class="ml-0.5">🔥</span></a>
+      </div>
+
+      <!-- Right: Dashboard Button -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="https://my.snbdhost.com" class="bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full transition-colors duration-200 shadow-sm">
+          My Dashboard
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="mobileMenuBtn" class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-primary hover:bg-gray-100 transition-colors" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-lg" id="hamburgerIcon"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile Menu -->
+  <div id="mobileMenu" class="mobile-menu lg:hidden bg-white border-t border-gray-100">
+    <div class="px-4 py-3 flex flex-col gap-1">
+      <a href="hosting.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Hosting</a>
+      <a href="openclaw.html" class="px-3 py-2.5 text-sm font-semibold text-primary bg-purple-50 rounded-lg">OpenClaw</a>
+      <a href="n8n-automation.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">N8N Automation</a>
+      <a href="domain.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Domain</a>
+      <a href="servers.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Servers</a>
+      <a href="support.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Support</a>
+      <a href="offers.html" class="px-3 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50 rounded-lg">Offers 🔥</a>
+      <div class="pt-2 border-t border-gray-100 mt-1">
+        <a href="https://my.snbdhost.com" class="block bg-primary hover:bg-primary-dark text-white text-sm font-semibold px-5 py-2.5 rounded-full text-center transition-colors">
+          My Dashboard
+        </a>
+      </div>
+    </div>
+  </div>
+</nav>
+
+
+<!-- ========== HERO SECTION ========== -->
+<section class="gradient-hero pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden relative">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="text-center max-w-4xl mx-auto">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-purple-50 border border-purple-200 text-claw text-sm font-semibold px-4 py-2 rounded-full mb-6">
+        <span>🤖</span>
+        <span>AI-Powered Personal Assistant Hosting</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 leading-tight tracking-tight mb-6">
+        Deploy your <span class="text-claw">OpenClaw</span><br/>AI Agent in minutes
+      </h1>
+
+      <!-- Integration Badges -->
+      <div class="flex flex-wrap justify-center gap-2 sm:gap-3 mb-8">
+        <span class="float-anim inline-flex items-center gap-1.5 bg-green-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+          <i class="fa-brands fa-whatsapp text-xs"></i> WhatsApp
+        </span>
+        <span class="float-anim inline-flex items-center gap-1.5 bg-blue-500 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+          <i class="fa-brands fa-telegram text-xs"></i> Telegram
+        </span>
+        <span class="float-anim inline-flex items-center gap-1.5 bg-indigo-600 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+          <i class="fa-brands fa-discord text-xs"></i> Discord
+        </span>
+        <span class="float-anim inline-flex items-center gap-1.5 bg-gray-900 text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-md">
+          <i class="fa-solid fa-terminal text-xs"></i> API
+        </span>
+      </div>
+
+      <!-- Subtext -->
+      <p class="text-gray-500 text-base sm:text-lg md:text-xl max-w-2xl mx-auto leading-relaxed mb-10">
+        OpenClaw is a self-hosted AI agent that automates tasks, manages files, and connects to your favorite messaging platforms. We handle the infrastructure — you just deploy.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <a href="#pricing" class="inline-flex items-center gap-2 bg-claw hover:bg-claw-dark text-white font-bold text-lg px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all duration-200">
+          Get Started <span class="text-xl">→</span>
+        </a>
+        <a href="#features" class="inline-flex items-center gap-2 border-2 border-gray-300 text-gray-700 font-bold text-lg px-8 py-4 rounded-full hover:border-claw hover:text-claw transition-all duration-200">
+          <i class="fa-solid fa-play text-sm"></i> See How It Works
+        </a>
+      </div>
+    </div>
+
+    <!-- Terminal Preview -->
+    <div class="mt-16 max-w-4xl mx-auto">
+      <div class="bg-slate-nav rounded-2xl shadow-2xl overflow-hidden glow-purple">
+        <!-- Terminal Bar -->
+        <div class="bg-slate-800 px-5 py-3 flex items-center gap-3 border-b border-slate-700">
+          <div class="flex items-center gap-1.5">
+            <div class="w-3 h-3 rounded-full bg-red-500"></div>
+            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+            <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          </div>
+          <div class="flex-1 bg-slate-700 rounded-md px-4 py-1.5 flex items-center gap-2">
+            <i class="fa-solid fa-terminal text-purple-400 text-xs"></i>
+            <span class="text-slate-300 text-xs font-mono">openclaw@snbdhost ~ $</span>
+          </div>
+        </div>
+        <!-- Terminal Content -->
+        <div class="p-6 sm:p-8 font-mono text-sm">
+          <div class="space-y-3">
+            <div class="flex items-center gap-2">
+              <span class="text-green-400">$</span>
+              <span class="text-white">openclaw deploy --platform whatsapp</span>
+            </div>
+            <div class="text-slate-400">✓ Pulling OpenClaw v3.2.1 image...</div>
+            <div class="text-slate-400">✓ Configuring WhatsApp Business API bridge...</div>
+            <div class="text-slate-400">✓ Setting up NVMe SSD storage volume...</div>
+            <div class="text-slate-400">✓ Applying SSL certificate...</div>
+            <div class="flex items-center gap-2">
+              <span class="text-green-400">✓</span>
+              <span class="text-green-400 font-semibold">OpenClaw is live at openclaw.yoursite.com</span>
+            </div>
+            <div class="mt-4 bg-slate-700/60 rounded-xl p-4">
+              <div class="grid grid-cols-2 sm:grid-cols-4 gap-4">
+                <div>
+                  <div class="text-slate-500 text-xs">Status</div>
+                  <div class="text-green-400 font-bold text-sm flex items-center gap-1.5">
+                    <span class="w-2 h-2 bg-green-400 rounded-full pulse-dot"></span> Running
+                  </div>
+                </div>
+                <div>
+                  <div class="text-slate-500 text-xs">Memory</div>
+                  <div class="text-white font-bold text-sm">1.2 / 4 GB</div>
+                </div>
+                <div>
+                  <div class="text-slate-500 text-xs">CPU</div>
+                  <div class="text-white font-bold text-sm">12% usage</div>
+                </div>
+                <div>
+                  <div class="text-slate-500 text-xs">Messages</div>
+                  <div class="text-purple-400 font-bold text-sm">2,847 today</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== FEATURES SECTION ========== -->
+<section id="features" class="bg-gray-50 py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center max-w-3xl mx-auto mb-14">
+      <div class="inline-flex items-center gap-2 bg-purple-100 text-claw text-xs font-semibold px-4 py-2 rounded-full mb-4 uppercase tracking-widest">
+        Why OpenClaw?
+      </div>
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">
+        Your AI. Your Server. Your Rules.
+      </h2>
+      <p class="text-gray-500 text-base sm:text-lg leading-relaxed">
+        OpenClaw gives you complete control over your AI assistant — no third-party data sharing, no vendor lock-in.
+      </p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Feature 1 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-purple-100 rounded-xl flex items-center justify-center text-xl mb-5">🔒</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">100% Self-Hosted Privacy</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Your data stays on your server. No third-party APIs see your conversations or files. Full GDPR compliance built-in.</p>
+      </div>
+
+      <!-- Feature 2 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-green-100 rounded-xl flex items-center justify-center text-xl mb-5">💬</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Multi-Platform Messaging</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Connect WhatsApp, Telegram, Discord, Slack, and more. One AI brain, multiple channels — seamlessly managed.</p>
+      </div>
+
+      <!-- Feature 3 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-blue-100 rounded-xl flex items-center justify-center text-xl mb-5">⚡</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">One-Click Deploy</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">No DevOps required. We handle Docker, SSL, and server config. Just pick a plan and your OpenClaw instance is live.</p>
+      </div>
+
+      <!-- Feature 4 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-yellow-100 rounded-xl flex items-center justify-center text-xl mb-5">🧠</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Custom AI Models</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Bring your own API key — OpenAI, Claude, Gemini, Llama, or any OpenAI-compatible model. Complete flexibility.</p>
+      </div>
+
+      <!-- Feature 5 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center text-xl mb-5">📁</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">File & Knowledge Management</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Upload documents, PDFs, and data. OpenClaw indexes and searches your knowledge base to answer intelligently.</p>
+      </div>
+
+      <!-- Feature 6 -->
+      <div class="feature-card bg-white rounded-2xl border border-gray-100 p-7 shadow-sm">
+        <div class="w-12 h-12 bg-indigo-100 rounded-xl flex items-center justify-center text-xl mb-5">🔗</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">API & Webhook Ready</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Full REST API access. Connect OpenClaw to your existing workflows, CRMs, and automation tools via webhooks.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== HOW IT WORKS ========== -->
+<section class="bg-white py-20 md:py-28">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center max-w-2xl mx-auto mb-16">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">
+        Live in 3 Simple Steps
+      </h2>
+      <p class="text-gray-500 text-lg">From signup to a running AI agent — no server knowledge required</p>
+    </div>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+      <!-- Step 1 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl font-black text-claw mx-auto mb-5 border-2 border-purple-200">1</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Choose Your Plan</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Pick a plan based on your usage — personal assistant, team bot, or enterprise-grade deployment.</p>
+      </div>
+
+      <!-- Connector -->
+      <div class="hidden md:flex items-center justify-center absolute" style="display:none;">
+        <div class="w-12 h-0.5 bg-purple-200"></div>
+      </div>
+
+      <!-- Step 2 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl font-black text-claw mx-auto mb-5 border-2 border-purple-200">2</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Connect Your Channels</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Link WhatsApp, Telegram, Discord or any platform. Add your preferred AI model API key.</p>
+      </div>
+
+      <!-- Step 3 -->
+      <div class="text-center">
+        <div class="w-16 h-16 bg-purple-100 rounded-2xl flex items-center justify-center text-2xl font-black text-claw mx-auto mb-5 border-2 border-purple-200">3</div>
+        <h3 class="text-lg font-bold text-gray-900 mb-2">Go Live Instantly</h3>
+        <p class="text-gray-500 text-sm leading-relaxed">Your OpenClaw AI agent is deployed, secured with SSL, and ready to answer questions 24/7.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== PRICING SECTION ========== -->
+<section id="pricing" class="bg-gray-50 py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center max-w-3xl mx-auto mb-12">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">
+        OpenClaw Hosting Plans
+      </h2>
+      <p class="text-gray-500 text-base sm:text-lg leading-relaxed">
+        Deploy your AI assistant on high-performance NVMe SSD servers. All plans include free SSL, automatic updates & 24/7 support.
+      </p>
+    </div>
+
+    <!-- Pricing Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
+
+      <!-- Starter -->
+      <div class="pricing-card bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col">
+        <div class="p-7 pb-5">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Starter</div>
+          <div class="inline-block bg-purple-50 text-claw text-xs font-medium px-3 py-1 rounded-full mb-5">
+            Personal use, hobby projects
+          </div>
+          <div class="flex items-end gap-2 mb-1">
+            <span class="text-5xl font-black text-gray-900">৳499</span>
+            <span class="text-gray-500 font-medium mb-2">/mo</span>
+          </div>
+          <div class="text-sm text-gray-400 mb-6">
+            Perfect for a single AI assistant
+          </div>
+          <a href="https://my.snbdhost.com/cart.php" class="block w-full text-center border-2 border-claw text-claw font-bold py-3 rounded-xl hover:bg-claw hover:text-white transition-colors duration-200">
+            Get Started
+          </a>
+        </div>
+        <div class="px-7 pb-7 pt-2 border-t border-gray-100 flex-1">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4 pt-4">What's included</p>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 1 OpenClaw Instance</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 2 GB NVMe SSD Storage</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 1 GB RAM</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 1 vCPU Core</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 50 GB Bandwidth</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 2 Messaging Channels</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Free SSL Certificate</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Auto Updates</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Weekly Backups</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 24/7 Email Support</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Professional (FEATURED) -->
+      <div class="pricing-card bg-claw rounded-2xl overflow-hidden flex flex-col relative shadow-2xl shadow-purple-200 md:-mt-4 md:mb-0 z-10">
+        <div class="bg-purple-900 text-white text-xs font-bold text-center py-2 tracking-wide">
+          Recommended ⭐ Most Popular
+        </div>
+        <div class="p-7 pb-5">
+          <div class="text-xs font-semibold text-purple-200 uppercase tracking-widest mb-2">Professional</div>
+          <div class="inline-block bg-white/20 text-white text-xs font-medium px-3 py-1 rounded-full mb-5">
+            Businesses, teams & agencies
+          </div>
+          <div class="flex items-end gap-2 mb-1">
+            <span class="text-5xl font-black text-white">৳1,299</span>
+            <span class="text-purple-200 font-medium mb-2">/mo</span>
+          </div>
+          <div class="text-sm text-purple-200 mb-6">
+            Multi-channel AI deployment
+          </div>
+          <a href="https://my.snbdhost.com/cart.php" class="block w-full text-center bg-white text-claw font-bold py-3 rounded-xl hover:bg-gray-100 transition-colors duration-200 shadow-lg">
+            Get Started
+          </a>
+        </div>
+        <div class="px-7 pb-7 pt-2 border-t border-white/20 flex-1">
+          <p class="text-xs font-semibold text-purple-200 uppercase tracking-wide mb-4 pt-4">What's included</p>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> 3 OpenClaw Instances</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> 10 GB NVMe SSD Storage</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> 4 GB RAM</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> 2 vCPU Cores</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> 200 GB Bandwidth</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> Unlimited Channels</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> Custom Domain + SSL</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> Knowledge Base Upload (100MB)</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> REST API Access</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> Daily Backups</li>
+            <li class="flex items-start gap-2.5 text-sm text-white"><i class="fa-solid fa-circle-check text-white mt-0.5 shrink-0"></i> Priority Support (Chat + Ticket)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Enterprise -->
+      <div class="pricing-card bg-white rounded-2xl border border-gray-200 overflow-hidden flex flex-col">
+        <div class="p-7 pb-5">
+          <div class="text-xs font-semibold text-gray-400 uppercase tracking-widest mb-2">Enterprise</div>
+          <div class="inline-block bg-gray-100 text-gray-500 text-xs font-medium px-3 py-1 rounded-full mb-5">
+            Large-scale, high-traffic deployments
+          </div>
+          <div class="flex items-end gap-2 mb-1">
+            <span class="text-5xl font-black text-gray-900">৳3,499</span>
+            <span class="text-gray-500 font-medium mb-2">/mo</span>
+          </div>
+          <div class="text-sm text-gray-400 mb-6">
+            Dedicated resources, max performance
+          </div>
+          <a href="https://my.snbdhost.com/cart.php" class="block w-full text-center border-2 border-claw text-claw font-bold py-3 rounded-xl hover:bg-claw hover:text-white transition-colors duration-200">
+            Get Started
+          </a>
+        </div>
+        <div class="px-7 pb-7 pt-2 border-t border-gray-100 flex-1">
+          <p class="text-xs font-semibold text-gray-400 uppercase tracking-wide mb-4 pt-4">What's included</p>
+          <ul class="space-y-2.5">
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 10 OpenClaw Instances</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 50 GB NVMe SSD Storage</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 8 GB RAM</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 4 vCPU Cores</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> 1 TB Bandwidth</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Unlimited Channels</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Custom Domain + Wildcard SSL</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Knowledge Base Upload (1GB)</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Full REST API + Webhooks</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Real-Time Backups</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> Dedicated Support Manager</li>
+            <li class="flex items-start gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i> SLA 99.99% Uptime Guarantee</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Money back -->
+    <p class="text-center text-gray-400 text-sm mt-10 flex items-center justify-center gap-2">
+      <i class="fa-solid fa-shield-halved text-green-500"></i>
+      7-day money-back guarantee. No contracts, cancel anytime.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ========== CTA BANNER ========== -->
+<section class="gradient-purple py-16">
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    <div class="text-4xl mb-4">🤖</div>
+    <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-white mb-4 leading-tight">
+      Ready to launch your<br class="hidden sm:block" />
+      AI-powered assistant?
+    </h2>
+    <p class="text-purple-200 text-base sm:text-lg mb-8">
+      Join hundreds of businesses already using OpenClaw on SNBD HOST infrastructure.
+    </p>
+    <a href="#pricing" class="inline-flex items-center gap-2 bg-white text-claw font-bold text-base sm:text-lg px-8 py-4 rounded-full border-2 border-white hover:bg-transparent hover:text-white transition-all duration-200 shadow-lg">
+      Deploy OpenClaw Now
+    </a>
+  </div>
+</section>
+
+
+<!-- ========== USE CASES ========== -->
+<section class="bg-white py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">
+        Built for Every Use Case
+      </h2>
+      <p class="text-gray-500 text-lg">From personal productivity to enterprise customer support</p>
+    </div>
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 text-center">
+        <div class="text-3xl mb-3">🛒</div>
+        <div class="text-base font-bold text-gray-900 mb-1">E-Commerce</div>
+        <div class="text-sm text-gray-500">Automated order tracking & customer support bot on WhatsApp</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 text-center">
+        <div class="text-3xl mb-3">🏥</div>
+        <div class="text-base font-bold text-gray-900 mb-1">Healthcare</div>
+        <div class="text-sm text-gray-500">Appointment booking & patient FAQs via Telegram bot</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 text-center">
+        <div class="text-3xl mb-3">🎓</div>
+        <div class="text-base font-bold text-gray-900 mb-1">Education</div>
+        <div class="text-sm text-gray-500">Study assistant with document Q&A for students and coaches</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 text-center">
+        <div class="text-3xl mb-3">🏢</div>
+        <div class="text-base font-bold text-gray-900 mb-1">Agencies</div>
+        <div class="text-sm text-gray-500">Multi-client bots for marketing automation & lead gen</div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ========== WHY SNBD HOST ========== -->
+<section class="bg-gray-50 py-20 md:py-28">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="text-center max-w-2xl mx-auto mb-14">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">
+        Why Host OpenClaw with Us?
+      </h2>
+    </div>
+
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 sm:p-8 text-center">
+        <div class="text-3xl sm:text-4xl mb-3">⚡</div>
+        <div class="text-3xl sm:text-4xl font-black text-gray-900 mb-1">NVMe</div>
+        <div class="text-sm text-gray-500 font-medium">SSD Storage</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 sm:p-8 text-center">
+        <div class="text-3xl sm:text-4xl mb-3">🔒</div>
+        <div class="text-3xl sm:text-4xl font-black text-gray-900 mb-1">Free</div>
+        <div class="text-sm text-gray-500 font-medium">SSL Certificates</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 sm:p-8 text-center">
+        <div class="text-3xl sm:text-4xl mb-3">🌍</div>
+        <div class="text-3xl sm:text-4xl font-black text-gray-900 mb-1">99.9%</div>
+        <div class="text-sm text-gray-500 font-medium">Uptime Guarantee</div>
+      </div>
+
+      <div class="stat-card bg-white border-2 border-gray-100 hover:border-purple-200 rounded-2xl p-6 sm:p-8 text-center">
+        <div class="text-3xl sm:text-4xl mb-3">⭐</div>
+        <div class="text-3xl sm:text-4xl font-black text-gray-900 mb-1">24/7</div>
+        <div class="text-sm text-gray-500 font-medium">Expert Support</div>
+      </div>
+
+    </div>
+
+    <p class="text-center text-gray-500 text-base sm:text-lg max-w-2xl mx-auto">
+      Powered by AMD EPYC processors and enterprise-grade networking for the fastest AI response times.
+    </p>
+
+  </div>
+</section>
+
+
+<!-- ========== FOOTER ========== -->
+<footer class="bg-dark text-gray-400 pt-16 pb-8">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+      <!-- Column 1: Logo + Tagline -->
+      <div>
+        <a href="index.html" class="flex items-center gap-0.5 mb-4">
+          <span class="text-2xl font-black text-white tracking-tight">SNBD</span>
+          <span class="text-2xl font-black text-primary tracking-tight">HOST</span>
+        </a>
+        <p class="text-sm text-gray-500 leading-relaxed mb-5">
+          Bangladesh's trusted web hosting provider. Fast NVMe SSD hosting, free SSL, and 24/7 expert support.
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-primary rounded-lg flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-facebook-f text-sm text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-primary rounded-lg flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-x-twitter text-sm text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-primary rounded-lg flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-linkedin-in text-sm text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-9 h-9 bg-gray-800 hover:bg-primary rounded-lg flex items-center justify-center transition-colors">
+            <i class="fa-brands fa-youtube text-sm text-gray-400 hover:text-white"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: My Account -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">My Account</h4>
+        <ul class="space-y-3">
+          <li><a href="https://my.snbdhost.com" class="text-sm text-gray-400 hover:text-white transition-colors">Start Page</a></li>
+          <li><a href="hosting.html" class="text-sm text-gray-400 hover:text-white transition-colors">Host Plan</a></li>
+          <li><a href="domain.html" class="text-sm text-gray-400 hover:text-white transition-colors">Domains</a></li>
+          <li><a href="https://my.snbdhost.com/invoices" class="text-sm text-gray-400 hover:text-white transition-colors">Invoices</a></li>
+          <li><a href="https://my.snbdhost.com/services" class="text-sm text-gray-400 hover:text-white transition-colors">My Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Legals -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legals</h4>
+        <ul class="space-y-3">
+          <li><a href="terms.html" class="text-sm text-gray-400 hover:text-white transition-colors">Terms of Service</a></li>
+          <li><a href="privacy.html" class="text-sm text-gray-400 hover:text-white transition-colors">Privacy & Protection</a></li>
+          <li><a href="domain-policy.html" class="text-sm text-gray-400 hover:text-white transition-colors">Domain Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Support -->
+      <div>
+        <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Support</h4>
+        <ul class="space-y-3">
+          <li>
+            <a href="support.html" class="flex items-center gap-2 text-sm text-gray-400 hover:text-white transition-colors">
+              <span class="w-2 h-2 bg-green-400 rounded-full pulse-dot shrink-0"></span>
+              Live Support
+            </a>
+          </li>
+          <li><a href="https://my.snbdhost.com/support/tickets" class="text-sm text-gray-400 hover:text-white transition-colors">Open a Ticket</a></li>
+          <li><a href="contact.html" class="text-sm text-gray-400 hover:text-white transition-colors">Contact Us</a></li>
+        </ul>
+        <div class="mt-6 bg-gray-800 rounded-xl p-4">
+          <div class="text-xs text-gray-400 mb-1">Need help right now?</div>
+          <a href="support.html" class="text-sm font-semibold text-primary hover:text-red-400 transition-colors">
+            Chat with us →
+          </a>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+      <p class="text-xs text-gray-600 text-center sm:text-left">
+        Copyright 2020–2026 SNBD HOST. All rights reserved.
+      </p>
+      <div class="flex items-center gap-4">
+        <span class="text-xs text-gray-600">Trusted by 2,450+ websites</span>
+        <div class="flex items-center gap-1.5 text-xs text-green-400 font-medium">
+          <span class="w-1.5 h-1.5 bg-green-400 rounded-full pulse-dot"></span>
+          All systems operational
+        </div>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ========== JAVASCRIPT ========== -->
+<script>
+  // ---- Mobile Menu Toggle ----
+  const mobileMenuBtn = document.getElementById('mobileMenuBtn');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const hamburgerIcon = document.getElementById('hamburgerIcon');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    const isOpen = mobileMenu.classList.contains('open');
+    mobileMenu.classList.toggle('open', !isOpen);
+    hamburgerIcon.className = isOpen
+      ? 'fa-solid fa-bars text-lg'
+      : 'fa-solid fa-xmark text-lg';
+  });
+
+  // Close on outside click
+  document.addEventListener('click', (e) => {
+    if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+      mobileMenu.classList.remove('open');
+      hamburgerIcon.className = 'fa-solid fa-bars text-lg';
+    }
+  });
+
+  // ---- Smooth scroll for anchor links ----
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', (e) => {
+      const target = document.querySelector(anchor.getAttribute('href'));
+      if (target) {
+        e.preventDefault();
+        const offset = 80;
+        const top = target.getBoundingClientRect().top + window.scrollY - offset;
+        window.scrollTo({ top, behavior: 'smooth' });
+      }
+    });
+  });
+
+  // ---- Scroll-in animation (Intersection Observer) ----
+  const observerOptions = {
+    threshold: 0.1,
+    rootMargin: '0px 0px -40px 0px',
+  };
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+        observer.unobserve(entry.target);
+      }
+    });
+  }, observerOptions);
+
+  document.querySelectorAll('.pricing-card, .feature-card, .stat-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(20px)';
+    el.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>
