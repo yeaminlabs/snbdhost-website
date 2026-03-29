@@ -1,0 +1,895 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Domain Registration — SNBD HOST</title>
+  <meta name="description" content="Register your domain name with SNBD HOST. Search hundreds of extensions starting from ৳99/yr. Free WHOIS privacy with every domain." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#e02020',
+              dark: '#c01818',
+            }
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .nav-link-active { color: #e02020; border-bottom: 2px solid #e02020; padding-bottom: 2px; }
+    .hover-lift { transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .hover-lift:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(0,0,0,0.10); }
+    .search-result-card { animation: fadeSlideIn 0.35s ease forwards; }
+    @keyframes fadeSlideIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .transfer-step { transition: background 0.2s; }
+    .transfer-step:hover { background: rgba(255,255,255,0.07); }
+    .badge-highlight { background: #fee2e2; color: #b91c1c; border-color: #fca5a5; }
+    select { appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%236b7280' d='M6 8L1 3h10z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 12px center; }
+  </style>
+</head>
+<body class="bg-white text-gray-800 antialiased">
+
+<!-- ============================
+     NAVBAR
+============================= -->
+<nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex items-center justify-between h-16">
+
+      <!-- Logo -->
+      <a href="index.html" class="flex items-center gap-1 flex-shrink-0">
+        <span class="font-black text-xl text-gray-900">SNBD</span><span class="font-black text-xl text-red-600">HOST</span>
+      </a>
+
+      <!-- Desktop Nav -->
+      <div class="hidden lg:flex items-center gap-6 text-sm font-medium text-gray-600">
+        <a href="hosting.html" class="hover:text-brand-red transition-colors">Hosting</a>
+        <a href="n8n-automation.html" class="hover:text-brand-red transition-colors">N8N Automation</a>
+        <a href="domain.html" class="nav-link-active font-semibold">Domain</a>
+        <a href="servers.html" class="hover:text-brand-red transition-colors">Servers</a>
+        <a href="blog.html" class="hover:text-brand-red transition-colors">Blog</a>
+        <a href="support.html" class="hover:text-brand-red transition-colors">Support</a>
+        <a href="offers.html" class="hover:text-brand-red transition-colors flex items-center gap-1">Offers <span>🔥</span></a>
+      </div>
+
+      <!-- Right CTA -->
+      <div class="hidden lg:flex items-center gap-3">
+        <a href="dashboard.html" class="bg-brand-red hover:bg-brand-dark text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+          My Dashboard
+        </a>
+      </div>
+
+      <!-- Mobile Hamburger -->
+      <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-lg text-gray-600 hover:bg-gray-100 transition-colors" aria-label="Toggle menu">
+        <i class="fa-solid fa-bars text-lg" id="hamburger-icon"></i>
+      </button>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden pb-4 border-t border-gray-100 mt-2">
+      <div class="flex flex-col gap-1 pt-3">
+        <a href="hosting.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">Hosting</a>
+        <a href="n8n-automation.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">N8N Automation</a>
+        <a href="domain.html" class="px-3 py-2 rounded-lg text-sm font-semibold text-brand-red bg-red-50">Domain</a>
+        <a href="servers.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">Servers</a>
+        <a href="blog.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">Blog</a>
+        <a href="support.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">Support</a>
+        <a href="offers.html" class="px-3 py-2 rounded-lg text-sm font-medium text-gray-600 hover:bg-gray-50 hover:text-brand-red transition-colors">Offers 🔥</a>
+        <div class="pt-2 px-3">
+          <a href="dashboard.html" class="block text-center bg-brand-red hover:bg-brand-dark text-white text-sm font-semibold px-4 py-2 rounded-lg transition-colors">
+            My Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+</nav>
+
+<!-- ============================
+     SECTION 1: HERO + DOMAIN SEARCH
+============================= -->
+<section class="bg-white pt-20 pb-24 px-4">
+  <div class="max-w-4xl mx-auto text-center">
+
+    <!-- Badge -->
+    <div class="inline-flex items-center gap-2 bg-red-50 border border-red-100 text-red-700 text-sm font-semibold px-4 py-2 rounded-full mb-6">
+      🌐 Register Your Domain Today
+    </div>
+
+    <!-- Headline -->
+    <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-5">
+      Find Your Perfect<br /><span class="text-brand-red">Domain Name</span>
+    </h1>
+
+    <!-- Subtext -->
+    <p class="text-lg sm:text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
+      Search from hundreds of domain extensions. Secure your brand online starting from just <strong class="text-gray-800">৳99/yr</strong>
+    </p>
+
+    <!-- Domain Search Bar -->
+    <div class="bg-white rounded-2xl shadow-xl border border-gray-200 p-3 sm:p-4 max-w-3xl mx-auto">
+      <div class="flex flex-col sm:flex-row gap-3">
+        <input
+          id="domain-input"
+          type="text"
+          placeholder="Search your domain name e.g. mysite.com"
+          class="flex-1 px-4 py-3 text-base rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-800 placeholder-gray-400"
+        />
+        <select
+          id="ext-select"
+          class="sm:w-36 px-4 py-3 text-sm font-semibold rounded-xl border border-gray-200 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-700 bg-white cursor-pointer pr-8"
+          onchange="highlightBadge(this.value)"
+        >
+          <option value=".com">.com</option>
+          <option value=".net">.net</option>
+          <option value=".org">.org</option>
+          <option value=".xyz">.xyz</option>
+          <option value=".io">.io</option>
+          <option value=".com.bd">.com.bd</option>
+          <option value=".bd">.bd</option>
+        </select>
+        <button
+          onclick="searchDomain()"
+          class="bg-brand-red hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-xl transition-colors whitespace-nowrap flex items-center gap-2 justify-center"
+        >
+          <i class="fa-solid fa-magnifying-glass text-sm"></i>
+          Search Domain
+        </button>
+      </div>
+
+      <!-- Popular Extension Badges -->
+      <div class="flex flex-wrap gap-2 mt-4 justify-center">
+        <button id="badge-.com" onclick="selectExt('.com')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.com <span class="text-gray-400">৳1,200/yr</span></button>
+        <button id="badge-.xyz" onclick="selectExt('.xyz')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.xyz <span class="text-gray-400">৳99/yr</span></button>
+        <button id="badge-.net" onclick="selectExt('.net')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.net <span class="text-gray-400">৳1,400/yr</span></button>
+        <button id="badge-.org" onclick="selectExt('.org')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.org <span class="text-gray-400">৳1,300/yr</span></button>
+        <button id="badge-.io" onclick="selectExt('.io')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.io <span class="text-gray-400">৳4,500/yr</span></button>
+        <button id="badge-.com.bd" onclick="selectExt('.com.bd')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.com.bd <span class="text-gray-400">৳800/yr</span></button>
+        <button id="badge-.bd" onclick="selectExt('.bd')" class="ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border bg-gray-50 text-gray-600 border-gray-200 hover:bg-red-50 hover:text-red-700 hover:border-red-200 transition-colors">.bd <span class="text-gray-400">৳800/yr</span></button>
+      </div>
+    </div>
+
+    <!-- Search Results (hidden by default) -->
+    <div id="search-results" class="hidden max-w-3xl mx-auto mt-5">
+      <div class="search-result-card bg-white rounded-2xl shadow-xl border border-gray-200 overflow-hidden">
+        <div class="bg-gray-50 border-b border-gray-100 px-5 py-3 flex items-center justify-between">
+          <span class="text-sm font-semibold text-gray-700">Search Results for "<span id="result-domain-name" class="text-brand-red">mysite</span>"</span>
+          <span class="text-xs text-gray-400">Showing 3 results</span>
+        </div>
+        <div class="divide-y divide-gray-100">
+          <!-- Result Row -->
+          <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-gray-900 text-base" id="result-com"></span>
+              <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-100">
+                <i class="fa-solid fa-circle-check text-xs"></i> Available
+              </span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="font-bold text-gray-800">৳1,200<span class="text-xs font-normal text-gray-400">/yr</span></span>
+              <a href="#" class="bg-brand-red hover:bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">Register</a>
+            </div>
+          </div>
+          <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-gray-900 text-base" id="result-net"></span>
+              <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-100">
+                <i class="fa-solid fa-circle-check text-xs"></i> Available
+              </span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="font-bold text-gray-800">৳1,400<span class="text-xs font-normal text-gray-400">/yr</span></span>
+              <a href="#" class="bg-brand-red hover:bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">Register</a>
+            </div>
+          </div>
+          <div class="flex items-center justify-between px-5 py-4">
+            <div class="flex items-center gap-3">
+              <span class="font-bold text-gray-900 text-base" id="result-xyz"></span>
+              <span class="inline-flex items-center gap-1 bg-green-50 text-green-700 text-xs font-semibold px-2 py-0.5 rounded-full border border-green-100">
+                <i class="fa-solid fa-circle-check text-xs"></i> Available
+              </span>
+            </div>
+            <div class="flex items-center gap-4">
+              <span class="font-bold text-gray-800">৳99<span class="text-xs font-normal text-gray-400">/yr</span></span>
+              <a href="#" class="bg-brand-red hover:bg-brand-dark text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">Register</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     SECTION 2: DOMAIN PRICING TABLE
+============================= -->
+<section class="bg-gray-50 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Domain Pricing</h2>
+      <p class="text-lg text-gray-500">Transparent, competitive pricing with no hidden renewal fees</p>
+    </div>
+
+    <div class="bg-white rounded-2xl shadow-lg overflow-hidden border border-gray-100">
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="bg-gray-900 text-white">
+              <th class="text-left px-6 py-4 font-bold text-sm uppercase tracking-wide">Extension</th>
+              <th class="text-center px-6 py-4 font-bold text-sm uppercase tracking-wide">Register (1yr)</th>
+              <th class="text-center px-6 py-4 font-bold text-sm uppercase tracking-wide">Renew (1yr)</th>
+              <th class="text-center px-6 py-4 font-bold text-sm uppercase tracking-wide">Transfer</th>
+              <th class="text-left px-6 py-4 font-bold text-sm uppercase tracking-wide hidden md:table-cell">Popular For</th>
+              <th class="text-center px-6 py-4 font-bold text-sm uppercase tracking-wide"></th>
+            </tr>
+          </thead>
+          <tbody class="divide-y divide-gray-100">
+            <!-- .com -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.com</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳1,200</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,400</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,200</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Business, personal brands</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .net -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.net</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳1,400</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,600</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,400</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Tech, networks</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .org -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.org</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳1,300</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,500</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,300</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">NGOs, nonprofits</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .xyz -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.xyz</span>
+                <span class="ml-2 bg-yellow-100 text-yellow-700 text-xs font-bold px-1.5 py-0.5 rounded">HOT</span>
+              </td>
+              <td class="px-6 py-4 text-center font-bold text-brand-red">৳99</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳599</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳499</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Startups, portfolios</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .io -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.io</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳4,500</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳5,000</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳4,500</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Tech startups, SaaS</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .info -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.info</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳700</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳900</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳700</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Informational sites</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .online -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.online</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳199</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳899</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳699</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Online businesses</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .store -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.store</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳299</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,299</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳999</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">eCommerce stores</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .tech -->
+            <tr class="hover:bg-gray-50 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.tech</span>
+              </td>
+              <td class="px-6 py-4 text-center font-semibold text-gray-800">৳599</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,999</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳1,499</td>
+              <td class="px-6 py-4 text-gray-500 hidden md:table-cell">Tech companies</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .com.bd — highlighted -->
+            <tr class="bg-red-50 hover:bg-red-100 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.com.bd</span>
+                <span class="ml-2 text-sm">⭐</span>
+              </td>
+              <td class="px-6 py-4 text-center font-bold text-brand-red">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-gray-600 font-medium hidden md:table-cell">Bangladesh businesses</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .bd — highlighted -->
+            <tr class="bg-red-50 hover:bg-red-100 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.bd</span>
+                <span class="ml-2 text-sm">⭐</span>
+              </td>
+              <td class="px-6 py-4 text-center font-bold text-brand-red">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-gray-600 font-medium hidden md:table-cell">Bangladesh brands</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+            <!-- .net.bd — highlighted -->
+            <tr class="bg-red-50 hover:bg-red-100 transition-colors">
+              <td class="px-6 py-4">
+                <span class="font-black text-gray-900 text-base">.net.bd</span>
+                <span class="ml-2 text-sm">⭐</span>
+              </td>
+              <td class="px-6 py-4 text-center font-bold text-brand-red">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-center text-gray-600">৳800</td>
+              <td class="px-6 py-4 text-gray-600 font-medium hidden md:table-cell">Bangladesh networks</td>
+              <td class="px-6 py-4 text-center"><a href="#" class="text-brand-red font-semibold hover:underline text-xs">Register</a></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="bg-red-50 border-t border-red-100 px-6 py-3 flex items-center gap-2">
+        <span class="text-sm">⭐</span>
+        <p class="text-xs text-red-700 font-medium">Bangladesh country-code domains (.com.bd, .bd, .net.bd) are highlighted in red — perfect for establishing your local online presence.</p>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ============================
+     SECTION 3: FREE DOMAIN BANNER
+============================= -->
+<section class="bg-brand-red py-16 px-4">
+  <div class="max-w-4xl mx-auto text-center text-white">
+    <div class="text-4xl mb-4">🎁</div>
+    <h2 class="text-3xl sm:text-4xl font-black mb-4">Get a FREE Domain with Every Hosting Plan</h2>
+    <p class="text-lg text-red-100 mb-8 max-w-2xl mx-auto">
+      Purchase any hosting plan and get a free domain registration. <strong class="text-white">.xyz, .com.bd,</strong> or <strong class="text-white">.online</strong> — your choice. No strings attached.
+    </p>
+    <a
+      href="hosting.html"
+      class="inline-flex items-center gap-2 bg-white text-brand-red font-bold text-base px-8 py-4 rounded-xl hover:bg-red-50 transition-colors shadow-lg"
+    >
+      <i class="fa-solid fa-server text-sm"></i>
+      View Hosting Plans
+    </a>
+  </div>
+</section>
+
+<!-- ============================
+     SECTION 4: DOMAIN TRANSFER
+============================= -->
+<section class="bg-white py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid lg:grid-cols-2 gap-12 items-center">
+
+      <!-- Left Column -->
+      <div>
+        <div class="inline-flex items-center gap-2 bg-red-50 border border-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
+          <i class="fa-solid fa-arrow-right-arrow-left text-xs"></i>
+          Domain Transfer
+        </div>
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
+          Transfer Your Domain<br />to SNBD HOST
+        </h2>
+        <p class="text-lg text-gray-500 mb-8">
+          Already have a domain elsewhere? Transfer it to SNBD HOST and enjoy a better experience at every step.
+        </p>
+
+        <ul class="space-y-4 mb-8">
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
+              <i class="fa-solid fa-check text-brand-red text-xs"></i>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-800">Free 1-year extension on transfer</span>
+              <p class="text-sm text-gray-500 mt-0.5">Your domain registration extends by 1 year, at no extra cost.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
+              <i class="fa-solid fa-check text-brand-red text-xs"></i>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-800">Same-day transfer processing</span>
+              <p class="text-sm text-gray-500 mt-0.5">Most transfers are completed within hours, not days.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
+              <i class="fa-solid fa-check text-brand-red text-xs"></i>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-800">No downtime during transfer</span>
+              <p class="text-sm text-gray-500 mt-0.5">Your website stays fully live throughout the entire process.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
+              <i class="fa-solid fa-check text-brand-red text-xs"></i>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-800">24/7 transfer support</span>
+              <p class="text-sm text-gray-500 mt-0.5">Our domain specialists guide you every step of the way.</p>
+            </div>
+          </li>
+          <li class="flex items-start gap-3">
+            <div class="flex-shrink-0 w-6 h-6 rounded-full bg-red-100 flex items-center justify-center mt-0.5">
+              <i class="fa-solid fa-check text-brand-red text-xs"></i>
+            </div>
+            <div>
+              <span class="font-semibold text-gray-800">Unlock any registrar in minutes</span>
+              <p class="text-sm text-gray-500 mt-0.5">We support transfers from all major registrars including GoDaddy, Namecheap, and more.</p>
+            </div>
+          </li>
+        </ul>
+
+        <a href="#" class="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-dark text-white font-bold px-6 py-3 rounded-xl transition-colors">
+          Start Transfer
+          <i class="fa-solid fa-arrow-right text-sm"></i>
+        </a>
+      </div>
+
+      <!-- Right Column — Steps Card -->
+      <div class="bg-[#1e293b] rounded-2xl p-8 text-white shadow-2xl">
+        <div class="flex items-center gap-2 mb-6">
+          <div class="w-8 h-8 rounded-full bg-brand-red flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-list-ol text-xs text-white"></i>
+          </div>
+          <h3 class="text-lg font-bold">Transfer Steps</h3>
+        </div>
+
+        <div class="space-y-4">
+          <!-- Step 1 -->
+          <div class="transfer-step flex items-start gap-4 p-3 rounded-xl">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-black">1</div>
+            <div>
+              <p class="font-semibold text-sm">Unlock your domain</p>
+              <p class="text-xs text-gray-400 mt-0.5">Log in to your current registrar and disable the domain lock / registrar lock.</p>
+            </div>
+          </div>
+          <!-- Step 2 -->
+          <div class="transfer-step flex items-start gap-4 p-3 rounded-xl">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-black">2</div>
+            <div>
+              <p class="font-semibold text-sm">Get the EPP / Auth code</p>
+              <p class="text-xs text-gray-400 mt-0.5">Request the authorization (EPP) code from your current registrar. It's usually emailed to you.</p>
+            </div>
+          </div>
+          <!-- Step 3 -->
+          <div class="transfer-step flex items-start gap-4 p-3 rounded-xl">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-black">3</div>
+            <div>
+              <p class="font-semibold text-sm">Submit transfer request at SNBD HOST</p>
+              <p class="text-xs text-gray-400 mt-0.5">Enter your domain name and EPP code on our transfer page and complete payment.</p>
+            </div>
+          </div>
+          <!-- Step 4 -->
+          <div class="transfer-step flex items-start gap-4 p-3 rounded-xl">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-red-600 flex items-center justify-center text-sm font-black">4</div>
+            <div>
+              <p class="font-semibold text-sm">Approve email from old registrar</p>
+              <p class="text-xs text-gray-400 mt-0.5">Check your inbox for a confirmation email and click approve to authorize the transfer.</p>
+            </div>
+          </div>
+          <!-- Step 5 — Success -->
+          <div class="transfer-step flex items-start gap-4 p-3 rounded-xl bg-green-900/30 border border-green-700/30">
+            <div class="flex-shrink-0 w-8 h-8 rounded-full bg-green-600 flex items-center justify-center text-sm font-black">
+              <i class="fa-solid fa-check text-xs"></i>
+            </div>
+            <div>
+              <p class="font-semibold text-sm text-green-400">Domain Transferred ✓</p>
+              <p class="text-xs text-gray-400 mt-0.5">Your domain is now managed under SNBD HOST with a free 1-year extension applied automatically.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     SECTION 5: WHY REGISTER WITH US
+============================= -->
+<section class="bg-gray-50 py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Why Register Your Domain with SNBD HOST?</h2>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto">Everything you need to manage your domain name — included free, with every registration.</p>
+    </div>
+
+    <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+      <!-- Card 1 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">🔒</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">WHOIS Privacy Protection</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Keep your personal information private. Free WHOIS guard included with every domain registration — no extra charge.</p>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">🔄</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Easy DNS Management</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Full DNS control panel. Set A records, CNAME, MX, TXT, and more with ease — no technical expertise required.</p>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">🛡️</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Domain Lock Protection</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Prevent unauthorized transfers with domain lock — enabled by default on all newly registered domains.</p>
+      </div>
+
+      <!-- Card 4 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">⚡</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Instant Activation</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Domains are activated within minutes of registration. Start pointing your domain and building your site right away.</p>
+      </div>
+
+      <!-- Card 5 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">📧</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">Email Forwarding</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Forward emails from your domain to any inbox. Set up professional email addresses like hello@yourdomain.com — included free.</p>
+      </div>
+
+      <!-- Card 6 -->
+      <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-6 hover-lift">
+        <div class="w-12 h-12 bg-red-50 rounded-xl flex items-center justify-center mb-4 text-xl">🤝</div>
+        <h3 class="text-base font-bold text-gray-900 mb-2">24/7 Domain Support</h3>
+        <p class="text-sm text-gray-500 leading-relaxed">Our domain experts are available 24/7 via live chat and support tickets to help you with any domain-related questions.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ============================
+     SECTION 6: BANGLADESH DOMAINS SPOTLIGHT
+============================= -->
+<section class="bg-white py-20 px-4">
+  <div class="max-w-6xl mx-auto">
+
+    <div class="text-center mb-12">
+      <div class="inline-flex items-center gap-2 bg-green-50 border border-green-100 text-green-700 text-sm font-semibold px-4 py-2 rounded-full mb-5">
+        🇧🇩 Bangladesh Country Domains
+      </div>
+      <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Own Your Bangladeshi Digital Identity</h2>
+      <p class="text-lg text-gray-500 max-w-2xl mx-auto">
+        Register <strong class="text-gray-700">.com.bd</strong>, <strong class="text-gray-700">.bd</strong>, <strong class="text-gray-700">.net.bd</strong>, <strong class="text-gray-700">.org.bd</strong> domains and establish your local presence in Bangladesh.
+      </p>
+    </div>
+
+    <div class="grid sm:grid-cols-3 gap-6">
+
+      <!-- .com.bd -->
+      <div class="bg-white rounded-2xl border-t-4 border-green-500 shadow-lg p-6 hover-lift">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-3xl font-black text-gray-900">.com.bd</span>
+          <span class="text-2xl">🇧🇩</span>
+        </div>
+        <div class="text-2xl font-black text-brand-red mb-1">৳800<span class="text-sm font-normal text-gray-400">/yr</span></div>
+        <p class="text-sm text-gray-500 mb-5 leading-relaxed">
+          The go-to domain for commercial businesses operating in Bangladesh. Boost local trust and visibility.
+        </p>
+        <div class="space-y-2 mb-5">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Free WHOIS Privacy
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            DNS Management Included
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Same Renewal Price
+          </div>
+        </div>
+        <a href="#" class="block text-center bg-brand-red hover:bg-brand-dark text-white font-bold text-sm px-4 py-3 rounded-xl transition-colors">
+          Register Now
+        </a>
+      </div>
+
+      <!-- .bd -->
+      <div class="bg-white rounded-2xl border-t-4 border-green-500 shadow-lg p-6 hover-lift relative">
+        <div class="absolute -top-3 left-1/2 -translate-x-1/2">
+          <span class="bg-brand-red text-white text-xs font-bold px-3 py-1 rounded-full shadow">Most Popular</span>
+        </div>
+        <div class="flex items-center justify-between mb-4 mt-2">
+          <span class="text-3xl font-black text-gray-900">.bd</span>
+          <span class="text-2xl">🇧🇩</span>
+        </div>
+        <div class="text-2xl font-black text-brand-red mb-1">৳800<span class="text-sm font-normal text-gray-400">/yr</span></div>
+        <p class="text-sm text-gray-500 mb-5 leading-relaxed">
+          The premium Bangladesh domain for brands and organizations. Short, memorable, and instantly recognized.
+        </p>
+        <div class="space-y-2 mb-5">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Free WHOIS Privacy
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            DNS Management Included
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Same Renewal Price
+          </div>
+        </div>
+        <a href="#" class="block text-center bg-brand-red hover:bg-brand-dark text-white font-bold text-sm px-4 py-3 rounded-xl transition-colors">
+          Register Now
+        </a>
+      </div>
+
+      <!-- .net.bd -->
+      <div class="bg-white rounded-2xl border-t-4 border-green-500 shadow-lg p-6 hover-lift">
+        <div class="flex items-center justify-between mb-4">
+          <span class="text-3xl font-black text-gray-900">.net.bd</span>
+          <span class="text-2xl">🇧🇩</span>
+        </div>
+        <div class="text-2xl font-black text-brand-red mb-1">৳800<span class="text-sm font-normal text-gray-400">/yr</span></div>
+        <p class="text-sm text-gray-500 mb-5 leading-relaxed">
+          Ideal for ISPs, network companies, and telecommunications businesses operating in Bangladesh.
+        </p>
+        <div class="space-y-2 mb-5">
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Free WHOIS Privacy
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            DNS Management Included
+          </div>
+          <div class="flex items-center gap-2 text-xs text-gray-600">
+            <i class="fa-solid fa-check text-green-500 text-xs"></i>
+            Same Renewal Price
+          </div>
+        </div>
+        <a href="#" class="block text-center bg-brand-red hover:bg-brand-dark text-white font-bold text-sm px-4 py-3 rounded-xl transition-colors">
+          Register Now
+        </a>
+      </div>
+
+    </div>
+
+    <!-- Disclaimer note -->
+    <p class="text-center text-xs text-gray-400 mt-6">
+      Bangladesh country-code domain registrations may require valid local business documentation. Our team will guide you through the process.
+    </p>
+
+  </div>
+</section>
+
+<!-- ============================
+     FOOTER
+============================= -->
+<footer class="bg-[#111827] text-gray-400 py-16 px-4">
+  <div class="max-w-6xl mx-auto">
+    <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+      <!-- Column 1: Logo + Tagline -->
+      <div>
+        <a href="index.html" class="inline-flex items-center gap-1 mb-4">
+          <span class="font-black text-xl text-white">SNBD</span><span class="font-black text-xl text-red-500">HOST</span>
+        </a>
+        <p class="text-sm text-gray-500 leading-relaxed mb-4">
+          Bangladesh's trusted web hosting provider. Fast, reliable, and affordable hosting solutions for businesses of all sizes.
+        </p>
+        <div class="flex items-center gap-3">
+          <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors" aria-label="Facebook">
+            <i class="fa-brands fa-facebook-f text-xs text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors" aria-label="Twitter">
+            <i class="fa-brands fa-x-twitter text-xs text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors" aria-label="LinkedIn">
+            <i class="fa-brands fa-linkedin-in text-xs text-gray-400 hover:text-white"></i>
+          </a>
+          <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors" aria-label="YouTube">
+            <i class="fa-brands fa-youtube text-xs text-gray-400 hover:text-white"></i>
+          </a>
+        </div>
+      </div>
+
+      <!-- Column 2: My Account -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-4">My Account</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Start Page</a></li>
+          <li><a href="hosting.html" class="text-sm text-gray-500 hover:text-white transition-colors">Host Plan</a></li>
+          <li><a href="domain.html" class="text-sm text-gray-500 hover:text-white transition-colors">Domains</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Invoices</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">My Services</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 3: Legals -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-4">Legals</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Terms of Service</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Privacy &amp; Protection</a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Domain Policy</a></li>
+        </ul>
+      </div>
+
+      <!-- Column 4: Support -->
+      <div>
+        <h4 class="text-white font-bold text-sm mb-4">Support</h4>
+        <ul class="space-y-2.5">
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors flex items-center gap-2">
+            <span class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>Live Support
+          </a></li>
+          <li><a href="#" class="text-sm text-gray-500 hover:text-white transition-colors">Open a Ticket</a></li>
+          <li><a href="support.html" class="text-sm text-gray-500 hover:text-white transition-colors">Contact Us</a></li>
+        </ul>
+        <div class="mt-5 bg-gray-800 rounded-xl p-4">
+          <p class="text-xs text-gray-500 mb-1">Support Hours</p>
+          <p class="text-sm font-semibold text-white">24/7 Available</p>
+          <p class="text-xs text-gray-500 mt-1">Avg. response: &lt;10 min</p>
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Bar -->
+    <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+      <p class="text-xs text-gray-600">Copyright 2020–2026 SNBD HOST. All rights reserved.</p>
+      <div class="flex items-center gap-4">
+        <span class="text-xs text-gray-700">Proud to serve Bangladesh 🇧🇩</span>
+      </div>
+    </div>
+
+  </div>
+</footer>
+
+<!-- ============================
+     JAVASCRIPT
+============================= -->
+<script>
+  // Mobile Menu Toggle
+  const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+  const mobileMenu = document.getElementById('mobile-menu');
+  const hamburgerIcon = document.getElementById('hamburger-icon');
+
+  mobileMenuBtn.addEventListener('click', () => {
+    const isOpen = !mobileMenu.classList.contains('hidden');
+    if (isOpen) {
+      mobileMenu.classList.add('hidden');
+      hamburgerIcon.classList.remove('fa-xmark');
+      hamburgerIcon.classList.add('fa-bars');
+    } else {
+      mobileMenu.classList.remove('hidden');
+      hamburgerIcon.classList.remove('fa-bars');
+      hamburgerIcon.classList.add('fa-xmark');
+    }
+  });
+
+  // Extension badge highlight
+  function highlightBadge(ext) {
+    document.querySelectorAll('.ext-badge').forEach(btn => {
+      btn.classList.remove('badge-highlight');
+      btn.classList.add('bg-gray-50', 'text-gray-600', 'border-gray-200');
+    });
+    const badge = document.getElementById('badge-' + ext);
+    if (badge) {
+      badge.classList.add('badge-highlight');
+      badge.classList.remove('bg-gray-50', 'text-gray-600', 'border-gray-200');
+    }
+  }
+
+  function selectExt(ext) {
+    const select = document.getElementById('ext-select');
+    select.value = ext;
+    highlightBadge(ext);
+  }
+
+  // Domain Search — Mock Results
+  function searchDomain() {
+    const input = document.getElementById('domain-input');
+    const resultsDiv = document.getElementById('search-results');
+    const resultDomainName = document.getElementById('result-domain-name');
+    const resultCom = document.getElementById('result-com');
+    const resultNet = document.getElementById('result-net');
+    const resultXyz = document.getElementById('result-xyz');
+
+    let query = input.value.trim();
+
+    // Strip extension if user typed one
+    if (query === '') {
+      query = 'mysite';
+    } else {
+      query = query.replace(/\.(com|net|org|xyz|io|com\.bd|bd|info|online|store|tech)$/i, '');
+    }
+
+    // Sanitize
+    query = query.replace(/[^a-zA-Z0-9\-]/g, '') || 'mysite';
+
+    // Update result labels
+    resultDomainName.textContent = query;
+    resultCom.textContent = query + '.com';
+    resultNet.textContent = query + '.net';
+    resultXyz.textContent = query + '.xyz';
+
+    // Show with animation
+    resultsDiv.classList.remove('hidden');
+
+    // Scroll into view
+    setTimeout(() => {
+      resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+
+  // Allow pressing Enter in the search input
+  document.getElementById('domain-input').addEventListener('keydown', function(e) {
+    if (e.key === 'Enter') {
+      searchDomain();
+    }
+  });
+
+  // Highlight default badge on load
+  highlightBadge('.com');
+</script>
+
+</body>
+</html>

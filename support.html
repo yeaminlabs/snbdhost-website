@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Support — SNBD HOST</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#e02020'
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif']
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.35s ease, padding 0.35s ease;
+    }
+    .faq-answer.open {
+      max-height: 400px;
+    }
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+    .faq-item.open .faq-icon {
+      transform: rotate(45deg);
+    }
+    .card-hover {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(0,0,0,0.1);
+    }
+    .kb-card {
+      transition: border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .kb-card:hover {
+      border-color: #e02020;
+      transform: translateY(-3px);
+      box-shadow: 0 12px 28px rgba(224,32,32,0.1);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-800">
+
+  <!-- ======================== NAVBAR ======================== -->
+  <nav class="sticky top-0 z-50 bg-white/90 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-0.5 flex-shrink-0">
+          <span class="text-2xl font-black text-gray-900 tracking-tight">SNBD</span>
+          <span class="text-2xl font-black text-brand-red tracking-tight">HOST</span>
+        </a>
+
+        <!-- Desktop Nav -->
+        <div class="hidden lg:flex items-center space-x-1">
+          <a href="hosting.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">Hosting</a>
+          <a href="n8n-automation.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">N8N Automation</a>
+          <a href="domain.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">Domain</a>
+          <a href="servers.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">Servers</a>
+          <a href="blog.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">Blog</a>
+          <a href="support.html" class="px-3 py-2 text-sm font-medium text-brand-red border-b-2 border-brand-red transition-colors rounded-t-md">Support</a>
+          <a href="offers.html" class="px-3 py-2 text-sm font-medium text-gray-600 hover:text-brand-red transition-colors rounded-md hover:bg-red-50">Offers 🔥</a>
+        </div>
+
+        <!-- Dashboard Button -->
+        <div class="hidden lg:flex items-center">
+          <a href="#" class="bg-brand-red hover:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors shadow-sm">
+            My Dashboard
+          </a>
+        </div>
+
+        <!-- Mobile Hamburger -->
+        <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-brand-red hover:bg-red-50 transition-colors" aria-label="Open menu">
+          <i class="fa-solid fa-bars text-xl"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden hidden bg-white border-t border-gray-100 shadow-lg">
+      <div class="px-4 py-4 space-y-1">
+        <a href="hosting.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">Hosting</a>
+        <a href="n8n-automation.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">N8N Automation</a>
+        <a href="domain.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">Domain</a>
+        <a href="servers.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">Servers</a>
+        <a href="blog.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">Blog</a>
+        <a href="support.html" class="block px-3 py-2.5 text-sm font-semibold text-brand-red bg-red-50 rounded-md">Support</a>
+        <a href="offers.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-brand-red hover:bg-red-50 rounded-md transition-colors">Offers 🔥</a>
+        <div class="pt-2 border-t border-gray-100">
+          <a href="#" class="block w-full text-center bg-brand-red hover:bg-red-700 text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors">My Dashboard</a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ======================== HERO ======================== -->
+  <section class="bg-gradient-to-b from-white to-red-50 pt-20 pb-16 px-4">
+    <div class="max-w-6xl mx-auto text-center">
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-white border border-red-200 text-brand-red text-sm font-semibold px-4 py-2 rounded-full shadow-sm mb-6">
+        🎧 We're Here to Help
+      </div>
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-5">
+        World-Class Support,<br class="hidden sm:block" />
+        <span class="text-brand-red">Around the Clock</span>
+      </h1>
+      <!-- Subtext -->
+      <p class="text-lg text-gray-600 max-w-2xl mx-auto mb-12 leading-relaxed">
+        Whether you're launching your first website or managing an enterprise server — our expert team is ready 24/7 via live chat, tickets, and phone.
+      </p>
+
+      <!-- Support Channel Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+        <!-- Live Chat -->
+        <div class="bg-white rounded-xl shadow-md p-7 card-hover border border-gray-100 flex flex-col items-center text-center">
+          <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4">
+            <span class="text-3xl">💬</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Live Chat</h3>
+          <div class="flex items-center gap-1.5 mb-4">
+            <span class="w-2.5 h-2.5 bg-green-500 rounded-full animate-pulse"></span>
+            <span class="text-sm font-semibold text-green-600">Online Now</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed mb-6">Chat with a support expert in real-time. Average response time: under 2 minutes.</p>
+          <a href="#" class="mt-auto w-full bg-brand-red hover:bg-red-700 text-white font-semibold py-3 px-6 rounded-lg transition-colors text-sm shadow-sm">
+            Start Live Chat
+          </a>
+        </div>
+
+        <!-- Open a Ticket -->
+        <div class="bg-white rounded-xl shadow-md p-7 card-hover border border-gray-100 flex flex-col items-center text-center">
+          <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4">
+            <span class="text-3xl">🎫</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Open a Ticket</h3>
+          <div class="flex items-center gap-1.5 mb-4">
+            <i class="fa-regular fa-clock text-brand-red text-xs"></i>
+            <span class="text-sm font-semibold text-gray-500">Avg. response: 1–2 hours</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed mb-6">Submit a detailed support request. Get expert help via our ticketing system.</p>
+          <a href="#ticket-form" class="mt-auto w-full bg-white border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors text-sm">
+            Open Ticket
+          </a>
+        </div>
+
+        <!-- Email Support -->
+        <div class="bg-white rounded-xl shadow-md p-7 card-hover border border-gray-100 flex flex-col items-center text-center">
+          <div class="w-14 h-14 bg-red-50 rounded-full flex items-center justify-center mb-4">
+            <span class="text-3xl">📧</span>
+          </div>
+          <h3 class="text-xl font-bold text-gray-900 mb-2">Email Support</h3>
+          <div class="flex items-center gap-1.5 mb-4">
+            <i class="fa-solid fa-envelope text-brand-red text-xs"></i>
+            <span class="text-sm font-semibold text-gray-500">support@snbdhost.com</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed mb-6">Email us anytime. We'll get back to you with a thorough response.</p>
+          <a href="mailto:support@snbdhost.com" class="mt-auto w-full bg-white border-2 border-brand-red text-brand-red hover:bg-brand-red hover:text-white font-semibold py-3 px-6 rounded-lg transition-colors text-sm">
+            Send Email
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== SUPPORT STATS ======================== -->
+  <section class="bg-brand-red py-14 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 text-center text-white">
+        <div>
+          <div class="text-4xl lg:text-5xl font-black mb-2">&lt; 2 min</div>
+          <div class="text-red-200 font-medium text-sm uppercase tracking-wider">Live Chat Response</div>
+        </div>
+        <div>
+          <div class="text-4xl lg:text-5xl font-black mb-2">99.9%</div>
+          <div class="text-red-200 font-medium text-sm uppercase tracking-wider">Customer Satisfaction</div>
+        </div>
+        <div>
+          <div class="text-4xl lg:text-5xl font-black mb-2">24/7/365</div>
+          <div class="text-red-200 font-medium text-sm uppercase tracking-wider">Support Availability</div>
+        </div>
+        <div>
+          <div class="text-4xl lg:text-5xl font-black mb-2">10,000+</div>
+          <div class="text-red-200 font-medium text-sm uppercase tracking-wider">Tickets Resolved</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== KNOWLEDGE BASE ======================== -->
+  <section class="bg-white py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <!-- Heading -->
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Knowledge Base</h2>
+        <p class="text-gray-500 text-lg max-w-xl mx-auto">Browse our guides, tutorials, and documentation to find quick answers.</p>
+      </div>
+
+      <!-- Search Bar -->
+      <div class="max-w-2xl mx-auto mb-12">
+        <div class="flex items-center bg-white border-2 border-gray-200 focus-within:border-brand-red rounded-xl overflow-hidden shadow-sm transition-colors">
+          <i class="fa-solid fa-magnifying-glass text-gray-400 ml-4 mr-2 text-base"></i>
+          <input
+            type="text"
+            placeholder="Search articles, guides, tutorials..."
+            class="flex-1 py-4 px-2 text-sm text-gray-700 outline-none placeholder-gray-400 bg-transparent"
+          />
+          <button class="bg-brand-red hover:bg-red-700 text-white font-semibold px-6 py-4 text-sm transition-colors whitespace-nowrap">
+            Search
+          </button>
+        </div>
+      </div>
+
+      <!-- Category Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+        <!-- Getting Started -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">📦</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">Getting Started</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">24 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">cPanel setup, domain pointing, first website launch guides.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Domain Management -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">🌐</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">Domain Management</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">18 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">DNS settings, transfers, WHOIS, nameservers.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- SSL & Security -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">🔒</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">SSL &amp; Security</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">15 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Free SSL setup, HTTPS, security hardening.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Email Setup -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">📧</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">Email Setup</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">22 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">Business email, SMTP, spam filters, webmail.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Backups & Recovery -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">💾</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">Backups &amp; Recovery</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">12 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">JetBackup setup, restore files, database recovery.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- n8n Automation -->
+        <div class="kb-card bg-gray-50 border-2 border-transparent rounded-xl p-6 cursor-pointer">
+          <div class="text-4xl mb-4">🤖</div>
+          <div class="flex items-center justify-between mb-2">
+            <h3 class="font-bold text-gray-900 text-lg">n8n Automation</h3>
+            <span class="text-xs font-semibold bg-red-100 text-brand-red px-2.5 py-1 rounded-full">20 articles</span>
+          </div>
+          <p class="text-gray-500 text-sm leading-relaxed">n8n workflows, integrations, Docker management.</p>
+          <a href="#" class="inline-flex items-center gap-1 text-brand-red text-sm font-semibold mt-4 hover:gap-2 transition-all">
+            Browse Category <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== POPULAR ARTICLES ======================== -->
+  <section class="bg-gray-50 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Popular Articles</h2>
+        <p class="text-gray-500 text-lg">The most-read guides from our knowledge base.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Left Column -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+              <i class="fa-solid fa-fire text-brand-red"></i> Top Picks
+            </h3>
+          </div>
+          <ul class="divide-y divide-gray-50">
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to install WordPress with Softaculous in cPanel</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to set up a free SSL certificate (Let's Encrypt)</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to create a business email address with your domain</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to migrate your website to SNBD HOST (free migration guide)</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to connect your n8n instance to Gmail and Google Sheets</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Right Column -->
+        <div class="bg-white rounded-xl shadow-sm border border-gray-100 overflow-hidden">
+          <div class="p-6 border-b border-gray-100">
+            <h3 class="font-bold text-gray-900 text-base flex items-center gap-2">
+              <i class="fa-solid fa-star text-brand-red"></i> Also Popular
+            </h3>
+          </div>
+          <ul class="divide-y divide-gray-50">
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to point your domain DNS to SNBD HOST nameservers</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to restore your website from a JetBackup backup</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">Understanding cPanel resource limits (CPU, RAM, I/O)</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to set up a staging site for WordPress</span>
+              </a>
+            </li>
+            <li>
+              <a href="#" class="flex items-start gap-3 px-6 py-4 hover:bg-red-50 transition-colors group">
+                <i class="fa-solid fa-arrow-right text-brand-red text-xs mt-1 flex-shrink-0 group-hover:translate-x-1 transition-transform"></i>
+                <span class="text-sm text-gray-700 group-hover:text-brand-red transition-colors leading-snug">How to configure SMTP for WordPress (WP Mail SMTP guide)</span>
+              </a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FAQ ACCORDION ======================== -->
+  <section class="bg-white py-20 px-4">
+    <div class="max-w-3xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Frequently Asked Questions</h2>
+        <p class="text-gray-500 text-lg">Quick answers to the questions we hear most often.</p>
+      </div>
+
+      <div class="space-y-3" id="faq-container">
+
+        <!-- Q1 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">How do I access my cPanel control panel?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              After signing up, you'll receive a welcome email with your cPanel login link, username, and password. You can also access it directly at <span class="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-xs">yourdomain.com/cpanel</span> or <span class="font-mono bg-gray-100 px-1.5 py-0.5 rounded text-xs">yourserver-ip:2083</span>. If you've forgotten your password, reset it from your SNBD HOST client portal.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q2 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">What payment methods do you accept?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              We accept bKash, Nagad, Rocket, bank transfers (all major Bangladeshi banks), credit/debit cards (Visa/Mastercard), and PayPal for international payments. All payments are processed securely.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q3 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">Do you offer free website migration?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              Yes! We offer free website migration for all new hosting customers. Our migration team will transfer your files, databases, emails, and settings from your current host with zero downtime. Submit a migration request ticket after signing up.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q4 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">What is your refund policy?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              We offer a 7-day money-back guarantee on all shared hosting plans. If you're not satisfied within 7 days of purchase, contact our support team for a full refund. VPS and dedicated server plans are non-refundable after deployment.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q5 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">How long does it take to set up my hosting account?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              Shared hosting accounts are activated instantly after payment confirmation. VPS servers are deployed within 60 seconds. Dedicated servers may take 24–48 hours for physical hardware configuration.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q6 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">Can I upgrade my plan later?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              Absolutely! You can upgrade your hosting plan at any time from your client portal. Upgrades are applied immediately and you'll only be charged the pro-rated difference. We also offer seamless upgrades from shared hosting to VPS.
+            </div>
+          </div>
+        </div>
+
+        <!-- Q7 -->
+        <div class="faq-item border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors">
+            <span class="font-semibold text-gray-900 text-sm sm:text-base pr-4">Do you provide DDoS protection?</span>
+            <i class="faq-icon fa-solid fa-plus text-brand-red flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer">
+            <div class="px-6 pb-5 text-gray-600 text-sm leading-relaxed border-t border-gray-100 pt-4">
+              Basic DDoS protection is included with all plans. For advanced mitigation (up to 1 Tbps), we offer an enhanced DDoS protection add-on available for VPS and dedicated server plans.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== TICKET FORM ======================== -->
+  <section id="ticket-form" class="bg-gray-50 py-20 px-4">
+    <div class="max-w-2xl mx-auto">
+      <div class="text-center mb-10">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Open a Support Ticket</h2>
+        <p class="text-gray-500 text-lg">Fill in the details below and our team will respond within 1–2 hours.</p>
+      </div>
+
+      <div class="bg-white rounded-2xl shadow-md border border-gray-100 p-8">
+        <form id="support-ticket-form" novalidate>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <!-- Name -->
+            <div>
+              <label for="t-name" class="block text-sm font-semibold text-gray-700 mb-1.5">Full Name <span class="text-brand-red">*</span></label>
+              <input
+                type="text"
+                id="t-name"
+                name="name"
+                required
+                placeholder="Your full name"
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors"
+              />
+            </div>
+            <!-- Email -->
+            <div>
+              <label for="t-email" class="block text-sm font-semibold text-gray-700 mb-1.5">Email Address <span class="text-brand-red">*</span></label>
+              <input
+                type="email"
+                id="t-email"
+                name="email"
+                required
+                placeholder="you@example.com"
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors"
+              />
+            </div>
+          </div>
+
+          <!-- Subject -->
+          <div class="mb-5">
+            <label for="t-subject" class="block text-sm font-semibold text-gray-700 mb-1.5">Subject <span class="text-brand-red">*</span></label>
+            <input
+              type="text"
+              id="t-subject"
+              name="subject"
+              required
+              placeholder="Brief description of your issue"
+              class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors"
+            />
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 mb-5">
+            <!-- Department -->
+            <div>
+              <label for="t-department" class="block text-sm font-semibold text-gray-700 mb-1.5">Department</label>
+              <select
+                id="t-department"
+                name="department"
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors appearance-none bg-white"
+              >
+                <option value="general">General Support</option>
+                <option value="billing">Billing</option>
+                <option value="technical">Technical</option>
+                <option value="sales">Sales</option>
+                <option value="n8n">n8n Automation</option>
+                <option value="server">Server Issues</option>
+              </select>
+            </div>
+            <!-- Priority -->
+            <div>
+              <label for="t-priority" class="block text-sm font-semibold text-gray-700 mb-1.5">Priority</label>
+              <select
+                id="t-priority"
+                name="priority"
+                class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors appearance-none bg-white"
+              >
+                <option value="low">Low</option>
+                <option value="normal" selected>Normal</option>
+                <option value="high">High</option>
+                <option value="urgent">Urgent</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Message -->
+          <div class="mb-5">
+            <label for="t-message" class="block text-sm font-semibold text-gray-700 mb-1.5">Message <span class="text-brand-red">*</span></label>
+            <textarea
+              id="t-message"
+              name="message"
+              rows="6"
+              required
+              placeholder="Describe your issue in detail. Include any error messages, domain names, or screenshots that might help us assist you faster."
+              class="w-full border border-gray-200 rounded-lg px-4 py-3 text-sm text-gray-800 placeholder-gray-400 focus:outline-none focus:border-brand-red focus:ring-2 focus:ring-red-100 transition-colors resize-none"
+            ></textarea>
+          </div>
+
+          <!-- Attachment -->
+          <div class="mb-7">
+            <label for="t-attachment" class="block text-sm font-semibold text-gray-700 mb-1.5">Attachment <span class="text-gray-400 font-normal">(optional)</span></label>
+            <label for="t-attachment" class="flex items-center gap-3 border-2 border-dashed border-gray-200 rounded-lg px-4 py-4 cursor-pointer hover:border-brand-red hover:bg-red-50 transition-colors group">
+              <i class="fa-solid fa-cloud-arrow-up text-gray-400 group-hover:text-brand-red text-xl transition-colors"></i>
+              <div>
+                <span class="text-sm text-gray-500 group-hover:text-brand-red transition-colors font-medium">Click to upload a file</span>
+                <p class="text-xs text-gray-400 mt-0.5">PNG, JPG, PDF, ZIP up to 10MB</p>
+              </div>
+            </label>
+            <input type="file" id="t-attachment" name="attachment" class="sr-only" accept=".png,.jpg,.jpeg,.pdf,.zip" />
+            <p id="file-name-display" class="text-xs text-gray-500 mt-1.5 hidden"></p>
+          </div>
+
+          <!-- Submit Button -->
+          <button
+            type="submit"
+            class="w-full bg-brand-red hover:bg-red-700 active:bg-red-800 text-white font-bold py-4 rounded-xl text-base transition-colors shadow-md hover:shadow-lg"
+          >
+            <i class="fa-solid fa-paper-plane mr-2"></i>
+            Submit Ticket
+          </button>
+        </form>
+
+        <!-- Success Message (hidden by default) -->
+        <div id="ticket-success" class="hidden mt-6 bg-green-50 border border-green-200 rounded-xl p-5 flex items-start gap-4">
+          <div class="w-10 h-10 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0">
+            <i class="fa-solid fa-circle-check text-green-600 text-lg"></i>
+          </div>
+          <div>
+            <h4 class="font-bold text-green-800 text-base mb-1">Ticket Submitted!</h4>
+            <p class="text-green-700 text-sm">We'll respond within 1–2 hours. A confirmation email with your ticket ID has been sent to your inbox.</p>
+          </div>
+        </div>
+
+        <!-- Note -->
+        <p class="text-center text-xs text-gray-400 mt-5">
+          <i class="fa-solid fa-lock mr-1"></i>
+          You'll receive a confirmation email with your ticket ID. Track status in your client portal.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== CONTACT INFO ======================== -->
+  <section class="bg-white py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Get in Touch</h2>
+        <p class="text-gray-500 text-lg">Multiple ways to reach our team. We're always happy to help.</p>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <!-- Office -->
+        <div class="text-center bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-5">
+            <span class="text-2xl">📍</span>
+          </div>
+          <h3 class="font-bold text-gray-900 text-lg mb-4">Our Office</h3>
+          <div class="text-gray-600 text-sm leading-relaxed space-y-1.5">
+            <p class="font-semibold text-gray-800">SNBD HOST Technologies</p>
+            <p>Dhaka, Bangladesh</p>
+            <p class="text-gray-500">Mon–Fri: 9 AM – 10 PM BST</p>
+          </div>
+        </div>
+
+        <!-- Phone -->
+        <div class="text-center bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-5">
+            <span class="text-2xl">📞</span>
+          </div>
+          <h3 class="font-bold text-gray-900 text-lg mb-4">Phone Support</h3>
+          <div class="text-gray-600 text-sm leading-relaxed space-y-1.5">
+            <p class="font-semibold text-gray-800 text-base">+880 1XXX-XXXXXX</p>
+            <p class="text-gray-500">Available: 9 AM – 10 PM BST</p>
+            <div class="inline-flex items-center gap-1.5 bg-green-100 text-green-700 text-xs font-semibold px-3 py-1.5 rounded-full mt-2">
+              <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+              Emergency hotline: 24/7
+            </div>
+          </div>
+        </div>
+
+        <!-- Social Media -->
+        <div class="text-center bg-gray-50 rounded-2xl p-8 border border-gray-100">
+          <div class="w-14 h-14 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-5">
+            <span class="text-2xl">🌐</span>
+          </div>
+          <h3 class="font-bold text-gray-900 text-lg mb-4">Social Media</h3>
+          <div class="flex flex-col items-center gap-3">
+            <a href="#" class="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-red transition-colors font-medium">
+              <i class="fa-brands fa-facebook text-blue-600 w-4"></i> Facebook
+            </a>
+            <a href="#" class="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-red transition-colors font-medium">
+              <i class="fa-brands fa-x-twitter text-gray-800 w-4"></i> Twitter / X
+            </a>
+            <a href="#" class="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-red transition-colors font-medium">
+              <i class="fa-brands fa-linkedin text-blue-700 w-4"></i> LinkedIn
+            </a>
+            <a href="#" class="flex items-center gap-2 text-sm text-gray-600 hover:text-brand-red transition-colors font-medium">
+              <i class="fa-brands fa-youtube text-red-600 w-4"></i> YouTube
+            </a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ======================== FOOTER ======================== -->
+  <footer class="bg-gray-900 text-gray-300 pt-16 pb-8 px-4">
+    <div class="max-w-6xl mx-auto">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+        <!-- Logo + Tagline -->
+        <div class="lg:col-span-1">
+          <a href="index.html" class="inline-flex items-center space-x-0.5 mb-4">
+            <span class="text-2xl font-black text-white tracking-tight">SNBD</span>
+            <span class="text-2xl font-black text-brand-red tracking-tight">HOST</span>
+          </a>
+          <p class="text-gray-400 text-sm leading-relaxed mt-3">
+            Bangladesh's most trusted web hosting provider. Powering websites, businesses, and automations since 2020.
+          </p>
+          <div class="flex gap-3 mt-5">
+            <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-facebook text-xs"></i>
+            </a>
+            <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-x-twitter text-xs"></i>
+            </a>
+            <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-linkedin text-xs"></i>
+            </a>
+            <a href="#" class="w-8 h-8 bg-gray-800 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-youtube text-xs"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- My Account -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">My Account</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Start Page</a></li>
+            <li><a href="hosting.html" class="text-gray-400 hover:text-white text-sm transition-colors">Host Plan</a></li>
+            <li><a href="domain.html" class="text-gray-400 hover:text-white text-sm transition-colors">Domains</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Invoices</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">My Services</a></li>
+          </ul>
+        </div>
+
+        <!-- Legals -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legals</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Privacy &amp; Protection</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors">Domain Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Support -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Support</h4>
+          <ul class="space-y-3">
+            <li>
+              <a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2">
+                <span class="w-2 h-2 bg-green-500 rounded-full flex-shrink-0"></span>
+                Live Support
+              </a>
+            </li>
+            <li><a href="#ticket-form" class="text-gray-400 hover:text-white text-sm transition-colors">Open a Ticket</a></li>
+            <li><a href="support.html" class="text-gray-400 hover:text-white text-sm transition-colors">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bottom Bar -->
+      <div class="border-t border-gray-800 pt-8 flex flex-col sm:flex-row items-center justify-between gap-4">
+        <p class="text-gray-500 text-sm">Copyright 2020–2026 SNBD HOST. All rights reserved.</p>
+        <div class="flex items-center gap-1.5 text-gray-500 text-xs">
+          <span class="w-2 h-2 bg-green-500 rounded-full animate-pulse"></span>
+          All systems operational
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================== JAVASCRIPT ======================== -->
+  <script>
+    // --- Mobile Menu Toggle ---
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const menuIcon = mobileMenuBtn.querySelector('i');
+
+    mobileMenuBtn.addEventListener('click', () => {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      mobileMenu.classList.toggle('hidden', isOpen);
+      menuIcon.className = isOpen ? 'fa-solid fa-bars text-xl' : 'fa-solid fa-xmark text-xl';
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', (e) => {
+      if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        menuIcon.className = 'fa-solid fa-bars text-xl';
+      }
+    });
+
+    // --- FAQ Accordion ---
+    const faqContainer = document.getElementById('faq-container');
+    const faqItems = faqContainer.querySelectorAll('.faq-item');
+
+    faqItems.forEach(item => {
+      const trigger = item.querySelector('.faq-trigger');
+      const answer = item.querySelector('.faq-answer');
+
+      trigger.addEventListener('click', () => {
+        const isCurrentlyOpen = item.classList.contains('open');
+
+        // Close all
+        faqItems.forEach(otherItem => {
+          otherItem.classList.remove('open');
+          otherItem.querySelector('.faq-answer').classList.remove('open');
+          otherItem.querySelector('.faq-trigger').classList.remove('bg-red-50');
+        });
+
+        // Open clicked if it was not open
+        if (!isCurrentlyOpen) {
+          item.classList.add('open');
+          answer.classList.add('open');
+          trigger.classList.add('bg-red-50');
+        }
+      });
+    });
+
+    // --- File Attachment Display ---
+    const fileInput = document.getElementById('t-attachment');
+    const fileNameDisplay = document.getElementById('file-name-display');
+
+    fileInput.addEventListener('change', () => {
+      if (fileInput.files.length > 0) {
+        fileNameDisplay.textContent = 'Attached: ' + fileInput.files[0].name;
+        fileNameDisplay.classList.remove('hidden');
+      } else {
+        fileNameDisplay.classList.add('hidden');
+      }
+    });
+
+    // --- Ticket Form Submission ---
+    const ticketForm = document.getElementById('support-ticket-form');
+    const ticketSuccess = document.getElementById('ticket-success');
+
+    ticketForm.addEventListener('submit', (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById('t-name').value.trim();
+      const email = document.getElementById('t-email').value.trim();
+      const subject = document.getElementById('t-subject').value.trim();
+      const message = document.getElementById('t-message').value.trim();
+
+      // Simple validation
+      if (!name || !email || !subject || !message) {
+        const firstEmpty = [
+          { id: 't-name', val: name },
+          { id: 't-email', val: email },
+          { id: 't-subject', val: subject },
+          { id: 't-message', val: message }
+        ].find(f => !f.val);
+
+        if (firstEmpty) {
+          document.getElementById(firstEmpty.id).focus();
+          document.getElementById(firstEmpty.id).classList.add('border-brand-red');
+          setTimeout(() => {
+            document.getElementById(firstEmpty.id).classList.remove('border-brand-red');
+          }, 2500);
+        }
+        return;
+      }
+
+      // Show success
+      ticketForm.classList.add('opacity-0', 'pointer-events-none');
+      ticketSuccess.classList.remove('hidden');
+      ticketSuccess.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
+      setTimeout(() => {
+        ticketForm.reset();
+        fileNameDisplay.classList.add('hidden');
+        ticketForm.classList.remove('opacity-0', 'pointer-events-none');
+        ticketSuccess.classList.add('hidden');
+      }, 6000);
+    });
+  </script>
+</body>
+</html>

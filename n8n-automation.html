@@ -1,0 +1,806 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>N8N Automation Hosting Bangladesh | SNBD HOST</title>
+  <meta name="description" content="Get managed n8n hosting in Bangladesh with SNBD HOST. Docker-based, self-hosted n8n instances with free installation and 24/7 support. Starting from 500 BDT/mo." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#e02020',
+              dark: '#111827',
+              navy: '#0f172a',
+              slate: '#1e293b',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body { font-family: 'Inter', sans-serif; }
+    .faq-answer {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.4s ease, padding 0.3s ease;
+    }
+    .faq-answer.open {
+      max-height: 500px;
+    }
+    .faq-icon {
+      transition: transform 0.3s ease;
+    }
+    .faq-icon.rotated {
+      transform: rotate(180deg);
+    }
+    .nav-link {
+      position: relative;
+    }
+    .nav-link.active::after {
+      content: '';
+      position: absolute;
+      bottom: -4px;
+      left: 0;
+      right: 0;
+      height: 2px;
+      background-color: #e02020;
+      border-radius: 2px;
+    }
+    .hero-gradient {
+      background: linear-gradient(135deg, #fff 0%, #fef2f2 50%, #fff 100%);
+    }
+    .card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(224, 32, 32, 0.12);
+    }
+    .featured-card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .featured-card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 20px 40px rgba(224, 32, 32, 0.35);
+    }
+    .blog-card-hover {
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+    .blog-card-hover:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 32px rgba(0,0,0,0.1);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- ===== STICKY NAVBAR ===== -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center space-x-0.5 flex-shrink-0">
+          <span class="text-2xl font-black text-gray-900 tracking-tight">SNBD</span>
+          <span class="text-2xl font-black text-brand-red tracking-tight">HOST</span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden lg:flex items-center space-x-1">
+          <a href="hosting.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Hosting</a>
+          <a href="n8n-automation.html" class="nav-link active px-3 py-2 text-sm font-medium text-brand-red rounded-md hover:bg-red-50 transition-colors">N8N Automation</a>
+          <a href="domain.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Domain</a>
+          <a href="servers.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Servers</a>
+          <a href="blog.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Blog</a>
+          <a href="support.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Support</a>
+          <a href="offers.html" class="nav-link px-3 py-2 text-sm font-medium text-gray-600 hover:text-gray-900 rounded-md hover:bg-gray-50 transition-colors">Offers 🔥</a>
+        </div>
+
+        <!-- Right: Dashboard Button + Hamburger -->
+        <div class="flex items-center space-x-3">
+          <a href="dashboard.html" class="hidden sm:inline-flex items-center px-4 py-2 bg-brand-red text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors shadow-sm">
+            My Dashboard
+          </a>
+          <button id="mobile-menu-btn" class="lg:hidden p-2 rounded-md text-gray-600 hover:text-gray-900 hover:bg-gray-100 transition-colors" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars text-lg" id="hamburger-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="hidden lg:hidden bg-white border-t border-gray-100 shadow-lg">
+      <div class="px-4 py-3 space-y-1">
+        <a href="hosting.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Hosting</a>
+        <a href="n8n-automation.html" class="block px-3 py-2.5 text-sm font-medium text-brand-red bg-red-50 rounded-md">N8N Automation</a>
+        <a href="domain.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Domain</a>
+        <a href="servers.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Servers</a>
+        <a href="blog.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Blog</a>
+        <a href="support.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Support</a>
+        <a href="offers.html" class="block px-3 py-2.5 text-sm font-medium text-gray-600 hover:text-gray-900 hover:bg-gray-50 rounded-md transition-colors">Offers 🔥</a>
+        <div class="pt-2 pb-1">
+          <a href="dashboard.html" class="block w-full text-center px-4 py-2.5 bg-brand-red text-white text-sm font-semibold rounded-lg hover:bg-red-700 transition-colors">
+            My Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===== HERO SECTION ===== -->
+  <section class="hero-gradient py-20 lg:py-28 px-4">
+    <div class="max-w-4xl mx-auto text-center">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-brand-red text-sm font-semibold px-4 py-2 rounded-full mb-6">
+        <span>⚡</span>
+        <span>Docker-Based n8n Hosting</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-6">
+        Connect Apps &amp; Stop Wasting Time with our
+        <span class="text-brand-red"> Docker Based n8n Hosting</span>
+      </h1>
+
+      <!-- Subtext -->
+      <p class="text-lg sm:text-xl text-gray-600 leading-relaxed max-w-3xl mx-auto mb-10">
+        Need simple and reliable n8n hosting? With SNBD HOST, you can connect apps, automate tasks, and save hours every day. Whether you run a small project or a big business, SNBD HOST n8n hosting helps you cut manual work and focus on growth.
+      </p>
+
+      <!-- CTA Buttons -->
+      <div class="flex flex-col sm:flex-row gap-4 justify-center mb-14">
+        <a href="#pricing" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-brand-red text-white text-base font-bold rounded-xl hover:bg-red-700 transition-colors shadow-lg shadow-red-200">
+          Start Automating <span>→</span>
+        </a>
+        <a href="#pricing" class="inline-flex items-center justify-center gap-2 px-8 py-4 bg-white text-brand-red text-base font-bold rounded-xl border-2 border-brand-red hover:bg-red-50 transition-colors">
+          View Pricing
+        </a>
+      </div>
+
+      <!-- App Logos / Integration Badges -->
+      <div class="flex flex-wrap justify-center gap-2.5">
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-brands fa-google text-red-500 text-xs"></i> Gmail
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-solid fa-table-cells text-green-600 text-xs"></i> Google Sheets
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-brands fa-telegram text-sky-500 text-xs"></i> Telegram
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-solid fa-n text-black text-xs"></i> Notion
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-brands fa-slack text-purple-600 text-xs"></i> Slack
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-brands fa-whatsapp text-green-500 text-xs"></i> WhatsApp
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-white border border-gray-200 text-gray-700 text-xs font-semibold px-3 py-1.5 rounded-full shadow-sm">
+          <i class="fa-solid fa-robot text-gray-700 text-xs"></i> OpenAI
+        </span>
+        <span class="inline-flex items-center gap-1.5 bg-brand-red text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-sm">
+          + 300+ more
+        </span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RED CTA BANNER ===== -->
+  <section class="bg-brand-red py-16 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
+        ⭐ Start Automating using Self Hosted n8n Instances 💻
+      </h2>
+      <p class="text-red-100 text-lg leading-relaxed mb-8 max-w-2xl mx-auto">
+        Experience Blazing-Fast Servers — Get industry-grade speed to power your software and business automations without the hassle. No setup, no stress — just plug, play, and grow!
+      </p>
+      <a href="#pricing" class="inline-flex items-center justify-center gap-2 px-10 py-4 bg-white text-brand-red text-lg font-black rounded-2xl hover:bg-red-50 transition-colors shadow-xl">
+        BUY NOW 🖱️
+      </a>
+      <p class="text-red-200 text-sm mt-5 font-medium">
+        Starts with 500 BDT/mo for 0.5 GB RAM &amp; Free installation and Setup
+      </p>
+    </div>
+  </section>
+
+  <!-- ===== N8N PRICING PLANS ===== -->
+  <section id="pricing" class="bg-gray-50 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
+          Choose Your n8n Hosting Plan
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+          All plans include free installation, 24/7 chat support, and n8n Community Edition
+        </p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+
+        <!-- Card 1: n8n 1G -->
+        <div class="card-hover bg-white rounded-2xl shadow-md border border-gray-100 p-8 flex flex-col">
+          <div class="mb-6">
+            <span class="inline-block bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Starter</span>
+            <h3 class="text-2xl font-black text-gray-900 mb-1">n8n 1G</h3>
+            <div class="flex items-end gap-2 mt-3">
+              <span class="text-4xl font-black text-gray-900">৳2400</span>
+              <span class="text-gray-500 text-sm mb-1">/yearly</span>
+            </div>
+            <p class="text-gray-400 text-sm mt-1">(~৳200/mo)</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 flex-grow">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">1 Core vCPU (Shared)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">1 GB RAM Dedicated</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">N8N Community Edition</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">n8n Update on Request</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">24/7 Chat Support</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">Free Installation (within seconds)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">Docker-based deployment</span>
+            </li>
+          </ul>
+
+          <a href="#" class="block w-full text-center px-6 py-3.5 bg-brand-red text-white font-bold rounded-xl hover:bg-red-700 transition-colors text-sm">
+            BUY NOW
+          </a>
+        </div>
+
+        <!-- Card 2: n8n 2G (FEATURED) -->
+        <div class="featured-card-hover bg-brand-red rounded-2xl shadow-2xl shadow-red-300 p-8 flex flex-col relative md:-mt-4 md:-mb-4 md:scale-105 z-10">
+          <!-- Popular Badge -->
+          <div class="absolute -top-4 left-1/2 -translate-x-1/2">
+            <span class="inline-block bg-yellow-400 text-yellow-900 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider shadow-md whitespace-nowrap">
+              Most Popular 🔥
+            </span>
+          </div>
+
+          <div class="mb-6 mt-2">
+            <span class="inline-block bg-red-700 text-red-200 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Most Popular</span>
+            <h3 class="text-2xl font-black text-white mb-1">n8n 2G</h3>
+            <div class="flex items-end gap-2 mt-3">
+              <span class="text-4xl font-black text-white">৳4800</span>
+              <span class="text-red-200 text-sm mb-1">/yearly</span>
+            </div>
+            <p class="text-red-200 text-sm mt-1">(~৳400/mo)</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 flex-grow">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">1 Core vCPU (Shared)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">2 GB RAM Dedicated</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">N8N Community Edition</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">n8n Update on Request</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">24/7 Chat Support</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">Free Installation (within seconds)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-yellow-300 mt-0.5 flex-shrink-0"></i>
+              <span class="text-red-100 text-sm">Docker-based deployment</span>
+            </li>
+          </ul>
+
+          <a href="#" class="block w-full text-center px-6 py-3.5 bg-white text-brand-red font-bold rounded-xl hover:bg-red-50 transition-colors text-sm shadow-md">
+            BUY NOW
+          </a>
+        </div>
+
+        <!-- Card 3: n8n 4G -->
+        <div class="card-hover bg-white rounded-2xl shadow-md border border-gray-100 p-8 flex flex-col">
+          <div class="mb-6">
+            <span class="inline-block bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">Power</span>
+            <h3 class="text-2xl font-black text-gray-900 mb-1">n8n 4G</h3>
+            <div class="flex items-end gap-2 mt-3">
+              <span class="text-4xl font-black text-gray-900">৳9600</span>
+              <span class="text-gray-500 text-sm mb-1">/yearly</span>
+            </div>
+            <p class="text-gray-400 text-sm mt-1">&nbsp;</p>
+          </div>
+
+          <ul class="space-y-3 mb-8 flex-grow">
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">2 Core vCPU (Shared)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">4 GB RAM Dedicated</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">N8N Community Edition</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">n8n Update on Request</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">24/7 Chat Support</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">Free Installation (within seconds)</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <i class="fa-solid fa-check text-brand-red mt-0.5 flex-shrink-0"></i>
+              <span class="text-gray-700 text-sm">Docker-based deployment</span>
+            </li>
+          </ul>
+
+          <a href="#" class="block w-full text-center px-6 py-3.5 bg-brand-red text-white font-bold rounded-xl hover:bg-red-700 transition-colors text-sm">
+            BUY NOW
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== WHAT CAN I DO WITH N8N? ===== -->
+  <section class="bg-brand-navy py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-black text-white mb-4">
+          What I Can Do with N8N Hosting?
+        </h2>
+        <p class="text-slate-400 text-lg max-w-2xl mx-auto">
+          n8n gives you the power to automate anything — here's what's possible
+        </p>
+      </div>
+
+      <!-- Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+
+        <!-- Card 1 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">🔄</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Automate Repetitive Tasks</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Save hours by automating tasks like sending emails, posting to social media, or updating spreadsheets — all without coding.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">🔗</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Connect Your Favorite Apps</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Link tools like Gmail, Google Sheets, Telegram, Notion, Slack, and over 300+ apps to work together smoothly.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">📈</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Boost Your Business</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Automate lead generation, CRM updates, reminders, reports, and more. Grow faster while doing less manual work.
+          </p>
+        </div>
+
+        <!-- Card 4 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">🤖</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Use AI to Make Smart Decisions</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Connect OpenAI, GPT, or other AI tools to write emails, analyze text, create replies, or make smart choices inside your workflows.
+          </p>
+        </div>
+
+        <!-- Card 5 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">⚙️</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Build Custom Workflows with Logic</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            Add filters, conditions, delays, and triggers to control how and when tasks run. Your automation, your rules.
+          </p>
+        </div>
+
+        <!-- Card 6 -->
+        <div class="bg-brand-slate rounded-2xl p-6 border border-slate-700 hover:border-red-500/40 transition-colors group">
+          <div class="text-4xl mb-4">🔒</div>
+          <h3 class="text-white text-lg font-bold mb-3 group-hover:text-red-400 transition-colors">Private &amp; Self-Hosted</h3>
+          <p class="text-slate-400 text-sm leading-relaxed">
+            All your workflows run on your own server — fast, secure, and fully under your control. No third-party limits or spying.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FAQ ACCORDION SECTION ===== -->
+  <section class="bg-white py-20 px-4">
+    <div class="max-w-3xl mx-auto">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
+          Frequently Asked Questions
+        </h2>
+        <p class="text-gray-500 text-lg">
+          Everything you need to know about n8n hosting with SNBD HOST
+        </p>
+      </div>
+
+      <!-- FAQ Items -->
+      <div class="space-y-4" id="faq-container">
+
+        <!-- FAQ 1 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span class="font-semibold text-gray-900 text-base">Can n8n help reduce time spent managing social media?</span>
+            <i class="fa-solid fa-chevron-down faq-icon text-gray-400 flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer bg-gray-50">
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Yes! Automatically schedule posts, reply to DMs, or track mentions across platforms using workflows. You can connect Instagram, Facebook, Twitter/X, LinkedIn and more through n8n's integrations and trigger actions based on events or schedules.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 2 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span class="font-semibold text-gray-900 text-base">Is it possible to automate follow-up emails to customers who didn't complete checkout?</span>
+            <i class="fa-solid fa-chevron-down faq-icon text-gray-400 flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer bg-gray-50">
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Absolutely! n8n can integrate with your WooCommerce or custom store, detect abandoned carts, and automatically send personalized follow-up emails via Gmail, SMTP, or any email service. You can set delays, conditions, and personalization — all without code.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 3 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span class="font-semibold text-gray-900 text-base">Do I need coding skills to use n8n?</span>
+            <i class="fa-solid fa-chevron-down faq-icon text-gray-400 flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer bg-gray-50">
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-gray-600 text-sm leading-relaxed">
+                No coding skills required for most workflows! n8n has a visual drag-and-drop editor where you connect nodes to build workflows. However, if you want advanced logic, you can optionally write small JavaScript snippets for maximum flexibility.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 4 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span class="font-semibold text-gray-900 text-base">How is this better than Zapier or other tools?</span>
+            <i class="fa-solid fa-chevron-down faq-icon text-gray-400 flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer bg-gray-50">
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-gray-600 text-sm leading-relaxed">
+                Unlike Zapier, n8n is self-hosted — meaning your data stays on YOUR server, not a third-party cloud. You also get unlimited workflows, no per-task pricing, and far more flexibility with custom logic. SNBD HOST provides fully managed n8n instances so you get all benefits without server management headaches.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- FAQ 5 -->
+        <div class="border border-gray-200 rounded-xl overflow-hidden">
+          <button class="faq-trigger w-full flex items-center justify-between gap-4 px-6 py-5 text-left bg-white hover:bg-gray-50 transition-colors" onclick="toggleFAQ(this)">
+            <span class="font-semibold text-gray-900 text-base">What happens if something goes wrong in my workflow?</span>
+            <i class="fa-solid fa-chevron-down faq-icon text-gray-400 flex-shrink-0 text-sm"></i>
+          </button>
+          <div class="faq-answer bg-gray-50">
+            <div class="px-6 pb-5 pt-0">
+              <p class="text-gray-600 text-sm leading-relaxed">
+                n8n has built-in error handling with retry logic, error workflows, and execution logs. You can see exactly what happened at each step. Our 24/7 support team is also available to help troubleshoot any workflow issues.
+              </p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== BLOG PREVIEW SECTION ===== -->
+  <section class="bg-gray-50 py-20 px-4">
+    <div class="max-w-6xl mx-auto">
+
+      <!-- Section Header -->
+      <div class="text-center mb-14">
+        <h2 class="text-3xl sm:text-4xl font-black text-gray-900 mb-4">
+          Latest from Our Blog
+        </h2>
+        <p class="text-gray-500 text-lg max-w-2xl mx-auto">
+          Stay updated with automation tips, hosting guides, and industry insights
+        </p>
+      </div>
+
+      <!-- Blog Cards Grid -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+
+        <!-- Blog Card 1 -->
+        <article class="blog-card-hover bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="bg-gradient-to-br from-red-50 to-red-100 h-44 flex items-center justify-center">
+            <i class="fa-solid fa-bolt text-brand-red text-5xl opacity-60"></i>
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-block bg-red-100 text-brand-red text-xs font-bold px-2.5 py-1 rounded-full">N8N Hosting</span>
+              <span class="text-gray-400 text-xs">March 18, 2026</span>
+            </div>
+            <h3 class="text-gray-900 font-bold text-base mb-3 leading-snug flex-grow">
+              n8n Subscription BD — Get Managed n8n Hosting in Bangladesh
+            </h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">
+              Discover how SNBD HOST's managed n8n hosting gives Bangladesh businesses the power to automate workflows without server management.
+            </p>
+            <a href="blog.html" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-bold hover:text-red-700 transition-colors mt-auto">
+              Read More <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 2 -->
+        <article class="blog-card-hover bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="bg-gradient-to-br from-blue-50 to-blue-100 h-44 flex items-center justify-center">
+            <i class="fa-solid fa-server text-blue-500 text-5xl opacity-60"></i>
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-block bg-blue-100 text-blue-700 text-xs font-bold px-2.5 py-1 rounded-full">Server Tech</span>
+              <span class="text-gray-400 text-xs">March 5, 2026</span>
+            </div>
+            <h3 class="text-gray-900 font-bold text-base mb-3 leading-snug flex-grow">
+              Beyond cPanel: Modern Server Control Panels for Demanding Web Applications
+            </h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">
+              Explore the latest server management tools and control panels that go beyond traditional cPanel for advanced web applications.
+            </p>
+            <a href="blog.html" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-bold hover:text-red-700 transition-colors mt-auto">
+              Read More <span>→</span>
+            </a>
+          </div>
+        </article>
+
+        <!-- Blog Card 3 -->
+        <article class="blog-card-hover bg-white rounded-2xl shadow-sm border border-gray-100 overflow-hidden flex flex-col">
+          <div class="bg-gradient-to-br from-green-50 to-green-100 h-44 flex items-center justify-center">
+            <i class="fa-solid fa-leaf text-green-500 text-5xl opacity-60"></i>
+          </div>
+          <div class="p-6 flex flex-col flex-grow">
+            <div class="flex items-center justify-between mb-3">
+              <span class="inline-block bg-green-100 text-green-700 text-xs font-bold px-2.5 py-1 rounded-full">Green Hosting</span>
+              <span class="text-gray-400 text-xs">March 5, 2026</span>
+            </div>
+            <h3 class="text-gray-900 font-bold text-base mb-3 leading-snug flex-grow">
+              Web Hosting for Eco-Conscious Brands: Measuring and Reducing Your Digital Carbon Footprint
+            </h3>
+            <p class="text-gray-500 text-sm leading-relaxed mb-5">
+              Learn how to measure your website's environmental impact and choose hosting solutions that align with your sustainability goals.
+            </p>
+            <a href="blog.html" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-bold hover:text-red-700 transition-colors mt-auto">
+              Read More <span>→</span>
+            </a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="bg-brand-dark text-white pt-16 pb-8 px-4">
+    <div class="max-w-7xl mx-auto">
+
+      <!-- Footer Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 mb-12">
+
+        <!-- Column 1: Logo + Tagline -->
+        <div>
+          <a href="index.html" class="flex items-center space-x-0.5 mb-4">
+            <span class="text-2xl font-black text-white tracking-tight">SNBD</span>
+            <span class="text-2xl font-black text-brand-red tracking-tight">HOST</span>
+          </a>
+          <p class="text-gray-400 text-sm leading-relaxed mb-5">
+            Bangladesh's trusted web hosting provider. Fast, reliable, and affordable hosting solutions for businesses and individuals.
+          </p>
+          <div class="flex items-center gap-3">
+            <a href="#" aria-label="Facebook" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-brand-red transition-colors">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+            </a>
+            <a href="#" aria-label="Twitter" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-brand-red transition-colors">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" aria-label="LinkedIn" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-brand-red transition-colors">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" aria-label="YouTube" class="w-9 h-9 bg-gray-800 rounded-lg flex items-center justify-center text-gray-400 hover:text-white hover:bg-brand-red transition-colors">
+              <i class="fa-brands fa-youtube text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: My Account -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">My Account</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Start Page</a></li>
+            <li><a href="hosting.html" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Host Plan</a></li>
+            <li><a href="domain.html" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Domains</a></li>
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Invoices</a></li>
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> My Services</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Legals -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legals</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Privacy &amp; Protection</a></li>
+            <li><a href="#" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Domain Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Support -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Support</h4>
+          <ul class="space-y-3">
+            <li><a href="support.html" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Live Support</a></li>
+            <li><a href="support.html" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Open a Ticket</a></li>
+            <li><a href="support.html" class="text-gray-400 text-sm hover:text-white transition-colors flex items-center gap-2"><i class="fa-solid fa-angle-right text-xs text-brand-red"></i> Contact Us</a></li>
+          </ul>
+
+          <!-- Live Chat CTA -->
+          <div class="mt-6 p-4 bg-gray-800 rounded-xl border border-gray-700">
+            <p class="text-gray-300 text-xs font-semibold mb-1">Need help right now?</p>
+            <a href="support.html" class="text-brand-red text-xs font-bold hover:text-red-400 transition-colors flex items-center gap-1">
+              <i class="fa-solid fa-comments text-xs"></i> Start Live Chat
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Footer Bottom -->
+      <div class="border-t border-gray-800 pt-6 flex flex-col sm:flex-row items-center justify-between gap-3">
+        <p class="text-gray-500 text-sm">
+          Copyright 2020-2026 SNBD HOST. All rights reserved.
+        </p>
+        <div class="flex items-center gap-4">
+          <span class="text-gray-600 text-xs">Powered by</span>
+          <span class="text-gray-400 text-xs font-semibold">Bangladesh 🇧🇩</span>
+        </div>
+      </div>
+
+    </div>
+  </footer>
+
+  <!-- ===== JAVASCRIPT ===== -->
+  <script>
+    // Mobile Menu Toggle
+    const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+
+    mobileMenuBtn.addEventListener('click', function () {
+      const isOpen = !mobileMenu.classList.contains('hidden');
+      if (isOpen) {
+        mobileMenu.classList.add('hidden');
+        hamburgerIcon.classList.remove('fa-xmark');
+        hamburgerIcon.classList.add('fa-bars');
+      } else {
+        mobileMenu.classList.remove('hidden');
+        hamburgerIcon.classList.remove('fa-bars');
+        hamburgerIcon.classList.add('fa-xmark');
+      }
+    });
+
+    // Close mobile menu on outside click
+    document.addEventListener('click', function (e) {
+      if (!mobileMenuBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.add('hidden');
+        hamburgerIcon.classList.remove('fa-xmark');
+        hamburgerIcon.classList.add('fa-bars');
+      }
+    });
+
+    // FAQ Accordion
+    function toggleFAQ(trigger) {
+      const parentItem = trigger.parentElement;
+      const answer = parentItem.querySelector('.faq-answer');
+      const icon = trigger.querySelector('.faq-icon');
+      const isOpen = answer.classList.contains('open');
+
+      // Close all open FAQs
+      document.querySelectorAll('.faq-answer.open').forEach(function (openAnswer) {
+        openAnswer.classList.remove('open');
+        const openIcon = openAnswer.parentElement.querySelector('.faq-icon');
+        if (openIcon) openIcon.classList.remove('rotated');
+        openAnswer.previousElementSibling.classList.remove('bg-red-50');
+      });
+
+      // Toggle current FAQ
+      if (!isOpen) {
+        answer.classList.add('open');
+        icon.classList.add('rotated');
+        trigger.classList.add('bg-red-50');
+      }
+    }
+
+    // Smooth scroll for anchor links
+    document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
+      anchor.addEventListener('click', function (e) {
+        const href = this.getAttribute('href');
+        if (href === '#') return;
+        const target = document.querySelector(href);
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>

@@ -1,0 +1,1032 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SNBD HOST — Bangladesh's #1 Web Hosting Provider</title>
+  <meta name="description" content="SNBD HOST is Bangladesh's leading web hosting provider offering fast, secure, and affordable hosting solutions powered by NVMe SSD and AMD EPYC servers." />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              red: '#e02020',
+              dark: '#c01818',
+            }
+          },
+          fontFamily: {
+            inter: ['Inter', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    * { font-family: 'Inter', sans-serif; }
+    html { scroll-behavior: smooth; }
+
+    .option-card { transition: border-color 0.2s, box-shadow 0.2s, transform 0.15s; }
+    .option-card:hover { border-color: #e02020; transform: translateY(-2px); box-shadow: 0 8px 30px rgba(224,32,32,0.12); }
+    .option-card.selected { border-color: #e02020 !important; box-shadow: 0 0 0 3px rgba(224,32,32,0.18); background: #fff5f5; }
+    .option-card.selected .option-radio { background: #e02020; border-color: #e02020; }
+    .option-card.selected .option-radio::after { display: block; }
+
+    .option-radio {
+      width: 20px; height: 20px;
+      border: 2px solid #d1d5db;
+      border-radius: 50%;
+      position: relative;
+      flex-shrink: 0;
+      transition: all 0.2s;
+    }
+    .option-radio::after {
+      content: '';
+      display: none;
+      width: 8px; height: 8px;
+      background: white;
+      border-radius: 50%;
+      position: absolute;
+      top: 50%; left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    .pricing-card { transition: transform 0.2s, box-shadow 0.2s; }
+    .pricing-card:hover { transform: translateY(-4px); }
+
+    .chart-bar { transition: height 0.3s; }
+
+    .nav-link {
+      position: relative;
+      transition: color 0.2s;
+    }
+    .nav-link::after {
+      content: '';
+      position: absolute;
+      bottom: -2px; left: 0;
+      width: 0; height: 2px;
+      background: #e02020;
+      transition: width 0.2s;
+    }
+    .nav-link:hover::after { width: 100%; }
+    .nav-link:hover { color: #e02020; }
+
+    #mobile-menu { transition: max-height 0.3s ease, opacity 0.3s ease; max-height: 0; opacity: 0; overflow: hidden; }
+    #mobile-menu.open { max-height: 600px; opacity: 1; }
+
+    .partner-badge {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 8px;
+      padding: 8px 20px;
+      font-weight: 600;
+      font-size: 14px;
+      color: #374151;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .partner-badge:hover { border-color: #e02020; background: #fff5f5; color: #e02020; }
+
+    .feature-check { color: #16a34a; }
+
+    .perf-card {
+      background: linear-gradient(135deg, #e02020 0%, #c01818 100%);
+    }
+
+    .stat-glow {
+      box-shadow: 0 0 20px rgba(224,32,32,0.3);
+    }
+  </style>
+</head>
+<body class="bg-white text-gray-900 antialiased">
+
+  <!-- ===================== STICKY NAVBAR ===================== -->
+  <nav class="sticky top-0 z-50 bg-white/95 backdrop-blur-md shadow-sm border-b border-gray-100">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16">
+
+        <!-- Logo -->
+        <a href="index.html" class="flex items-center flex-shrink-0">
+          <span class="text-2xl font-black tracking-tight">
+            <span class="text-gray-900">SNBD</span><span class="text-brand-red">HOST</span>
+          </span>
+        </a>
+
+        <!-- Desktop Nav Links -->
+        <div class="hidden lg:flex items-center space-x-7">
+          <a href="hosting.html" class="nav-link text-sm font-medium text-gray-700">Hosting</a>
+          <a href="n8n-automation.html" class="nav-link text-sm font-medium text-gray-700">N8N Automation</a>
+          <a href="#" class="nav-link text-sm font-medium text-gray-700">Domain</a>
+          <a href="#" class="nav-link text-sm font-medium text-gray-700">Servers</a>
+          <a href="#" class="nav-link text-sm font-medium text-gray-700">Blog</a>
+          <a href="#" class="nav-link text-sm font-medium text-gray-700">Support</a>
+          <a href="#" class="nav-link text-sm font-medium text-gray-700 flex items-center gap-1">
+            Offers <span class="text-base">🔥</span>
+          </a>
+        </div>
+
+        <!-- Right: Dashboard Button + Hamburger -->
+        <div class="flex items-center gap-3">
+          <a href="#" class="hidden sm:inline-flex items-center gap-2 bg-brand-red hover:bg-brand-dark text-white text-sm font-semibold px-5 py-2.5 rounded-lg transition-colors duration-200 shadow-sm">
+            <i class="fa-solid fa-gauge-high text-xs"></i>
+            My Dashboard
+          </a>
+          <!-- Hamburger -->
+          <button id="hamburger-btn" class="lg:hidden p-2 rounded-lg text-gray-600 hover:text-brand-red hover:bg-gray-50 transition-colors" aria-label="Toggle menu">
+            <i class="fa-solid fa-bars text-lg" id="hamburger-icon"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Menu -->
+    <div id="mobile-menu" class="lg:hidden border-t border-gray-100 bg-white">
+      <div class="max-w-7xl mx-auto px-4 py-4 flex flex-col space-y-1">
+        <a href="hosting.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-server w-4 text-gray-400"></i> Hosting
+        </a>
+        <a href="n8n-automation.html" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-robot w-4 text-gray-400"></i> N8N Automation
+        </a>
+        <a href="#" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-globe w-4 text-gray-400"></i> Domain
+        </a>
+        <a href="#" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-database w-4 text-gray-400"></i> Servers
+        </a>
+        <a href="#" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-newspaper w-4 text-gray-400"></i> Blog
+        </a>
+        <a href="#" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-headset w-4 text-gray-400"></i> Support
+        </a>
+        <a href="#" class="flex items-center gap-2 px-4 py-3 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 hover:text-brand-red transition-colors">
+          <i class="fa-solid fa-fire w-4 text-gray-400"></i> Offers 🔥
+        </a>
+        <div class="pt-2 pb-1">
+          <a href="#" class="flex items-center justify-center gap-2 bg-brand-red text-white text-sm font-semibold px-5 py-3 rounded-lg w-full transition-colors hover:bg-brand-dark">
+            <i class="fa-solid fa-gauge-high text-xs"></i>
+            My Dashboard
+          </a>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+
+  <!-- ===================== HERO SECTION ===================== -->
+  <section class="bg-white py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+      <!-- Badge -->
+      <div class="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-brand-red text-sm font-semibold px-4 py-2 rounded-full mb-8">
+        <span>🚀</span>
+        <span>Bangladesh's #1 Web Hosting Provider</span>
+      </div>
+
+      <!-- Headline -->
+      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-5">
+        What are you planning to do?
+      </h1>
+
+      <!-- Subtext -->
+      <p class="text-lg sm:text-xl text-gray-500 font-medium max-w-2xl mx-auto mb-12">
+        Choose your goal and we'll guide you to the perfect plan
+      </p>
+
+      <!-- Option Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
+
+        <!-- Option 1 -->
+        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
+          <div class="flex items-start gap-4">
+            <div class="option-radio mt-1"></div>
+            <div class="flex-1">
+              <div class="text-3xl mb-3">🤖</div>
+              <h3 class="text-base font-bold text-gray-900 leading-snug">I am looking to get Automation hosted using N8N</h3>
+              <p class="text-sm text-gray-500 mt-2">Deploy your N8N workflows on our high-performance infrastructure</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 2 -->
+        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
+          <div class="flex items-start gap-4">
+            <div class="option-radio mt-1"></div>
+            <div class="flex-1">
+              <div class="text-3xl mb-3">🤖</div>
+              <h3 class="text-base font-bold text-gray-900 leading-snug">I want to get my SpinOne Bot Setup</h3>
+              <p class="text-sm text-gray-500 mt-2">Get your SpinOne bot configured and running in minutes</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Option 3 -->
+        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
+          <div class="flex items-start gap-4">
+            <div class="option-radio mt-1"></div>
+            <div class="flex-1">
+              <div class="text-3xl mb-3">🌐</div>
+              <h3 class="text-base font-bold text-gray-900 leading-snug">I want to Host my Website with SNBD HOST</h3>
+              <p class="text-sm text-gray-500 mt-2">Fast, secure website hosting with free domain &amp; SSL included</p>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- CTA Button -->
+      <a href="#pricing" class="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-dark text-white text-lg font-bold px-10 py-4 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl mb-10">
+        Get Started for Free
+        <i class="fa-solid fa-arrow-right text-base"></i>
+      </a>
+
+      <!-- Partners -->
+      <p class="text-sm text-gray-500 mb-5 font-medium">
+        We are a ISS partner license from various third parties. These software includes:
+      </p>
+      <div class="flex flex-wrap items-center justify-center gap-3">
+        <span class="partner-badge"><i class="fa-solid fa-c mr-1 text-xs text-orange-500"></i>cPanel</span>
+        <span class="text-gray-300 text-xl font-light">|</span>
+        <span class="partner-badge"><i class="fa-solid fa-w mr-1 text-xs text-blue-500"></i>Webuzo</span>
+        <span class="text-gray-300 text-xl font-light">|</span>
+        <span class="partner-badge"><i class="fa-brands fa-linux mr-1 text-xs text-yellow-600"></i>Linode</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== VALUE PROPOSITION SECTION ===================== -->
+  <section class="bg-gray-50 py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight mb-5">
+          Hosted with NVMe SSD &amp; Latest AMD EPYC Server to Boost your Website
+        </h2>
+        <p class="text-gray-500 text-lg leading-relaxed">
+          SNBD HOST delivers enterprise-grade infrastructure to businesses and developers across Bangladesh and beyond. From one-click installs to global server locations — we've built everything you need to succeed online.
+        </p>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 bg-red-50 rounded-xl flex items-center justify-center text-2xl mb-6">🤖</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Automated Installation</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Automated scripts help install software with one click — WordPress, Laravel, and 500+ apps ready instantly.
+          </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 bg-blue-50 rounded-xl flex items-center justify-center text-2xl mb-6">🌍</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Global Server Locations</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Multiple Linux-based server locations around the globe for low latency and maximum uptime.
+          </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-md transition-shadow">
+          <div class="w-14 h-14 bg-green-50 rounded-xl flex items-center justify-center text-2xl mb-6">✉️</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Ultimate SMTP Solutions</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Ultimate SMTP/Email Solutions for every domain hosted with us — business email made easy.
+          </p>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FREE DOMAIN BANNER ===================== -->
+  <section class="bg-brand-red py-14">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+      <div class="text-4xl mb-4">🎁</div>
+      <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-white leading-tight mb-4">
+        Get a Free Domain with Your Hosting – Incredible Value, No Hidden Costs!
+      </h2>
+      <p class="text-red-100 text-lg font-medium">
+        Every hosting plan comes bundled with a free domain registration. Start building today.
+      </p>
+      <a href="#pricing" class="inline-flex items-center gap-2 bg-white text-brand-red font-bold text-base px-8 py-3.5 rounded-xl mt-8 hover:bg-red-50 transition-colors shadow-lg">
+        <i class="fa-solid fa-gift"></i>
+        Claim Your Free Domain
+      </a>
+    </div>
+  </section>
+
+
+  <!-- ===================== PRICING SECTION ===================== -->
+  <section id="pricing" class="bg-white py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Simple, Transparent Pricing</h2>
+        <p class="text-gray-500 text-lg">Choose the perfect plan for your needs. All plans include free SSL, free migration, and 24/7 support.</p>
+      </div>
+
+      <!-- Pricing Cards -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-7 items-stretch">
+
+        <!-- Card 1: Starter -->
+        <div class="pricing-card border-2 border-gray-200 rounded-2xl p-8 flex flex-col">
+          <div class="mb-6">
+            <span class="inline-block bg-gray-100 text-gray-600 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+              <i class="fa-solid fa-flag-usa mr-1"></i>USA Server
+            </span>
+            <h3 class="text-2xl font-black text-gray-900 mb-1">Starter</h3>
+            <div class="flex items-baseline gap-1 mt-3">
+              <span class="text-4xl font-black text-gray-900">৳490</span>
+              <span class="text-gray-400 font-medium">/mo</span>
+            </div>
+            <p class="text-sm text-green-600 font-semibold mt-2 flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i> Includes .XYZ Domain FREE
+            </p>
+          </div>
+
+          <div class="border-t border-gray-100 pt-6 mb-6">
+            <div class="flex items-center gap-2 text-gray-700 font-semibold mb-4">
+              <i class="fa-solid fa-hard-drive text-brand-red"></i>
+              <span>10 GB NVMe SSD</span>
+            </div>
+            <ul class="space-y-2.5">
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Unlimited Bandwidth</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> LiteSpeed Server</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> 2-Core CPU Limit</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> 20 Entry Processes</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> I/O: 50 MB</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Inode Limit: 200,000</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> HTTP/2 Support</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Free Migration</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Free SSL</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Softaculous</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> cPanel®</li>
+            </ul>
+          </div>
+
+          <div class="mt-auto">
+            <a href="#" class="block text-center border-2 border-gray-300 text-gray-700 font-bold py-3.5 rounded-xl hover:border-brand-red hover:text-brand-red transition-colors">
+              Get Started
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 2: Professional (Featured) -->
+        <div class="pricing-card bg-brand-red rounded-2xl p-8 flex flex-col shadow-2xl stat-glow relative lg:-mt-4 lg:-mb-4">
+          <div class="absolute -top-4 left-1/2 transform -translate-x-1/2">
+            <span class="bg-yellow-400 text-yellow-900 text-xs font-black px-4 py-1.5 rounded-full uppercase tracking-wider whitespace-nowrap shadow">
+              Most Popular 🔥
+            </span>
+          </div>
+
+          <div class="mb-6 mt-2">
+            <span class="inline-block bg-white/20 text-white text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+              <i class="fa-solid fa-star mr-1"></i>Professional
+            </span>
+            <h3 class="text-2xl font-black text-white mb-1">Professional</h3>
+            <div class="flex items-baseline gap-1 mt-3">
+              <span class="text-4xl font-black text-white">৳2500</span>
+              <span class="text-red-200 font-medium">/mo</span>
+            </div>
+            <p class="text-sm text-yellow-300 font-semibold mt-2 flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i> Includes .COM Domain FREE (Bangladesh DC)
+            </p>
+          </div>
+
+          <div class="border-t border-white/20 pt-6 mb-6">
+            <div class="flex items-center gap-2 text-white font-semibold mb-4">
+              <i class="fa-solid fa-hard-drive text-yellow-300"></i>
+              <span>10 GB NVMe SSD</span>
+            </div>
+            <ul class="space-y-2.5">
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> Unlimited Bandwidth</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> LiteSpeed Server</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> 2-Core CPU Limit</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> 20 Entry Processes</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> I/O: 50 MB</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> Inode Limit: 200,000</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> HTTP/2 Support</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> Free Migration</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> Free SSL</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> Softaculous</li>
+              <li class="flex items-center gap-2.5 text-sm text-red-100"><i class="fa-solid fa-check text-yellow-300 w-4"></i> cPanel®</li>
+            </ul>
+          </div>
+
+          <div class="mt-auto">
+            <a href="#" class="block text-center bg-white text-brand-red font-black py-3.5 rounded-xl hover:bg-red-50 transition-colors shadow-lg text-base">
+              Get Started
+            </a>
+          </div>
+        </div>
+
+        <!-- Card 3: Enterprise -->
+        <div class="pricing-card border-2 border-gray-200 rounded-2xl p-8 flex flex-col">
+          <div class="mb-6">
+            <span class="inline-block bg-blue-50 text-blue-700 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-3">
+              <i class="fa-solid fa-location-dot mr-1"></i>Singapore
+            </span>
+            <h3 class="text-2xl font-black text-gray-900 mb-1">Enterprise</h3>
+            <div class="flex items-baseline gap-1 mt-3">
+              <span class="text-4xl font-black text-gray-900">৳4550</span>
+              <span class="text-gray-400 font-medium">/mo</span>
+            </div>
+            <p class="text-sm text-green-600 font-semibold mt-2 flex items-center gap-1">
+              <i class="fa-solid fa-circle-check"></i> Includes .COM Domain FREE
+            </p>
+          </div>
+
+          <div class="border-t border-gray-100 pt-6 mb-6">
+            <div class="flex items-center gap-2 text-gray-700 font-semibold mb-4">
+              <i class="fa-solid fa-hard-drive text-brand-red"></i>
+              <span>10 GB NVMe SSD</span>
+            </div>
+            <ul class="space-y-2.5">
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Unlimited Bandwidth</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> LiteSpeed Server</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> 2-Core CPU Limit</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> 20 Entry Processes</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> I/O: 50 MB</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Inode Limit: 200,000</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> HTTP/2 Support</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Free Migration</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Free SSL</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> Softaculous</li>
+              <li class="flex items-center gap-2.5 text-sm text-gray-600"><i class="fa-solid fa-check text-green-500 w-4"></i> cPanel®</li>
+            </ul>
+          </div>
+
+          <div class="mt-auto">
+            <a href="#" class="block text-center border-2 border-gray-300 text-gray-700 font-bold py-3.5 rounded-xl hover:border-brand-red hover:text-brand-red transition-colors">
+              Get Started
+            </a>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Money back -->
+      <p class="text-center text-gray-400 text-sm mt-10 flex items-center justify-center gap-2">
+        <i class="fa-solid fa-shield-halved text-green-500"></i>
+        30-day money-back guarantee. No contracts, cancel anytime.
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================== LITESPEED SECTION ===================== -->
+  <section class="bg-[#0f172a] py-20 lg:py-24">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+
+      <!-- Icon -->
+      <div class="w-20 h-20 bg-yellow-400 rounded-2xl flex items-center justify-center text-4xl mx-auto mb-8 shadow-lg">
+        ⚡
+      </div>
+
+      <h2 class="text-3xl sm:text-4xl font-extrabold text-white leading-tight mb-6">
+        Hosted with LiteSpeed Hosting
+      </h2>
+
+      <p class="text-slate-300 text-lg leading-relaxed max-w-3xl mx-auto mb-12">
+        SNBD HOST uses LiteSpeed Web Server — the world's most powerful web server technology. With HTTP/3 support, built-in caching, and superior scalability, your websites load faster and handle more traffic with ease. LiteSpeed is up to 9x faster than Apache and handles traffic spikes effortlessly.
+      </p>
+
+      <!-- Stat Badges -->
+      <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
+        <div class="flex items-center gap-3 bg-white/10 border border-white/10 text-white font-bold px-6 py-3.5 rounded-xl">
+          <span class="text-yellow-400 text-xl">⚡</span>
+          <span>9x Faster than Apache</span>
+        </div>
+        <div class="flex items-center gap-3 bg-white/10 border border-white/10 text-white font-bold px-6 py-3.5 rounded-xl">
+          <span class="text-green-400 text-xl"><i class="fa-solid fa-shield-halved"></i></span>
+          <span>HTTP/3 Support</span>
+        </div>
+        <div class="flex items-center gap-3 bg-white/10 border border-white/10 text-white font-bold px-6 py-3.5 rounded-xl">
+          <span class="text-blue-400 text-xl"><i class="fa-solid fa-bolt"></i></span>
+          <span>Built-in LSCache</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== DOMAIN & HOSTING FEATURES SECTION ===================== -->
+  <section class="bg-white py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+        <!-- Left: Image / Data Center Placeholder -->
+        <div class="relative">
+          <div class="bg-gradient-to-br from-gray-100 to-gray-200 rounded-2xl aspect-square max-w-lg mx-auto flex flex-col items-center justify-center shadow-inner border border-gray-200 overflow-hidden">
+            <!-- Decorative grid lines -->
+            <div class="absolute inset-0 opacity-10" style="background-image: repeating-linear-gradient(0deg, #9ca3af 0, #9ca3af 1px, transparent 0, transparent 50%), repeating-linear-gradient(90deg, #9ca3af 0, #9ca3af 1px, transparent 0, transparent 50%); background-size: 40px 40px;"></div>
+            <div class="relative z-10 text-center p-8">
+              <div class="text-7xl mb-5">🏢</div>
+              <p class="text-gray-500 font-bold text-xl">Our Data Center</p>
+              <p class="text-gray-400 text-sm mt-2">Bangladesh &amp; Global Infrastructure</p>
+              <!-- Mini server rack decorations -->
+              <div class="mt-8 space-y-2">
+                <div class="bg-gray-700 rounded h-6 flex items-center px-3 gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse"></div>
+                  <div class="h-1.5 bg-gray-500 rounded flex-1"></div>
+                  <div class="text-gray-400 text-xs font-mono">SRV-01</div>
+                </div>
+                <div class="bg-gray-700 rounded h-6 flex items-center px-3 gap-2">
+                  <div class="w-2 h-2 rounded-full bg-green-400 animate-pulse" style="animation-delay:0.3s"></div>
+                  <div class="h-1.5 bg-gray-500 rounded flex-1"></div>
+                  <div class="text-gray-400 text-xs font-mono">SRV-02</div>
+                </div>
+                <div class="bg-gray-700 rounded h-6 flex items-center px-3 gap-2">
+                  <div class="w-2 h-2 rounded-full bg-yellow-400 animate-pulse" style="animation-delay:0.6s"></div>
+                  <div class="h-1.5 bg-gray-500 rounded flex-1"></div>
+                  <div class="text-gray-400 text-xs font-mono">SRV-03</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Features -->
+        <div>
+          <span class="inline-block bg-red-50 text-brand-red text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-5">Domain &amp; Hosting</span>
+          <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 leading-tight mb-4">
+            Perfect Domain &amp; Hosting for every single project
+          </h2>
+          <p class="text-gray-500 text-lg mb-8">
+            Operated From our own Datacenters across Bangladesh
+          </p>
+
+          <ul class="space-y-4 mb-10">
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i class="fa-solid fa-check text-green-600 text-xs"></i>
+              </div>
+              <span class="text-gray-700 font-medium">Fast, secure SSD hosting from our datacenters</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i class="fa-solid fa-check text-green-600 text-xs"></i>
+              </div>
+              <span class="text-gray-700 font-medium">Optimized for business and SaaS websites</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i class="fa-solid fa-check text-green-600 text-xs"></i>
+              </div>
+              <span class="text-gray-700 font-medium">Daily backups and 99.9% uptime</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i class="fa-solid fa-check text-green-600 text-xs"></i>
+              </div>
+              <span class="text-gray-700 font-medium">Smart server resource tracking and insights</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <div class="w-6 h-6 bg-green-100 rounded-full flex items-center justify-center flex-shrink-0 mt-0.5">
+                <i class="fa-solid fa-check text-green-600 text-xs"></i>
+              </div>
+              <span class="text-gray-700 font-medium">Infrastructure built for high traffic apps &amp; websites</span>
+            </li>
+          </ul>
+
+          <a href="#" class="inline-flex items-center gap-2 text-brand-red font-bold text-base hover:gap-3 transition-all">
+            Explore All Features
+            <i class="fa-solid fa-arrow-right"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== DASHBOARD PREVIEW / REVENUE METRIC ===================== -->
+  <section class="bg-gray-50 py-20 lg:py-28">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto mb-14">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Track Everything in Real-Time</h2>
+      </div>
+
+      <!-- Mock Dashboard Card -->
+      <div class="bg-[#1e293b] rounded-2xl p-8 lg:p-10 shadow-2xl">
+
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
+
+          <!-- Left: Revenue -->
+          <div>
+            <p class="text-slate-400 text-sm font-medium uppercase tracking-wider mb-2">Total Revenue</p>
+            <div class="text-4xl lg:text-5xl font-black text-white mb-3">৳152,568.00</div>
+            <span class="inline-flex items-center gap-1.5 bg-green-500/20 text-green-400 text-sm font-bold px-3 py-1 rounded-full">
+              <i class="fa-solid fa-arrow-trend-up text-xs"></i>
+              +12.5% this month
+            </span>
+
+            <!-- Mock Bar Chart -->
+            <div class="mt-8">
+              <p class="text-slate-500 text-xs font-medium mb-3 uppercase tracking-wider">Monthly Performance</p>
+              <div class="flex items-end gap-1.5 h-20">
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:40%"></div>
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:55%"></div>
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:45%"></div>
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:70%"></div>
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:60%"></div>
+                <div class="chart-bar bg-slate-600 rounded-t flex-1" style="height:80%"></div>
+                <div class="chart-bar bg-brand-red rounded-t flex-1" style="height:100%"></div>
+              </div>
+              <div class="flex justify-between mt-1">
+                <span class="text-slate-600 text-xs">Jan</span>
+                <span class="text-slate-600 text-xs">Feb</span>
+                <span class="text-slate-600 text-xs">Mar</span>
+                <span class="text-slate-600 text-xs">Apr</span>
+                <span class="text-slate-600 text-xs">May</span>
+                <span class="text-slate-600 text-xs">Jun</span>
+                <span class="text-brand-red text-xs font-bold">Jul</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Right: Mini Stats -->
+          <div class="space-y-4">
+            <div class="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4">
+              <div class="w-12 h-12 bg-blue-500/20 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-globe text-blue-400 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Active Sites</p>
+                <p class="text-white text-2xl font-black">2,450</p>
+              </div>
+            </div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4">
+              <div class="w-12 h-12 bg-green-500/20 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-circle-check text-green-400 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Uptime</p>
+                <p class="text-white text-2xl font-black">99.9%</p>
+              </div>
+            </div>
+            <div class="bg-white/5 border border-white/10 rounded-xl p-5 flex items-center gap-4">
+              <div class="w-12 h-12 bg-yellow-500/20 rounded-xl flex items-center justify-center">
+                <i class="fa-solid fa-ticket text-yellow-400 text-xl"></i>
+              </div>
+              <div>
+                <p class="text-slate-400 text-xs font-medium uppercase tracking-wider">Support Tickets</p>
+                <p class="text-white text-2xl font-black">3</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Subtext -->
+      <p class="text-center text-gray-500 text-base mt-8">
+        Manage your hosting, domains, and billing from one beautiful dashboard
+      </p>
+    </div>
+  </section>
+
+
+  <!-- ===================== HI-SPEED SECTION ===================== -->
+  <section class="bg-white py-20 lg:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-3xl mx-auto mb-16">
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">
+          Hi-Speed Hosting for Real-Time Performance
+        </h2>
+        <p class="text-gray-500 text-lg">
+          SNBD HOST delivers ultra-fast, redundancy-connected hosting powered by our own datacenters in Bangladesh
+        </p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-14 items-center">
+
+        <!-- Left: Bullet Features -->
+        <div class="space-y-6">
+          <div class="flex items-start gap-4 p-5 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="text-2xl flex-shrink-0 mt-0.5">⚡</div>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-1">Low latency SSD hosting with premium bandwidth</h4>
+              <p class="text-gray-500 text-sm">NVMe SSD drives deliver blazing-fast read/write speeds for all your websites and apps.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-5 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="text-2xl flex-shrink-0 mt-0.5">📈</div>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-1">Auto scaling power for sudden traffic spikes</h4>
+              <p class="text-gray-500 text-sm">Our infrastructure scales dynamically to handle unexpected bursts of traffic with no downtime.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-5 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="text-2xl flex-shrink-0 mt-0.5">🖥️</div>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-1">Optimized for real-time apps, analytics &amp; dashboards</h4>
+              <p class="text-gray-500 text-sm">Purpose-built for modern applications requiring real-time data processing and delivery.</p>
+            </div>
+          </div>
+          <div class="flex items-start gap-4 p-5 rounded-xl hover:bg-gray-50 transition-colors">
+            <div class="text-2xl flex-shrink-0 mt-0.5">🔒</div>
+            <div>
+              <h4 class="font-bold text-gray-900 mb-1">Isolated environments, max uptime guarantee</h4>
+              <p class="text-gray-500 text-sm">Each account runs in an isolated environment ensuring security and guaranteed uptime SLA.</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Performance Stat Card -->
+        <div>
+          <div class="perf-card rounded-2xl p-10 text-white shadow-2xl">
+            <div class="text-center mb-8">
+              <div class="text-5xl mb-4">🚀</div>
+              <h3 class="text-2xl font-black mb-2">Performance Metrics</h3>
+              <p class="text-red-200 text-sm">Live infrastructure benchmarks</p>
+            </div>
+
+            <div class="space-y-5">
+              <div class="bg-white/15 rounded-xl p-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-circle-check text-yellow-300 text-xl"></i>
+                  <div>
+                    <p class="text-red-200 text-xs font-medium uppercase tracking-wider">Uptime SLA</p>
+                    <p class="text-white font-black text-xl">99.9%</p>
+                  </div>
+                </div>
+                <div class="w-16 h-2 bg-white/20 rounded-full overflow-hidden">
+                  <div class="h-full bg-yellow-300 rounded-full" style="width:99.9%"></div>
+                </div>
+              </div>
+
+              <div class="bg-white/15 rounded-xl p-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-gauge-high text-yellow-300 text-xl"></i>
+                  <div>
+                    <p class="text-red-200 text-xs font-medium uppercase tracking-wider">Response Time</p>
+                    <p class="text-white font-black text-xl">&lt; 50ms</p>
+                  </div>
+                </div>
+                <div class="w-16 h-2 bg-white/20 rounded-full overflow-hidden">
+                  <div class="h-full bg-yellow-300 rounded-full" style="width:85%"></div>
+                </div>
+              </div>
+
+              <div class="bg-white/15 rounded-xl p-5 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                  <i class="fa-solid fa-network-wired text-yellow-300 text-xl"></i>
+                  <div>
+                    <p class="text-red-200 text-xs font-medium uppercase tracking-wider">Network Speed</p>
+                    <p class="text-white font-black text-xl">10 Gbps</p>
+                  </div>
+                </div>
+                <div class="w-16 h-2 bg-white/20 rounded-full overflow-hidden">
+                  <div class="h-full bg-yellow-300 rounded-full" style="width:100%"></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== SOCIAL MEDIA eCOMMERCE SECTION ===================== -->
+  <section class="bg-gray-50 py-20 lg:py-24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+
+      <!-- Header -->
+      <div class="text-center max-w-2xl mx-auto mb-16">
+        <span class="inline-block bg-red-50 text-brand-red text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider mb-4">eCommerce</span>
+        <h2 class="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Social Media eCommerce</h2>
+        <p class="text-gray-500 text-lg">Deploy fast, sell faster — all on infrastructure you can trust</p>
+      </div>
+
+      <!-- Feature Cards -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-7">
+
+        <!-- Card 1 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all hover:-translate-y-1">
+          <div class="text-4xl mb-5">🛍️</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Use Any App</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Use any app inside — WordPress, WooCommerce, and more. One-click install, no technical expertise needed.
+          </p>
+          <a href="#" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-semibold mt-5 hover:gap-2.5 transition-all">
+            Learn more <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all hover:-translate-y-1">
+          <div class="text-4xl mb-5">📊</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Maximize Performance</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Maximize bandwidth and uptime hosting for your store. Never lose a sale due to downtime.
+          </p>
+          <a href="#" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-semibold mt-5 hover:gap-2.5 transition-all">
+            Learn more <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 hover:shadow-lg transition-all hover:-translate-y-1">
+          <div class="text-4xl mb-5">🚀</div>
+          <h3 class="text-xl font-bold text-gray-900 mb-3">Performance Tuned</h3>
+          <p class="text-gray-500 text-sm leading-relaxed">
+            Performance tuned for all store types — from small boutiques to high-volume shops.
+          </p>
+          <a href="#" class="inline-flex items-center gap-1.5 text-brand-red text-sm font-semibold mt-5 hover:gap-2.5 transition-all">
+            Learn more <i class="fa-solid fa-arrow-right text-xs"></i>
+          </a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-[#111827] text-white">
+
+    <!-- Top Section: 4 columns -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10">
+
+        <!-- Column 1: Brand -->
+        <div class="lg:col-span-1">
+          <a href="index.html" class="inline-block mb-4">
+            <span class="text-2xl font-black tracking-tight">
+              <span class="text-white">SNBD</span><span class="text-brand-red">HOST</span>
+            </span>
+          </a>
+          <p class="text-gray-400 text-sm leading-relaxed">
+            SNBD HOST is Bangladesh's leading web hosting provider, offering fast, secure, and affordable hosting solutions powered by cutting-edge infrastructure.
+          </p>
+          <!-- Social Icons -->
+          <div class="flex items-center gap-3 mt-6">
+            <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-facebook-f text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-x-twitter text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-linkedin-in text-sm"></i>
+            </a>
+            <a href="#" class="w-9 h-9 bg-gray-700 hover:bg-brand-red rounded-lg flex items-center justify-center transition-colors">
+              <i class="fa-brands fa-youtube text-sm"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- Column 2: My Account -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">My Account</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Start Page</a></li>
+            <li><a href="hosting.html" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Host Plan</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Domains</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Invoices</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>My Services</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 3: Legals -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Legals</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Terms of Service</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Privacy &amp; Protection</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Domain Policy</a></li>
+          </ul>
+        </div>
+
+        <!-- Column 4: Support -->
+        <div>
+          <h4 class="text-white font-bold text-sm uppercase tracking-wider mb-5">Support</h4>
+          <ul class="space-y-3">
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Live Support</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Open a Ticket</a></li>
+            <li><a href="#" class="text-gray-400 hover:text-white text-sm transition-colors flex items-center gap-2"><i class="fa-solid fa-chevron-right text-xs text-gray-600"></i>Contact Us</a></li>
+          </ul>
+
+          <!-- Contact Info -->
+          <div class="mt-7 space-y-2">
+            <a href="mailto:support@snbdhost.com" class="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors">
+              <i class="fa-solid fa-envelope text-brand-red"></i>
+              support@snbdhost.com
+            </a>
+            <a href="tel:+8801700000000" class="flex items-center gap-2 text-gray-400 hover:text-white text-sm transition-colors">
+              <i class="fa-solid fa-phone text-brand-red"></i>
+              +880 1700-000000
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Divider -->
+    <div class="border-t border-gray-800">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-col sm:flex-row items-center justify-between gap-4">
+          <p class="text-gray-500 text-sm text-center sm:text-left">
+            Copyright 2020-2026 SNBD HOST. All rights reserved.
+          </p>
+          <div class="flex items-center gap-4">
+            <span class="flex items-center gap-1.5 text-gray-600 text-xs">
+              <i class="fa-solid fa-shield-halved text-green-600"></i>
+              Secure Hosting
+            </span>
+            <span class="flex items-center gap-1.5 text-gray-600 text-xs">
+              <i class="fa-solid fa-lock text-green-600"></i>
+              SSL Protected
+            </span>
+            <span class="flex items-center gap-1.5 text-gray-600 text-xs">
+              <i class="fa-solid fa-circle-check text-green-600"></i>
+              99.9% Uptime
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </footer>
+
+
+  <!-- ===================== JAVASCRIPT ===================== -->
+  <script>
+    // ---- Mobile Menu Toggle ----
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const mobileMenu = document.getElementById('mobile-menu');
+    const hamburgerIcon = document.getElementById('hamburger-icon');
+
+    hamburgerBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.contains('open');
+      if (isOpen) {
+        mobileMenu.classList.remove('open');
+        hamburgerIcon.className = 'fa-solid fa-bars text-lg';
+      } else {
+        mobileMenu.classList.add('open');
+        hamburgerIcon.className = 'fa-solid fa-xmark text-lg';
+      }
+    });
+
+    // Close mobile menu when clicking outside
+    document.addEventListener('click', (e) => {
+      if (!hamburgerBtn.contains(e.target) && !mobileMenu.contains(e.target)) {
+        mobileMenu.classList.remove('open');
+        hamburgerIcon.className = 'fa-solid fa-bars text-lg';
+      }
+    });
+
+    // ---- Option Cards Selection ----
+    function selectOption(clickedCard) {
+      // Remove selected from all cards
+      document.querySelectorAll('.option-card').forEach(card => {
+        card.classList.remove('selected');
+      });
+      // Add selected to clicked card
+      clickedCard.classList.add('selected');
+    }
+
+    // ---- Smooth scroll for anchor links ----
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+      anchor.addEventListener('click', function(e) {
+        const target = document.querySelector(this.getAttribute('href'));
+        if (target) {
+          e.preventDefault();
+          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+      });
+    });
+
+    // ---- Navbar shadow on scroll ----
+    const navbar = document.querySelector('nav');
+    window.addEventListener('scroll', () => {
+      if (window.scrollY > 10) {
+        navbar.classList.add('shadow-md');
+      } else {
+        navbar.classList.remove('shadow-md');
+        navbar.classList.add('shadow-sm');
+      }
+    });
+  </script>
+
+</body>
+</html>
