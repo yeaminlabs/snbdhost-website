@@ -181,73 +181,139 @@
 
 
   <!-- ===================== HERO SECTION ===================== -->
-  <section class="bg-white py-20 lg:py-28">
+  <section class="relative bg-white pt-20 pb-20 lg:pt-32 lg:pb-32 overflow-hidden">
+    <!-- Glowing Background Blob -->
+    <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-red-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+    <div class="absolute -top-32 -right-32 w-[500px] h-[500px] bg-orange-400/10 rounded-full blur-[100px] pointer-events-none"></div>
+
+    <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-8 items-center">
+        
+        <!-- Left Column: Typography & CTAs -->
+        <div class="text-center lg:text-left">
+          
+          <!-- Animated Badge -->
+          <div class="inline-flex items-center gap-2.5 bg-white border border-gray-200 shadow-sm text-gray-700 text-sm font-semibold px-4 py-2 rounded-full mb-8 hover:border-brand-red hover:shadow-md transition-all duration-300">
+            <span class="flex h-2.5 w-2.5 relative">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-brand-red opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2.5 w-2.5 bg-brand-red"></span>
+            </span>
+            Empowering Bangladesh's Digital Future
+          </div>
+
+          <!-- Headline -->
+          <h1 class="text-5xl sm:text-6xl lg:text-7xl font-black text-gray-900 leading-[1.1] mb-6 tracking-tight">
+            Scale Your Ideas with <span class="text-transparent bg-clip-text bg-gradient-to-r from-brand-red to-orange-500">Powerful Tech</span> Infrastructure.
+          </h1>
+
+          <!-- Subtext -->
+          <p class="text-lg sm:text-xl text-gray-500 font-medium max-w-2xl mx-auto lg:mx-0 mb-10 leading-relaxed">
+            From lightning-fast NVMe web hosting to managed N8N and OpenClaw automation, SNBD HOST gives you the raw power and control to build anything.
+          </p>
+
+          <!-- CTAs -->
+          <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mb-8">
+            <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-brand-red hover:bg-brand-dark text-white text-lg font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-lg shadow-red-500/30 hover:shadow-red-500/50 hover:-translate-y-0.5">
+              Deploy Now
+              <i class="fa-solid fa-arrow-right text-sm"></i>
+            </a>
+            <a href="#pricing" class="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white border-2 border-gray-200 hover:border-gray-300 text-gray-800 text-lg font-bold px-8 py-4 rounded-xl transition-all duration-300 hover:bg-gray-50">
+              <i class="fa-solid fa-book-open text-gray-500 text-sm"></i>
+              Explore Services
+            </a>
+          </div>
+
+          <!-- Trust Signals -->
+          <div class="flex items-center justify-center lg:justify-start gap-5 text-sm font-medium text-gray-500">
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-green-500"></i> Free SSL</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-green-500"></i> 99.9% Uptime</span>
+            <span class="flex items-center gap-1.5"><i class="fa-solid fa-circle-check text-green-500"></i> 24/7 Support</span>
+          </div>
+
+        </div>
+
+        <!-- Right Column: Interactive SaaS Window -->
+        <div class="relative w-full max-w-lg mx-auto lg:max-w-none">
+          
+          <!-- Outer Decorative Frame -->
+          <div class="absolute -inset-1 bg-gradient-to-br from-brand-red/30 to-orange-500/30 rounded-[2rem] blur-lg opacity-50"></div>
+          
+          <!-- Glassmorphic Window -->
+          <div class="relative bg-white/70 backdrop-blur-2xl border border-gray-200/60 shadow-2xl rounded-3xl overflow-hidden">
+            
+            <!-- Window Top Bar -->
+            <div class="bg-gray-50/80 border-b border-gray-200/60 px-5 py-4 flex items-center justify-between">
+              <div class="flex gap-2.5">
+                <div class="w-3.5 h-3.5 rounded-full bg-red-400"></div>
+                <div class="w-3.5 h-3.5 rounded-full bg-yellow-400"></div>
+                <div class="w-3.5 h-3.5 rounded-full bg-green-400"></div>
+              </div>
+              <div class="text-xs font-semibold text-gray-500 uppercase tracking-widest">Quick Launch</div>
+              <div class="w-12"></div> <!-- Spacer for balance -->
+            </div>
+
+            <!-- Content Area (The Options) -->
+            <div class="p-6 sm:p-8 space-y-4">
+              
+              <!-- Option 1: Automation -->
+              <a href="n8n-automation.html" class="group block relative bg-white border border-gray-200 hover:border-brand-red rounded-2xl p-5 hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gray-50 group-hover:bg-red-50 flex items-center justify-center transition-colors">
+                    <span class="text-2xl">🤖</span>
+                  </div>
+                  <div>
+                    <h3 class="text-gray-900 font-bold text-base mb-1 group-hover:text-brand-red transition-colors">Hosted N8N Automation</h3>
+                    <p class="text-gray-500 text-sm">Deploy N8N workflows on NVMe</p>
+                  </div>
+                  <div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300">
+                    <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Option 2: OpenClaw / SpinOne -->
+              <a href="openclaw.html" class="group block relative bg-white border border-gray-200 hover:border-brand-red rounded-2xl p-5 hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gray-50 group-hover:bg-red-50 flex items-center justify-center transition-colors">
+                    <span class="text-2xl">⚡</span>
+                  </div>
+                  <div>
+                    <h3 class="text-gray-900 font-bold text-base mb-1 group-hover:text-brand-red transition-colors">OpenClaw AI Bot Setup</h3>
+                    <p class="text-gray-500 text-sm">Deploy intelligent AI assistants</p>
+                  </div>
+                  <div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300">
+                    <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                  </div>
+                </div>
+              </a>
+
+              <!-- Option 3: Hosting -->
+              <a href="hosting.html" class="group block relative bg-white border border-gray-200 hover:border-brand-red rounded-2xl p-5 hover:shadow-xl hover:shadow-red-500/10 transition-all duration-300 hover:-translate-y-1">
+                <div class="flex items-center gap-4">
+                  <div class="w-12 h-12 rounded-xl bg-gray-50 group-hover:bg-red-50 flex items-center justify-center transition-colors">
+                    <span class="text-2xl">🌐</span>
+                  </div>
+                  <div>
+                    <h3 class="text-gray-900 font-bold text-base mb-1 group-hover:text-brand-red transition-colors">cPanel Website Hosting</h3>
+                    <p class="text-gray-500 text-sm">Fast, secure web hosting with SSL</p>
+                  </div>
+                  <div class="ml-auto opacity-0 group-hover:opacity-100 transition-opacity transform group-hover:translate-x-1 duration-300">
+                    <i class="fa-solid fa-arrow-right text-brand-red"></i>
+                  </div>
+                </div>
+              </a>
+
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ===================== PARTNERS SECTION ===================== -->
+  <section class="bg-gray-50/50 border-b border-gray-100 py-12">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-
-      <!-- Badge -->
-      <div class="inline-flex items-center gap-2 bg-red-50 border border-red-200 text-brand-red text-sm font-semibold px-4 py-2 rounded-full mb-8">
-        <span>🚀</span>
-        <span>Bangladesh's #1 Web Hosting Provider</span>
-      </div>
-
-      <!-- Headline -->
-      <h1 class="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-5">
-        What are you planning to do?
-      </h1>
-
-      <!-- Subtext -->
-      <p class="text-lg sm:text-xl text-gray-500 font-medium max-w-2xl mx-auto mb-12">
-        Choose your goal and we'll guide you to the perfect plan
-      </p>
-
-      <!-- Option Cards -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-5 max-w-5xl mx-auto mb-10">
-
-        <!-- Option 1 -->
-        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
-          <div class="flex items-start gap-4">
-            <div class="option-radio mt-1"></div>
-            <div class="flex-1">
-              <div class="text-3xl mb-3">🤖</div>
-              <h3 class="text-base font-bold text-gray-900 leading-snug">I am looking to get Automation hosted using N8N</h3>
-              <p class="text-sm text-gray-500 mt-2">Deploy your N8N workflows on our high-performance infrastructure</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Option 2 -->
-        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
-          <div class="flex items-start gap-4">
-            <div class="option-radio mt-1"></div>
-            <div class="flex-1">
-              <div class="text-3xl mb-3">🤖</div>
-              <h3 class="text-base font-bold text-gray-900 leading-snug">I want to get my SpinOne Bot Setup</h3>
-              <p class="text-sm text-gray-500 mt-2">Get your SpinOne bot configured and running in minutes</p>
-            </div>
-          </div>
-        </div>
-
-        <!-- Option 3 -->
-        <div class="option-card border-2 border-gray-200 rounded-xl p-6 cursor-pointer bg-white text-left" onclick="selectOption(this)">
-          <div class="flex items-start gap-4">
-            <div class="option-radio mt-1"></div>
-            <div class="flex-1">
-              <div class="text-3xl mb-3">🌐</div>
-              <h3 class="text-base font-bold text-gray-900 leading-snug">I want to Host my Website with SNBD HOST</h3>
-              <p class="text-sm text-gray-500 mt-2">Fast, secure website hosting with free domain &amp; SSL included</p>
-            </div>
-          </div>
-        </div>
-
-      </div>
-
-      <!-- CTA Button -->
-      <a href="#pricing" class="inline-flex items-center gap-2 bg-brand-red hover:bg-brand-dark text-white text-lg font-bold px-10 py-4 rounded-xl transition-colors duration-200 shadow-lg hover:shadow-xl mb-10">
-        Get Started for Free
-        <i class="fa-solid fa-arrow-right text-base"></i>
-      </a>
-
-      <!-- Partners -->
       <p class="text-sm text-gray-500 mb-6 font-semibold uppercase tracking-wider">
         Our Trusted Software Partners
       </p>
