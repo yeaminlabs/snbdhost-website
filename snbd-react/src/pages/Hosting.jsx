@@ -1,4 +1,6 @@
 import { useState } from 'react'
+import SEOHead from '../components/SEOHead';
+import { pageMeta } from '../seo/pageMeta';
 
 const packages = [
   {
@@ -201,7 +203,7 @@ export default function HostingPage() {
             {locationTab.toUpperCase()} {pkg.name}
           </div>
           <div className="flex items-end gap-2 mb-1">
-            <span className={`text-4xl xl:text-5xl font-black ${isRecommended ? 'text-white' : 'text-gray-900'}`}>৳{price.toLocaleString()}</span>
+            <span className={`text-4xl xl:text-5xl font-extrabold ${isRecommended ? 'text-white' : 'text-gray-900'}`}>৳{price.toLocaleString()}</span>
             <span className={`font-medium mb-2 ${isRecommended ? 'text-red-200' : 'text-gray-500'}`}>
               /{billingTab === 'annual' ? 'yr' : 'mo'}
             </span>
@@ -265,6 +267,7 @@ export default function HostingPage() {
 
   return (
     <>
+      <SEOHead {...pageMeta.hosting} />
       {/* HERO */}
       <section className="gradient-hero pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden relative">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -273,7 +276,7 @@ export default function HostingPage() {
               <span>⚡</span>
               <span>cPanel Hosting in Bangladesh</span>
             </div>
-            <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-black text-gray-900 leading-tight tracking-tight mb-6">
+            <h1 className="text-4xl sm:text-5xl md:text-5xl lg:text-5xl md:text-5xl font-extrabold text-gray-900 leading-tight tracking-tight mb-6">
               Host smarter,<br />
               <span className="text-primary">faster,</span> and easier
             </h1>
@@ -296,7 +299,7 @@ export default function HostingPage() {
       <section id="pricing" className="section-subtle py-20 md:py-28">
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-12">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">Transparent Pricing. No Surprises.</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Transparent Pricing. No Surprises.</h2>
             <p className="text-gray-500 text-base sm:text-lg leading-relaxed">Choose the perfect plan. Start small, scale big.</p>
           </div>
 
@@ -346,7 +349,7 @@ export default function HostingPage() {
         <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-3xl mx-auto mb-14">
             <div className="inline-flex items-center gap-2 bg-[#F0F1F4] text-gray-500 text-xs font-semibold px-4 py-2 rounded-full mb-4 uppercase tracking-widest">Enterprise Class</div>
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">Scale Without Limits</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Scale Without Limits</h2>
             <p className="text-gray-500 text-base sm:text-lg leading-relaxed">Enterprise-grade hosting for high-traffic applications, stores, and growing agencies.</p>
           </div>
           
@@ -360,13 +363,13 @@ export default function HostingPage() {
       <section className="section-subtle py-20 md:py-28">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center max-w-2xl mx-auto mb-14">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-gray-900 mb-4">Why Thousands Trust SNBD HOST</h2>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-extrabold text-gray-900 mb-4">Why Thousands Trust SNBD HOST</h2>
           </div>
           <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-10">
             {[{emoji:'🚀',stat:'2,450+',label:'Active Websites Hosted'},{emoji:'⚡',stat:'99.9%',label:'Uptime Guarantee'},{emoji:'🌍',stat:'3',label:'Data Center Locations'},{emoji:'⭐',stat:'24/7',label:'Expert Support'}].map(({emoji,stat,label})=>(
               <div key={label} className="stat-card bg-[#FFFFFF] border-2 border-[#E5E7EB] hover:border-primary/20 rounded-2xl p-6 sm:p-8 text-center">
                 <div className="text-3xl sm:text-4xl mb-3">{emoji}</div>
-                <div className="text-3xl sm:text-4xl font-black text-gray-900 mb-1">{stat}</div>
+                <div className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-1">{stat}</div>
                 <div className="text-sm text-gray-500 font-medium">{label}</div>
               </div>
             ))}

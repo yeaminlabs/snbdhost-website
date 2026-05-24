@@ -1,4 +1,7 @@
 import { useState, useEffect } from 'react';
+import SEOHead from '../components/SEOHead';
+import JsonLd from '../components/JsonLd';
+import { pageMeta } from '../seo/pageMeta';
 
 // Animated terminal lines
 const TERMINAL_LINES = [
@@ -132,8 +135,20 @@ export default function BDIXServers() {
     }
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+
   return (
     <>
+      <SEOHead {...pageMeta.bdixServers} />
+      <JsonLd data={faqSchema} />
       <style>{`
         @keyframes floatUp {
           0%   { transform: translateY(0) scale(1); opacity: 0; }
@@ -211,10 +226,10 @@ export default function BDIXServers() {
                     <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
                     <span className="relative inline-flex rounded-full h-3 w-3 bg-red-600"></span>
                   </span>
-                  <span className="text-xs font-black uppercase tracking-[0.18em] text-red-400">BDIX Live Network • Dhaka, BD</span>
+                  <span className="text-xs font-extrabold uppercase tracking-[0.18em] text-red-400">BDIX Live Network • Dhaka, BD</span>
                 </div>
 
-                <h1 className="font-black leading-[1.05] mb-4 tracking-tight" style={{ fontSize: 'clamp(2.8rem, 7vw, 5rem)' }}>
+                <h1 className="font-extrabold leading-[1.05] mb-4 tracking-tight" style={{ fontSize: 'clamp(2.8rem, 7vw, 5rem)' }}>
                   Sub-ms Ping.<br />
                   <span className="text-white">Max Local</span><br />
                   <span style={{ WebkitTextStroke: '2px #dc2626', color: 'transparent' }}>Speed.</span>
@@ -246,7 +261,7 @@ export default function BDIXServers() {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
-                  <a href="#pricing" className="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-black px-8 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5" style={{ fontSize: '1rem', boxShadow: '0 8px 24px rgba(220,38,38,0.35)' }}>
+                  <a href="#pricing" className="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5" style={{ fontSize: '1rem', boxShadow: '0 8px 24px rgba(220,38,38,0.35)' }}>
                     <i className="fa-solid fa-rocket"></i> View Plans &amp; Pricing
                   </a>
                   <span className="text-gray-500 text-sm">From <strong className="text-white text-xl">৳500</strong><span className="text-gray-600">/mo</span></span>
@@ -287,10 +302,10 @@ export default function BDIXServers() {
             {/* Starter */}
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:border-red-200 transition-all flex flex-col relative group">
               <div className="h-1.5 w-full bg-red-100 absolute top-0 left-0 rounded-t-2xl group-hover:bg-red-500 transition-colors"></div>
-              <h3 className="text-xl font-black text-gray-900 mb-1">BDIX Starter</h3>
+              <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Starter</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">Perfect for small local sites.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-gray-900">৳500</span>
+                <span className="text-4xl font-extrabold text-gray-900">৳500</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -305,10 +320,10 @@ export default function BDIXServers() {
             {/* Pro */}
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:border-red-200 transition-all flex flex-col relative group">
               <div className="h-1.5 w-full bg-red-200 absolute top-0 left-0 rounded-t-2xl group-hover:bg-red-500 transition-colors"></div>
-              <h3 className="text-xl font-black text-gray-900 mb-1">BDIX Pro</h3>
+              <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Pro</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">For growing businesses.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-gray-900">৳900</span>
+                <span className="text-4xl font-extrabold text-gray-900">৳900</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -322,11 +337,11 @@ export default function BDIXServers() {
 
             {/* Business (Popular) */}
             <div className="bg-white rounded-2xl p-8 border-2 border-red-500 shadow-2xl hover:-translate-y-2 transition-transform flex flex-col relative">
-              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs font-black uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">Most Popular</div>
-              <h3 className="text-xl font-black text-gray-900 mb-1 mt-2">BDIX Business</h3>
+              <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-red-600 text-white text-xs font-extrabold uppercase tracking-widest px-4 py-1.5 rounded-full shadow-lg">Most Popular</div>
+              <h3 className="text-xl font-extrabold text-gray-900 mb-1 mt-2">BDIX Business</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">High traffic web applications.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-gray-900">৳1,600</span>
+                <span className="text-4xl font-extrabold text-gray-900">৳1,600</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-200 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -341,10 +356,10 @@ export default function BDIXServers() {
             {/* Ultra */}
             <div className="bg-white rounded-2xl p-8 border border-gray-100 shadow-xl shadow-gray-200/50 hover:shadow-2xl hover:border-red-200 transition-all flex flex-col relative group">
               <div className="h-1.5 w-full bg-red-300 absolute top-0 left-0 rounded-t-2xl group-hover:bg-red-500 transition-colors"></div>
-              <h3 className="text-xl font-black text-gray-900 mb-1">BDIX Ultra</h3>
+              <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Ultra</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">Enterprise resource demands.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-black text-gray-900">৳2,800</span>
+                <span className="text-4xl font-extrabold text-gray-900">৳2,800</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -375,7 +390,7 @@ export default function BDIXServers() {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-3xl font-black text-gray-900 mb-6">Complete Control &amp; Software Flexibility</h2>
+                <h2 className="text-3xl font-extrabold text-gray-900 mb-6">Complete Control &amp; Software Flexibility</h2>
                 <p className="text-gray-600 text-lg mb-6 leading-relaxed">
                   Take absolute command over your hosting environment. We provide industry-standard <strong>cPanel &amp; WHM</strong> (optional license) combined with Softaculous for 1-click installation of hundreds of scripts including WordPress, Joomla, and Magento.
                 </p>
@@ -407,7 +422,7 @@ export default function BDIXServers() {
         <section className="py-24 bg-[#F4F5F7]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-16">
-              <h2 className="text-3xl font-black text-gray-900 mb-4">Compare VPS Specifications</h2>
+              <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Compare VPS Specifications</h2>
               <p className="text-lg text-gray-600 max-w-2xl mx-auto">Dive into the deep technical details to find the exact configuration your application demands.</p>
             </div>
 
@@ -536,7 +551,7 @@ export default function BDIXServers() {
         <section className="py-24 bg-[#F4F5F7]">
           <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="text-center mb-12">
-              <h2 className="text-3xl font-black text-gray-900 mb-4">Frequently Asked Questions</h2>
+              <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Frequently Asked Questions</h2>
               <p className="text-gray-600">Got questions about our BDIX hosting capabilities? We've got answers.</p>
             </div>
 
@@ -574,9 +589,9 @@ export default function BDIXServers() {
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-red-500 opacity-75"></span>
                 <span className="relative inline-flex rounded-full h-2 w-2 bg-red-600"></span>
               </span>
-              <span className="text-xs font-black uppercase tracking-[0.2em] text-red-400">Servers Online</span>
+              <span className="text-xs font-extrabold uppercase tracking-[0.2em] text-red-400">Servers Online</span>
             </div>
-            <h2 className="text-4xl font-black mb-6">Unleash Your Local Potential</h2>
+            <h2 className="text-4xl font-extrabold mb-6">Unleash Your Local Potential</h2>
             <p className="text-xl text-gray-400 mb-10">Stop routing local users to Singapore. Move to Dhaka and watch your metrics soar.</p>
             <a href="#pricing" className="inline-block bg-white text-gray-900 hover:bg-gray-100 hover:-translate-y-1 font-bold px-10 py-4 rounded-xl transition-all shadow-xl text-lg">
               Deploy BDIX Server Now

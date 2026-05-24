@@ -1,5 +1,7 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
+import SEOHead from '../components/SEOHead';
+import { pageMeta } from '../seo/pageMeta';
 
 export default function DomainPage() {
   const [query, setQuery] = useState('')
@@ -22,13 +24,14 @@ export default function DomainPage() {
 
   return (
     <>
+      <SEOHead {...pageMeta.domain} />
       {/* HERO + SEARCH */}
       <section className="bg-white pt-20 pb-24 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <div className="inline-flex items-center gap-2 bg-red-50 border border-red-100 text-red-700 text-sm font-semibold px-4 py-2 rounded-full mb-6">
             🌐 Register Your Domain Today
           </div>
-          <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black text-gray-900 leading-tight mb-5">
+          <h1 className="text-4xl sm:text-5xl lg:text-5xl font-extrabold text-gray-900 leading-tight mb-5">
             Find Your Perfect<br /><span className="text-[var(--brand-red)]">Domain Name</span>
           </h1>
           <p className="text-lg sm:text-xl text-gray-500 mb-10 max-w-2xl mx-auto">
@@ -112,7 +115,7 @@ export default function DomainPage() {
       <section className="section-subtle py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Domain Pricing</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">Domain Pricing</h2>
             <p className="text-lg text-gray-500">Transparent, competitive pricing with no hidden renewal fees</p>
           </div>
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden border border-[#E5E7EB]">
@@ -145,7 +148,7 @@ export default function DomainPage() {
                   ].map(({ext:e,reg,ren,tra,pop,hot,bd}) => (
                     <tr key={e} className={`${bd ? 'bg-red-50 hover:bg-red-100' : 'hover:bg-[#F0F1F4]'} transition-colors`}>
                       <td className="px-6 py-4">
-                        <span className="font-black text-gray-900 text-base">{e}</span>
+                        <span className="font-extrabold text-gray-900 text-base">{e}</span>
                         {hot && <span className="ml-2 bg-yellow-100 text-yellow-700 text-xs font-bold px-1.5 py-0.5 rounded">HOT</span>}
                         {bd && <span className="ml-2 text-sm">⭐</span>}
                       </td>
@@ -171,7 +174,7 @@ export default function DomainPage() {
       <section className="bg-brand-red py-16 px-4">
         <div className="max-w-4xl mx-auto text-center text-white">
           <div className="text-4xl mb-4">🎁</div>
-          <h2 className="text-3xl sm:text-4xl font-black mb-4">Get a FREE Domain with Every Hosting Plan</h2>
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4">Get a FREE Domain with Every Hosting Plan</h2>
           <p className="text-lg text-red-100 mb-8 max-w-2xl mx-auto">
             Purchase any hosting plan and get a free domain registration. <strong className="text-white">.xyz, .com.bd,</strong> or <strong className="text-white">.online</strong> — your choice. No strings attached.
           </p>
@@ -190,7 +193,7 @@ export default function DomainPage() {
               <div className="inline-flex items-center gap-2 bg-red-50 border border-red-100 text-red-700 text-xs font-semibold px-3 py-1.5 rounded-full mb-5">
                 <i className="fa-solid fa-arrow-right-arrow-left text-xs"></i> Domain Transfer
               </div>
-              <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-4">Transfer Your Domain<br />to SNBD HOST</h2>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-4">Transfer Your Domain<br />to SNBD HOST</h2>
               <p className="text-lg text-gray-500 mb-8">Already have a domain elsewhere? Transfer it to SNBD HOST and enjoy a better experience at every step.</p>
               <ul className="space-y-4 mb-8">
                 {[
@@ -231,7 +234,7 @@ export default function DomainPage() {
                   {n:null,title:'Domain Transferred ✓',desc:'Your domain is now managed under SNBD HOST with a free 1-year extension applied automatically.',green:true},
                 ].map(({n,title,desc,green}) => (
                   <div key={title} className={`transfer-step flex items-start gap-4 p-3 rounded-xl ${green ? 'bg-green-900/30 border border-green-700/30' : ''}`}>
-                    <div className={`flex-shrink-0 w-8 h-8 rounded-full ${green ? 'bg-green-600' : 'bg-red-600'} flex items-center justify-center text-sm font-black`}>
+                    <div className={`flex-shrink-0 w-8 h-8 rounded-full ${green ? 'bg-green-600' : 'bg-red-600'} flex items-center justify-center text-sm font-extrabold`}>
                       {green ? <i className="fa-solid fa-check text-xs"></i> : n}
                     </div>
                     <div>
@@ -250,7 +253,7 @@ export default function DomainPage() {
       <section className="section-subtle py-20 px-4">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Why Register Your Domain with SNBD HOST?</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">Why Register Your Domain with SNBD HOST?</h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">Everything you need to manage your domain name — included free, with every registration.</p>
           </div>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -279,7 +282,7 @@ export default function DomainPage() {
             <div className="inline-flex items-center gap-2 bg-green-50 border border-green-100 text-green-700 text-sm font-semibold px-4 py-2 rounded-full mb-5">
               🇧🇩 Bangladesh Country Domains
             </div>
-            <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-3">Own Your Bangladeshi Digital Identity</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-3">Own Your Bangladeshi Digital Identity</h2>
             <p className="text-lg text-gray-500 max-w-2xl mx-auto">
               Register <strong className="text-gray-500">.com.bd</strong>, <strong className="text-gray-500">.bd</strong>, <strong className="text-gray-500">.net.bd</strong>, <strong className="text-gray-500">.org.bd</strong> domains and establish your local presence in Bangladesh.
             </p>
@@ -297,10 +300,10 @@ export default function DomainPage() {
                   </div>
                 )}
                 <div className={`flex items-center justify-between mb-4 ${popular ? 'mt-2' : ''}`}>
-                  <span className="text-3xl font-black text-gray-900">{e}</span>
+                  <span className="text-3xl font-extrabold text-gray-900">{e}</span>
                   <span className="text-2xl">🇧🇩</span>
                 </div>
-                <div className="text-2xl font-black text-[var(--brand-red)] mb-1">৳800<span className="text-sm font-normal text-[#9CA3AF]">/yr</span></div>
+                <div className="text-2xl font-extrabold text-[var(--brand-red)] mb-1">৳800<span className="text-sm font-normal text-[#9CA3AF]">/yr</span></div>
                 <p className="text-sm text-gray-500 mb-5 leading-relaxed">{desc}</p>
                 <div className="space-y-2 mb-5">
                   {['Free WHOIS Privacy','DNS Management Included','Same Renewal Price'].map(f => (

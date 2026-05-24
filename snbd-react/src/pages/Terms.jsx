@@ -1,6 +1,10 @@
+import SEOHead from '../components/SEOHead';
+import { pageMeta } from '../seo/pageMeta';
+
 export default function Terms() {
   return (
     <>
+      <SEOHead {...pageMeta.terms} />
 
 
 {/* ========== HEADER ========== */}

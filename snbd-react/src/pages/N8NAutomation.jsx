@@ -1,5 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
+import JsonLd from '../components/JsonLd';
+import { pageMeta } from '../seo/pageMeta';
 
 export default function N8NAutomation() {
   const [billingCycle, setBillingCycle] = useState('yearly');
@@ -91,9 +94,20 @@ export default function N8NAutomation() {
     }
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+
   return (
     <div className="text-[#e2e8f0] font-sans selection:bg-brand-red selection:text-white min-h-screen relative bg-transparent">
-      
+      <SEOHead {...pageMeta.n8nAutomation} />
+      <JsonLd data={faqSchema} />
       {/* Particles.js Container */}
       <div id="tsparticles" className="fixed inset-0 z-0 bg-[#0a0a0a]"></div>
 
@@ -109,7 +123,7 @@ export default function N8NAutomation() {
           
           {/* Headline */}
           <div className="mb-14 max-w-2xl">
-            <h1 className="text-4xl sm:text-5xl md:text-6xl font-semibold text-white tracking-tight mb-4 leading-tight">
+            <h1 className="text-4xl sm:text-5xl md:text-5xl font-semibold text-white tracking-tight mb-4 leading-tight">
               n8n Hosting
             </h1>
             <p className="text-[#a1a1aa] text-lg sm:text-xl font-light leading-relaxed mb-8">

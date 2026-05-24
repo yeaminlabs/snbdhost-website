@@ -1,5 +1,8 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import SEOHead from '../components/SEOHead';
+import JsonLd from '../components/JsonLd';
+import { pageMeta } from '../seo/pageMeta';
 
 export default function OpenClaw() {
   const [billingTab, setBillingTab] = useState('monthly');
@@ -24,9 +27,20 @@ export default function OpenClaw() {
     }
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.question,
+      acceptedAnswer: { '@type': 'Answer', text: f.answer },
+    })),
+  };
+
   return (
     <div className="bg-[#F8F9FA] text-gray-900 font-body selection:bg-primary selection:text-white pb-20">
-      
+      <SEOHead {...pageMeta.openclaw} />
+      <JsonLd data={faqSchema} />
       {/* ========== SECTION 1: HERO ========== */}
       <section className="pt-28 pb-16 px-4 relative overflow-hidden flex flex-col items-center">
         {/* Subtle background glow */}
@@ -41,7 +55,7 @@ export default function OpenClaw() {
             OpenClaw AI v2.0
           </div>
           
-          <h1 className="text-5xl sm:text-6xl md:text-7xl font-black text-gray-900 tracking-tight mb-6 leading-[1.1]">
+          <h1 className="text-5xl sm:text-5xl md:text-5xl md:text-5xl font-extrabold text-gray-900 tracking-tight mb-6 leading-[1.1]">
             Your own AI agent.<br/> Private, always on & <span className="text-primary">live in 60 seconds.</span>
           </h1>
           
@@ -148,8 +162,8 @@ export default function OpenClaw() {
 
       {/* ========== SECTION 3: PRICING ========== */}
       <section id="pricing" className="py-20 px-4 bg-white border-y border-gray-100">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl sm:text-4xl font-black text-gray-900 mb-8">Pick your plan</h2>
+        <div className="max-w-7xl mx-auto text-center">
+          <h2 className="text-3xl sm:text-4xl font-extrabold text-gray-900 mb-8">Pick your plan</h2>
           
           <div className="flex justify-center mb-12">
             <div className="bg-[#F4F5F7] p-1 rounded-full inline-flex shadow-inner border border-gray-200">
@@ -168,53 +182,42 @@ export default function OpenClaw() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-3xl mx-auto text-left">
-            {/* Starter Plan */}
-            <div className="bg-white border border-gray-200 rounded-3xl p-8 flex flex-col shadow-sm hover:shadow-md transition-shadow">
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-gray-900">OpenClaw Starter</h3>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
+            {[
+              { name: 'Claw Starter', priceM: '997', priceY: '11,997', cpu: 2, ram: 4, disk: 40 },
+              { name: 'Claw Pro', priceM: '1,597', priceY: '19,197', cpu: 4, ram: 8, disk: 80, popular: true },
+              { name: 'Claw Elite', priceM: '2,597', priceY: '31,197', cpu: 8, ram: 16, disk: 160 },
+              { name: 'Claw Enterprise', priceM: '4,797', priceY: '57,597', cpu: 16, ram: 32, disk: 320 },
+            ].map((plan, idx) => (
+              <div key={idx} className={`bg-white border ${plan.popular ? 'border-primary border-2 shadow-xl shadow-red-100 transform md:-translate-y-4 relative' : 'border-gray-200 shadow-sm'} rounded-3xl p-6 flex flex-col hover:shadow-md transition-shadow`}>
+                {plan.popular && (
+                  <div className="absolute top-0 right-6 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full tracking-wide">
+                    RECOMMENDED
+                  </div>
+                )}
+                
+                <h3 className={`text-xl font-bold mb-4 ${plan.popular ? 'text-primary' : 'text-gray-900'}`}>{plan.name}</h3>
+                
+                <div className="mb-6 border-b border-gray-100 pb-6">
+                  <span className="text-3xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? plan.priceM : plan.priceY}</span>
+                  <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
+                </div>
+                
+                <a href="#" className={`w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${plan.popular ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200' : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
+                  Select Plan
+                </a>
+                
+                <div className="text-sm font-bold text-gray-900 mb-4">Top Features</div>
+                <ul className="space-y-4 text-sm text-gray-600 flex-1">
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> {plan.cpu} Core High-Performance CPU</li>
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> {plan.ram} GB Dedicated RAM</li>
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> {plan.disk} GB NVMe Storage</li>
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> Automated One-Click Deployment</li>
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> Pre-configured Nginx Reverse Proxy</li>
+                  <li className="flex items-start gap-3"><i className={`fa-solid fa-check mt-0.5 ${plan.popular ? 'text-primary' : 'text-green-500'}`}></i> Node.js 22 & OpenClaw Global Environment</li>
+                </ul>
               </div>
-              <div className="mb-6">
-                <span className="text-4xl font-black text-gray-900">৳{billingTab === 'monthly' ? '499' : '399'}</span>
-                <span className="text-gray-500 font-medium">/mo</span>
-              </div>
-              <a href="#" className="w-full text-center bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 font-bold py-3.5 rounded-xl transition-colors mb-8 border border-gray-200">
-                Select Plan
-              </a>
-              <div className="text-sm font-bold text-gray-900 mb-4">Top Features</div>
-              <ul className="space-y-4 text-sm text-gray-600 flex-1">
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-green-500 mt-0.5"></i> 1 Core vCPU</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-green-500 mt-0.5"></i> 1 GB NVMe RAM</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-green-500 mt-0.5"></i> Essential WhatsApp Integration</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-green-500 mt-0.5"></i> 20 GB Storage</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-green-500 mt-0.5"></i> Shared IPv4</li>
-              </ul>
-            </div>
-
-            {/* Pro Plan */}
-            <div className="bg-white border-2 border-primary rounded-3xl p-8 flex flex-col shadow-xl shadow-red-100 relative transform md:-translate-y-4">
-              <div className="absolute top-0 right-8 -translate-y-1/2 bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-                RECOMMENDED
-              </div>
-              <div className="flex justify-between items-center mb-4">
-                <h3 className="text-xl font-bold text-primary">OpenClaw Pro</h3>
-              </div>
-              <div className="mb-6">
-                <span className="text-4xl font-black text-gray-900">৳{billingTab === 'monthly' ? '1299' : '999'}</span>
-                <span className="text-gray-500 font-medium">/mo</span>
-              </div>
-              <a href="#" className="w-full text-center bg-primary hover:bg-primary-dark text-white shadow-md shadow-red-200 font-bold py-3.5 rounded-xl transition-colors mb-8">
-                Select Plan
-              </a>
-              <div className="text-sm font-bold text-gray-900 mb-4">Top Features</div>
-              <ul className="space-y-4 text-sm text-gray-600 flex-1">
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-primary mt-0.5"></i> 2 Cores vCPU</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-primary mt-0.5"></i> 4 GB NVMe RAM</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-primary mt-0.5"></i> Advanced Multi-Channel (Web/Chat)</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-primary mt-0.5"></i> 40 GB Storage</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-primary mt-0.5"></i> Dedicated IPv4 Address</li>
-              </ul>
-            </div>
+            ))}
           </div>
         </div>
       </section>
@@ -222,25 +225,25 @@ export default function OpenClaw() {
       {/* ========== SECTION 4: 3 EASY STEPS ========== */}
       <section className="py-20 px-4">
         <div className="max-w-5xl mx-auto text-center">
-          <h2 className="text-3xl font-black text-gray-900 mb-4">Deploy OpenClaw in 3 easy steps</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-4">Deploy OpenClaw in 3 easy steps</h2>
           <p className="text-gray-500 mb-12">SNBD HOST's auto-installer sets everything up for you. No server administration required.</p>
           
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="bg-white border border-gray-200 rounded-2xl p-8 text-left shadow-sm relative overflow-hidden">
-              <div className="text-6xl font-black text-gray-50 absolute -bottom-4 -right-2">1</div>
-              <div className="w-10 h-10 bg-red-50 text-primary rounded-full flex items-center justify-center font-black mb-4 z-10 relative">1</div>
+              <div className="text-5xl font-extrabold text-gray-50 absolute -bottom-4 -right-2">1</div>
+              <div className="w-10 h-10 bg-red-50 text-primary rounded-full flex items-center justify-center font-extrabold mb-4 z-10 relative">1</div>
               <h3 className="text-lg font-bold text-gray-900 mb-2 relative z-10">Select Hosting plan</h3>
               <p className="text-gray-500 text-sm relative z-10">Choose between the Starter or Pro plan depending on the complexity of your workflows.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-2xl p-8 text-left shadow-sm relative overflow-hidden">
-              <div className="text-6xl font-black text-gray-50 absolute -bottom-4 -right-2">2</div>
-              <div className="w-10 h-10 bg-red-50 text-primary rounded-full flex items-center justify-center font-black mb-4 z-10 relative">2</div>
+              <div className="text-5xl font-extrabold text-gray-50 absolute -bottom-4 -right-2">2</div>
+              <div className="w-10 h-10 bg-red-50 text-primary rounded-full flex items-center justify-center font-extrabold mb-4 z-10 relative">2</div>
               <h3 className="text-lg font-bold text-gray-900 mb-2 relative z-10">Choose data center</h3>
               <p className="text-gray-500 text-sm relative z-10">Select from our USA or local BDIX data centers to minimize latency for your user base.</p>
             </div>
             <div className="bg-white border border-gray-200 rounded-2xl p-8 text-left shadow-sm relative overflow-hidden">
-              <div className="text-6xl font-black text-gray-50 absolute -bottom-4 -right-2">3</div>
-              <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-black mb-4 z-10 relative">3</div>
+              <div className="text-5xl font-extrabold text-gray-50 absolute -bottom-4 -right-2">3</div>
+              <div className="w-10 h-10 bg-primary text-white rounded-full flex items-center justify-center font-extrabold mb-4 z-10 relative">3</div>
               <h3 className="text-lg font-bold text-gray-900 mb-2 relative z-10">OpenClaw is ready</h3>
               <p className="text-gray-500 text-sm relative z-10">Within 60 seconds, your private dashboard is live. Log in and start building workflows.</p>
             </div>
@@ -252,7 +255,7 @@ export default function OpenClaw() {
       <section className="py-20 bg-white border-y border-gray-100 overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mb-8 flex justify-between items-end">
           <div>
-            <h2 className="text-3xl font-black text-gray-900 mb-2">One agent. Endless workflows.</h2>
+            <h2 className="text-3xl font-extrabold text-gray-900 mb-2">One agent. Endless workflows.</h2>
             <p className="text-gray-500">Automate your entire business logic.</p>
           </div>
           <div className="hidden sm:flex gap-2">
@@ -284,12 +287,12 @@ export default function OpenClaw() {
       {/* ========== SECTION 6: COMPARISON TABLE ========== */}
       <section className="py-24 px-4">
         <div className="max-w-4xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 mb-12 text-center">OpenClaw on SNBD HOST vs. others</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-12 text-center">OpenClaw on SNBD HOST vs. others</h2>
           
           <div className="bg-white rounded-2xl border border-gray-200 shadow-xl overflow-hidden">
             <div className="grid grid-cols-3 bg-gray-50 border-b border-gray-200 p-6 items-center">
               <div className="font-bold text-gray-500 uppercase tracking-widest text-xs">Features</div>
-              <div className="font-black text-lg text-primary text-center">SNBD HOST</div>
+              <div className="font-extrabold text-lg text-primary text-center">SNBD HOST</div>
               <div className="font-bold text-gray-600 text-center">Other Cloud SaaS</div>
             </div>
             
@@ -319,7 +322,7 @@ export default function OpenClaw() {
       {/* ========== SECTION 7: WHY HOSTINGER / SNBD GRID ========== */}
       <section className="py-20 px-4 bg-[#F4F5F7]">
         <div className="max-w-5xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 mb-12 text-center">Why deploy OpenClaw with SNBD HOST?</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-12 text-center">Why deploy OpenClaw with SNBD HOST?</h2>
           
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {[
@@ -348,7 +351,7 @@ export default function OpenClaw() {
           <div className="absolute -right-20 -top-20 w-96 h-96 bg-primary rounded-full blur-[80px] opacity-30"></div>
           
           <div className="relative z-10 max-w-md text-left mb-8 md:mb-0">
-            <h2 className="text-3xl sm:text-4xl font-black text-white mb-4">Set up your OpenClaw today</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-white mb-4">Set up your OpenClaw today</h2>
             <p className="text-gray-400 mb-8 text-lg">Get a private AI that actually works for your business. No setup fees.</p>
             <a href="#pricing" className="inline-block bg-primary hover:bg-red-600 text-white font-bold px-8 py-4 rounded-xl transition-colors shadow-lg">
               Get Started Now
@@ -359,7 +362,7 @@ export default function OpenClaw() {
           <div className="relative z-10 w-48 h-48 md:w-64 md:h-64 flex-shrink-0">
             <div className="absolute inset-0 bg-primary rounded-3xl transform rotate-12 shadow-2xl"></div>
             <div className="absolute inset-0 bg-gray-800 rounded-3xl border border-gray-700 shadow-inner flex items-center justify-center transform -rotate-6">
-              <i className="fa-solid fa-robot text-7xl text-primary drop-shadow-[0_0_15px_rgba(208,2,27,0.5)]"></i>
+              <i className="fa-solid fa-robot text-5xl md:text-5xl text-primary drop-shadow-[0_0_15px_rgba(208,2,27,0.5)]"></i>
             </div>
           </div>
         </div>
@@ -368,7 +371,7 @@ export default function OpenClaw() {
       {/* ========== SECTION 9: FAQS ========== */}
       <section className="py-16 px-4">
         <div className="max-w-3xl mx-auto">
-          <h2 className="text-3xl font-black text-gray-900 mb-10 text-center">OpenClaw on SNBD HOST FAQs</h2>
+          <h2 className="text-3xl font-extrabold text-gray-900 mb-10 text-center">OpenClaw on SNBD HOST FAQs</h2>
           
           <div className="space-y-4">
             {faqs.map((faq, idx) => (

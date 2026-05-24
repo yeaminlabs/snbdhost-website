@@ -1,4 +1,7 @@
 import { useState } from 'react';
+import SEOHead from '../components/SEOHead';
+import JsonLd from '../components/JsonLd';
+import { pageMeta } from '../seo/pageMeta';
 
 export default function Support() {
   const [faqOpen, setFaqOpen] = useState(null);
@@ -46,12 +49,24 @@ export default function Support() {
     }
   ];
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: faqs.map(f => ({
+      '@type': 'Question',
+      name: f.q,
+      acceptedAnswer: { '@type': 'Answer', text: f.a },
+    })),
+  };
+
   return (
     <div className="bg-[#f8f9fc] min-h-screen">
+      <SEOHead {...pageMeta.support} />
+      <JsonLd data={faqSchema} />
       {/* ===== HERO SECTION (SEARCH FIRST) ===== */}
       <section className="bg-gradient-to-br from-gray-900 to-black py-24 sm:py-32 px-4 shadow-inner">
         <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl sm:text-5xl font-black text-white mb-10 tracking-tight">
+          <h1 className="text-4xl sm:text-5xl font-extrabold text-white mb-10 tracking-tight">
             Hi, how can we help you?
           </h1>
           
@@ -81,7 +96,7 @@ export default function Support() {
       <section className="py-20 px-4 bg-[#f8f9fc]">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-10">
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900">Common Solutions</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Common Solutions</h2>
             <p className="text-gray-400 font-medium tracking-widest uppercase mt-2 text-sm">- FAQs -</p>
           </div>
           
@@ -112,7 +127,7 @@ export default function Support() {
       <section className="py-16 px-4 bg-[#f8f9fc]">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900">Further Solutions</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Further Solutions</h2>
             <p className="text-gray-400 font-medium tracking-widest uppercase mt-2 text-sm">- Help articles -</p>
           </div>
 
@@ -221,7 +236,7 @@ export default function Support() {
       <section className="py-20 px-4 bg-[#f8f9fc] mb-10">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-2xl sm:text-3xl font-black text-gray-900">Didn't find a solution?</h2>
+            <h2 className="text-2xl sm:text-3xl font-extrabold text-gray-900">Didn't find a solution?</h2>
             <p className="text-gray-400 font-medium tracking-widest uppercase mt-2 text-sm">- Get in touch -</p>
           </div>
 

@@ -6,17 +6,41 @@ export default function Header() {
   const [serversMobileOpen, setServersMobileOpen] = useState(false);
 
   return (
-    <nav className="sticky top-0 z-50 bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo */}
+    <header className="sticky top-0 z-50 flex flex-col">
+      {/* Top Notification Bar */}
+      <div className="bg-[#111111] text-white py-2 px-4 sm:px-6 lg:px-8 text-xs sm:text-sm font-medium flex justify-between items-center">
+        <div className="flex items-center gap-2">
+          <span className="bg-primary text-white text-[10px] font-bold px-2 py-0.5 rounded">NEW</span>
+          <span>AI-Powered Hosting is here! Deploy, manage & scale smarter than ever.</span>
+        </div>
+        <Link to="/offers" className="text-white hover:text-gray-300 font-bold hidden sm:block">View Offers <i className="fa-solid fa-arrow-right ml-1"></i></Link>
+      </div>
+
+      <nav className="bg-white/90 backdrop-blur-md border-b border-gray-200 shadow-sm transition-all duration-300">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-16">
+            {/* Logo */}
           <Link to="/" className="flex items-center shrink-0">
             <img src="/logo.png" alt="SNBD HOST" className="h-8 w-auto" />
           </Link>
 
           {/* Desktop Nav Links */}
           <div className="hidden lg:flex items-center space-x-1">
-            <Link to="/hosting" className="nav-link">Hosting</Link>
+            {/* Hosting Dropdown */}
+            <div className="relative group">
+              <button className="nav-link inline-flex items-center gap-1 cursor-pointer">
+                Hosting <i className="fa-solid fa-chevron-down text-xs transition-transform group-hover:rotate-180"></i>
+              </button>
+              <div className="snbd-dropdown-menu absolute top-full left-0 mt-2 w-52 opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-2 z-50">
+                <Link to="/hosting" className="snbd-dropdown-item">
+                  <i className="fa-solid fa-cloud text-brand-red w-4"></i> Shared Hosting
+                </Link>
+                <Link to="/reseller-hosting" className="snbd-dropdown-item">
+                  <i className="fa-solid fa-users text-brand-red w-4"></i> Reseller Hosting
+                </Link>
+              </div>
+            </div>
+
             <Link to="/n8n-automation" className="nav-link">N8N Automation</Link>
             <Link to="/openclaw" className="nav-link">OpenClaw</Link>
             <Link to="/domain" className="nav-link">Domain</Link>
@@ -39,7 +63,7 @@ export default function Header() {
               </div>
             </div>
             
-            <a href="#" className="nav-link">Blog</a>
+            <Link to="/blog" className="nav-link">Blog</Link>
             <Link to="/support" className="nav-link">Support</Link>
             <Link to="/offers" className="nav-link nav-offers">Offers 🔥</Link>
           </div>
@@ -79,9 +103,28 @@ export default function Header() {
       {/* Mobile Menu */}
       <div className={`lg:hidden ${mobileMenuOpen ? 'block' : 'hidden'}`}>
         <div className="px-4 py-3 space-y-1">
-          <Link to="/hosting" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
-            <i className="fa-solid fa-server w-4 text-[#CC0000]"></i> Hosting
-          </Link>
+          {/* Hosting Mobile Accordion */}
+          <div>
+            <button 
+              onClick={() => {
+                // We reuse serversMobileOpen or create a new state. Let's just create a new one conceptually, but to avoid adding state, we'll just link directly to /hosting and /reseller-hosting
+              }}
+              className="mobile-menu-link w-full justify-between pointer-events-none"
+            >
+              <span className="flex items-center gap-2.5">
+                <i className="fa-solid fa-cloud w-4 text-[#CC0000]"></i> Hosting
+              </span>
+            </button>
+            <div className="pl-6 mt-1 space-y-1">
+              <Link to="/hosting" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                <i className="fa-solid fa-server w-4"></i> Shared Hosting
+              </Link>
+              <Link to="/reseller-hosting" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
+                <i className="fa-solid fa-users w-4"></i> Reseller Hosting
+              </Link>
+            </div>
+          </div>
+
           <Link to="/n8n-automation" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
             <i className="fa-solid fa-diagram-project w-4 text-[#CC0000]"></i> N8N Automation
           </Link>
@@ -116,7 +159,7 @@ export default function Header() {
             </div>
           </div>
           
-          <a href="#" className="mobile-menu-link"><i className="fa-solid fa-newspaper w-4 text-[#CC0000]"></i> Blog</a>
+          <Link to="/blog" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}><i className="fa-solid fa-newspaper w-4 text-[#CC0000]"></i> Blog</Link>
           <Link to="/support" className="mobile-menu-link" onClick={() => setMobileMenuOpen(false)}>
             <i className="fa-solid fa-headset w-4 text-[#CC0000]"></i> Support
           </Link>
@@ -138,6 +181,7 @@ export default function Header() {
           </div>
         </div>
       </div>
-    </nav>
+      </nav>
+    </header>
   );
 }

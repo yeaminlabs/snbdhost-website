@@ -46,6 +46,11 @@ body {
   margin: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: 1.15;
+  letter-spacing: -0.02em;
+}
+
 #root {
   width: 100%;
   max-width: 100%;
