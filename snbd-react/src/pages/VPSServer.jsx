@@ -28,12 +28,12 @@ export default function VPSServer() {
   ];
 
   const sgPlans = [
-    { name: 'SG VPS 2G', desc: 'Perfect for light web servers, VPNs, or personal projects.', priceM: 1547, priceY: 18567, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '0.5 TB' },
-    { name: 'SG VPS 4G', desc: 'Ideal for WordPress sites, small databases, and bot hosting.', priceM: 2857, priceY: 34287, cpu: 2, ram: '4 GB', disk: '80 GB', bw: '1 TB', popular: true },
-    { name: 'SG VPS 8G', desc: 'Optimized for MERN stack apps, n8n automation, and staging.', priceM: 5087, priceY: 61047, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '2 TB' },
-    { name: 'SG VPS 16G', desc: 'Built for high-traffic websites, eCommerce, and production APIs.', priceM: 10087, priceY: 121047, cpu: 8, ram: '16 GB', disk: '320 GB', bw: '3 TB' },
-    { name: 'SG VPS 32G', desc: 'Enterprise-grade power for heavy workloads and resource-intensive SaaS.', priceM: 20077, priceY: 240927, cpu: 16, ram: '32 GB', disk: '640 GB', bw: '4 TB' },
-    { name: 'SG VPS 48G', desc: 'Maximum performance for massive databases and enterprise scale.', priceM: 30067, priceY: 360807, cpu: 24, ram: '48 GB', disk: '800 GB', bw: '5 TB' },
+    { name: 'SG VPS 2G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-2g', desc: 'Perfect for light web servers, VPNs, or personal projects.', priceM: 1547, priceY: 18567, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '0.5 TB' },
+    { name: 'SG VPS 4G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-4g', desc: 'Ideal for WordPress sites, small databases, and bot hosting.', priceM: 2857, priceY: 34287, cpu: 2, ram: '4 GB', disk: '80 GB', bw: '1 TB', popular: true },
+    { name: 'SG VPS 8G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-8g', desc: 'Optimized for MERN stack apps, n8n automation, and staging.', priceM: 5087, priceY: 61047, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '2 TB' },
+    { name: 'SG VPS 16G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-16g', desc: 'Built for high-traffic websites, eCommerce, and production APIs.', priceM: 10087, priceY: 121047, cpu: 8, ram: '16 GB', disk: '320 GB', bw: '3 TB' },
+    { name: 'SG VPS 24G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-24g', desc: 'Enterprise-grade power for heavy workloads and resource-intensive SaaS.', priceM: 15087, priceY: 181047, cpu: 12, ram: '24 GB', disk: '480 GB', bw: '4 TB' },
+    { name: 'SG VPS 32G', link: 'https://portal.snbdhost.com/store/sg-vps/sg-vps-32g', desc: 'Maximum performance for massive databases and enterprise scale.', priceM: 20077, priceY: 240927, cpu: 16, ram: '32 GB', disk: '640 GB', bw: '5 TB' },
   ];
 
   const usaPlans = [
@@ -184,9 +184,9 @@ export default function VPSServer() {
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
                 
-                <button className={`w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${plan.popular ? (location === 'sg' ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-lg shadow-red-900/20' : 'bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-lg shadow-blue-900/20') : 'bg-transparent border-gray-700 hover:border-gray-500 text-white'}`}>
+                <a href={plan.link || '#'} className={`block w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${plan.popular ? (location === 'sg' ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-lg shadow-red-900/20' : 'bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-lg shadow-blue-900/20') : 'bg-transparent border-gray-700 hover:border-gray-500 text-white'}`}>
                   Deploy {plan.name}
-                </button>
+                </a>
                 
                 <ul className="space-y-3 text-sm text-gray-400 flex-1">
                   <li className="flex items-center gap-3"><i className={`fa-solid fa-microchip w-4 ${location === 'sg' ? 'text-primary' : 'text-blue-500'}`}></i> <strong className="text-white">{plan.cpu} Core</strong> AMD EPYC™</li>

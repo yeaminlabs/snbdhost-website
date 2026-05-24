@@ -6,6 +6,8 @@ const packages = [
   {
     id: '01',
     name: 'Starter',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/starter',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/starter',
     yearlyPrice: 397,
     monthlyPrice: 99,
     storage: '1 GB NVMe SSD',
@@ -27,6 +29,8 @@ const packages = [
   {
     id: '02',
     name: 'Basic',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/basic',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/basic',
     yearlyPrice: 747,
     monthlyPrice: 187,
     storage: '5 GB NVMe SSD',
@@ -48,6 +52,8 @@ const packages = [
   {
     id: '03',
     name: 'Professional',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/professional',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/professional',
     yearlyPrice: 1397,
     monthlyPrice: 349,
     storage: '10 GB NVMe SSD',
@@ -69,6 +75,8 @@ const packages = [
   {
     id: '04',
     name: 'Business',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/business',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/business',
     yearlyPrice: 2497,
     monthlyPrice: 624,
     storage: '20 GB NVMe SSD',
@@ -91,6 +99,8 @@ const packages = [
   {
     id: '05',
     name: 'Advanced',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/advanced',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/advanced',
     yearlyPrice: 3997,
     monthlyPrice: 999,
     storage: '40 GB NVMe SSD',
@@ -112,6 +122,8 @@ const packages = [
   {
     id: '06',
     name: 'Premium',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/premium',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/premium',
     yearlyPrice: 5997,
     monthlyPrice: 1499,
     storage: '60 GB NVMe SSD',
@@ -134,6 +146,8 @@ const packages = [
   {
     id: '07',
     name: 'Enterprise',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/enterprise',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/en',
     yearlyPrice: 7997,
     monthlyPrice: 1999,
     storage: '80 GB NVMe SSD',
@@ -155,6 +169,8 @@ const packages = [
   {
     id: '08',
     name: 'Ultimate',
+    usaLink: 'https://portal.snbdhost.com/store/usa-shared-hosting/ultimate',
+    bdixLink: 'https://portal.snbdhost.com/store/bdix-shared-hosting/unlimited',
     yearlyPrice: 10997,
     monthlyPrice: 2749,
     storage: '100 GB NVMe SSD',
@@ -218,7 +234,7 @@ export default function HostingPage() {
             </div>
           )}
           
-          <a href="https://my.snbdhost.com/cart.php" 
+          <a href={locationTab === 'usa' ? pkg.usaLink : pkg.bdixLink} 
              className={`block w-full text-center font-bold py-3 rounded-xl transition-colors duration-200 
                ${isRecommended 
                  ? 'bg-white text-primary hover:bg-gray-100 shadow-lg' 

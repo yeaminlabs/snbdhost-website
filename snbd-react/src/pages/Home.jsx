@@ -368,7 +368,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <div className="mt-auto">
-                <Link to="/hosting" className="block w-full text-center border-2 border-gray-200 text-gray-900 font-bold py-3.5 rounded-xl hover:border-blue-500 hover:text-blue-600 transition-colors">Select Plan</Link>
+                <a href="https://portal.snbdhost.com/store/usa-shared-hosting/basic" className="block w-full text-center border-2 border-gray-200 text-gray-900 font-bold py-3.5 rounded-xl hover:border-blue-500 hover:text-blue-600 transition-colors">Select Plan</a>
               </div>
             </div>
             
@@ -398,7 +398,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <div className="mt-auto">
-                <Link to="/hosting" className="block w-full text-center bg-primary text-white font-bold py-3.5 rounded-xl hover:bg-primary-dark transition-colors shadow-md shadow-red-200">Select Plan</Link>
+                <a href="https://portal.snbdhost.com/store/bdix-shared-hosting/basic" className="block w-full text-center bg-primary text-white font-bold py-3.5 rounded-xl hover:bg-primary-dark transition-colors shadow-md shadow-red-200">Select Plan</a>
               </div>
             </div>
 
@@ -425,7 +425,7 @@ export default function HomePage() {
                 </ul>
               </div>
               <div className="mt-auto">
-                <Link to="/vps-server" className="block w-full text-center border-2 border-gray-700 text-white font-bold py-3.5 rounded-xl hover:bg-gray-800 transition-colors">View Server Details</Link>
+                <a href="https://portal.snbdhost.com/store/sg-vps/sg-vps-2g" className="block w-full text-center border-2 border-gray-700 text-white font-bold py-3.5 rounded-xl hover:bg-gray-800 transition-colors">Deploy Server</a>
               </div>
             </div>
           </div>

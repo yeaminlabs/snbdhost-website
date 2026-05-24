@@ -184,10 +184,10 @@ export default function OpenClaw() {
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 text-left">
             {[
-              { name: 'Claw Starter', priceM: '997', priceY: '11,997', cpu: 2, ram: 4, disk: 40 },
-              { name: 'Claw Pro', priceM: '1,597', priceY: '19,197', cpu: 4, ram: 8, disk: 80, popular: true },
-              { name: 'Claw Elite', priceM: '2,597', priceY: '31,197', cpu: 8, ram: 16, disk: 160 },
-              { name: 'Claw Enterprise', priceM: '4,797', priceY: '57,597', cpu: 16, ram: 32, disk: 320 },
+              { name: 'Claw Starter', priceM: '997', priceY: '11,997', cpu: 2, ram: 4, disk: 40, link: 'https://portal.snbdhost.com/store/ai-agent-hosting/claw-starter' },
+              { name: 'Claw Pro', priceM: '1,597', priceY: '19,197', cpu: 4, ram: 8, disk: 80, popular: true, link: 'https://portal.snbdhost.com/store/ai-agent-hosting/claw-pro' },
+              { name: 'Claw Elite', priceM: '2,597', priceY: '31,197', cpu: 8, ram: 16, disk: 160, link: 'https://portal.snbdhost.com/store/ai-agent-hosting/claw-elite' },
+              { name: 'Claw Enterprise', priceM: '4,797', priceY: '57,597', cpu: 16, ram: 32, disk: 320, link: 'https://portal.snbdhost.com/store/ai-agent-hosting/claw-enterprise' },
             ].map((plan, idx) => (
               <div key={idx} className={`bg-white border ${plan.popular ? 'border-primary border-2 shadow-xl shadow-red-100 transform md:-translate-y-4 relative' : 'border-gray-200 shadow-sm'} rounded-3xl p-6 flex flex-col hover:shadow-md transition-shadow`}>
                 {plan.popular && (
@@ -203,7 +203,7 @@ export default function OpenClaw() {
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
                 
-                <a href="#" className={`w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${plan.popular ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200' : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
+                <a href={plan.link} className={`w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${plan.popular ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200' : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
                   Select Plan
                 </a>
                 

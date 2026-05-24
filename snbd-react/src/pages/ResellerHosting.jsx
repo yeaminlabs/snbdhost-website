@@ -6,15 +6,16 @@ import { pageMeta } from '../seo/pageMeta';
 
 export default function ResellerHosting() {
   const [billingTab, setBillingTab] = useState('monthly');
+  const [locationTab, setLocationTab] = useState('usa');
   const [openFaq, setOpenFaq] = useState(0);
 
   const packages = [
-    { name: 'US RS 01', priceM: 500, priceY: 4797, storage: '20GB', bw: '500GB', accounts: 10, ram: '1GB', cpu: '1 Core' },
-    { name: 'US RS 02', priceM: 1000, priceY: 9597, storage: '40GB', bw: '1TB', accounts: 20, ram: '1GB', cpu: '1 Core' },
-    { name: 'US RS 03', priceM: 1500, priceY: 14397, storage: '60GB', bw: '1.5TB', accounts: 30, ram: '2GB', cpu: '2 Cores', popular: true },
-    { name: 'US RS 04', priceM: 2000, priceY: 19197, storage: '80GB', bw: '2TB', accounts: 50, ram: '3GB', cpu: '2 Cores' },
-    { name: 'US RS 05', priceM: 2500, priceY: 23997, storage: '100GB', bw: '3TB', accounts: 70, ram: '3GB', cpu: '3 Cores' },
-    { name: 'US RS 06', priceM: 3000, priceY: 28797, storage: '120GB', bw: '5TB', accounts: 100, ram: '3GB', cpu: '3 Cores' },
+    { usaName: 'US RS 01', bdixName: 'BDIX RS 01', priceM: 500, priceY: 4797, storage: '20GB', bw: '500GB', accounts: 10, ram: '1GB', cpu: '1 Core', usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-01', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-01' },
+    { usaName: 'US RS 02', bdixName: 'BDIX RS 02', priceM: 1000, priceY: 9597, storage: '40GB', bw: '1TB', accounts: 20, ram: '1GB', cpu: '1 Core', usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-02', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-02' },
+    { usaName: 'US RS 03', bdixName: 'BDIX RS 03', priceM: 1500, priceY: 14397, storage: '60GB', bw: '1.5TB', accounts: 30, ram: '2GB', cpu: '2 Cores', popular: true, usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-03', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-03' },
+    { usaName: 'US RS 04', bdixName: 'BDIX RS 04', priceM: 2000, priceY: 19197, storage: '80GB', bw: '2TB', accounts: 50, ram: '3GB', cpu: '2 Cores', usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-04', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-04' },
+    { usaName: 'US RS 05', bdixName: 'BDIX RS 05', priceM: 2500, priceY: 23997, storage: '100GB', bw: '3TB', accounts: 70, ram: '3GB', cpu: '3 Cores', usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-05', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-05' },
+    { usaName: 'US RS 06', bdixName: 'BDIX RS 06', priceM: 3000, priceY: 28797, storage: '120GB', bw: '5TB', accounts: 100, ram: '3GB', cpu: '3 Cores', usaLink: 'https://portal.snbdhost.com/store/usa-reseller-hosting/rs-06', bdixLink: 'https://portal.snbdhost.com/store/bdix-reseller-hosting/rs-06' },
   ];
 
   const addons = [
@@ -59,7 +60,7 @@ export default function ResellerHosting() {
             Start your own web hosting business
           </h1>
           <p className="text-lg text-gray-500 mb-10 max-w-2xl mx-auto leading-relaxed">
-            High-performance USA reseller hosting powered by LiteSpeed, NVMe SSDs, and strict CloudLinux isolation. Keep 100% of your profits.
+            High-performance USA and BDIX reseller hosting powered by LiteSpeed, NVMe SSDs, and strict CloudLinux isolation. Keep 100% of your profits.
           </p>
         </div>
       </section>
@@ -67,7 +68,22 @@ export default function ResellerHosting() {
       {/* ========== PRICING CARDS ========== */}
       <section className="py-20 px-4 -mt-8 relative z-10">
         <div className="max-w-7xl mx-auto text-center">
-          <div className="flex justify-center mb-12">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-12">
+            <div className="bg-white p-1.5 rounded-2xl inline-flex shadow-sm border border-gray-200">
+              <button 
+                onClick={() => setLocationTab('usa')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all ${locationTab === 'usa' ? 'bg-blue-50 text-blue-600 shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+              >
+                <i className="fa-solid fa-flag-usa"></i> USA Datacenter
+              </button>
+              <button 
+                onClick={() => setLocationTab('bdix')}
+                className={`flex items-center gap-2 px-6 py-3 rounded-xl text-sm font-bold transition-all ${locationTab === 'bdix' ? 'bg-red-50 text-primary shadow-sm' : 'text-gray-500 hover:text-gray-800'}`}
+              >
+                <i className="fa-solid fa-bolt"></i> BDIX Datacenter
+              </button>
+            </div>
+
             <div className="bg-[#F4F5F7] p-1 rounded-full inline-flex shadow-inner border border-gray-200">
               <button 
                 onClick={() => setBillingTab('monthly')}
@@ -92,14 +108,14 @@ export default function ResellerHosting() {
                     RECOMMENDED
                   </div>
                 )}
-                <h3 className="text-xl font-bold text-gray-900 mb-4">{pkg.name}</h3>
+                <h3 className="text-xl font-bold text-gray-900 mb-4">{locationTab === 'usa' ? pkg.usaName : pkg.bdixName}</h3>
                 <div className="mb-6 border-b border-gray-100 pb-6">
                   <span className="text-4xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? pkg.priceM : pkg.priceY}</span>
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
-                <button className={`w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${pkg.popular ? 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200' : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
+                <a href={locationTab === 'usa' ? pkg.usaLink : pkg.bdixLink} className={`block w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${pkg.popular ? (locationTab === 'usa' ? 'bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-md shadow-blue-200' : 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200') : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
                   Select Plan
-                </button>
+                </a>
                 <div className="text-sm font-bold text-gray-900 mb-4">Core Limits</div>
                 <ul className="space-y-3 text-sm text-gray-600">
                   <li className="flex items-center justify-between"><span className="flex items-center gap-2"><i className="fa-solid fa-hard-drive text-gray-400"></i> NVMe Storage</span> <strong>{pkg.storage}</strong></li>
@@ -125,7 +141,7 @@ export default function ResellerHosting() {
                 <tr>
                   <th className="p-4 bg-gray-50 border-b-2 border-gray-200 font-bold text-gray-900 sticky left-0 z-20 min-w-[200px]">Feature</th>
                   {packages.map(pkg => (
-                    <th key={pkg.name} className="p-4 bg-gray-50 border-b-2 border-gray-200 font-bold text-primary text-center whitespace-nowrap">{pkg.name}</th>
+                    <th key={pkg.usaName} className="p-4 bg-gray-50 border-b-2 border-gray-200 font-bold text-primary text-center whitespace-nowrap">{locationTab === 'usa' ? pkg.usaName : pkg.bdixName}</th>
                   ))}
                 </tr>
               </thead>
