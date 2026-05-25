@@ -115,6 +115,7 @@ const PARTICLES = [
 ];
 
 export default function BDIXServers() {
+  const { formatPrice } = useCurrency();
   const [openFaq, setOpenFaq] = useState(0);
 
   const faqs = [
