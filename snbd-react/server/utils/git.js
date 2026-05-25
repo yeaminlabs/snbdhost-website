@@ -43,7 +43,7 @@ async function buildCommit(commitSha) {
     await runCmd(`git checkout ${commitSha}`);
 
     // 3. Install packages if they changed, clean slate check
-    await runCmd('npm install');
+    await runCmd('npm install --legacy-peer-deps');
 
     // 4. Compile the React build using Vite
     await runCmd('npm run build');
