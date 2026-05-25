@@ -35,41 +35,50 @@ async function buildCommit(commitSha) {
     throw new Error('Invalid commit SHA format. Must be a 7-40 character hex string.');
   }
 
-  const runCmd = (cmd) => execPromise(cmd, { cwd: PROJECT_ROOT });
+  const os = require('os');
+  const fs = require('fs');
 
-  let stashed = false;
+  // Create a temporary directory for the build process
+  const tmpDir = path.join(os.tmpdir(), `snbd-build-${commitSha}-${Date.now()}`);
+  const runCmd = (cmd, cwd = tmpDir) => execPromise(cmd, { cwd });
+
   try {
-    // 1. Save uncommitted local work so it isn't lost
-    const { stdout: stashOut } = await runCmd('git stash');
-    if (!stashOut.includes('No local changes to save')) {
-      stashed = true;
-    }
+    console.log(`[VersionControl] Creating temporary build directory at: ${tmpDir}`);
+    // 1. Create a local clone of the repository in the temporary directory
+    // This isolates the build process from the live server files to prevent 502 errors
+    await execPromise(`git clone "${PROJECT_ROOT}" "${tmpDir}"`);
 
     // 2. Checkout target commit
     await runCmd(`git checkout ${commitSha}`);
 
-    // 3. Install packages if they changed, clean slate check
+    // 3. Install packages
     await runCmd('npm install --legacy-peer-deps');
 
     // 4. Compile the React build using Vite
     await runCmd('npm run build');
 
-    // 5. Restore repository back to main branch
-    await runCmd('git checkout main');
-
-    // 6. Pop stashed changes if any were saved
-    if (stashed) {
-      await runCmd('git stash pop');
+    // 5. Copy the built dist folder back to the project root
+    const sourceDist = path.join(tmpDir, 'dist');
+    const targetDist = path.join(PROJECT_ROOT, 'dist');
+    
+    // Clear the existing dist folder if it exists
+    if (fs.existsSync(targetDist)) {
+      fs.rmSync(targetDist, { recursive: true, force: true });
     }
+    
+    // Copy the new dist folder
+    fs.cpSync(sourceDist, targetDist, { recursive: true });
+
+    // 6. Cleanup temporary directory
+    fs.rmSync(tmpDir, { recursive: true, force: true });
 
   } catch (err) {
     console.error('Git build compile error:', err);
     
-    // Safety fallback: revert working directory state if compile fails mid-way
+    // Attempt cleanup on failure
     try {
-      await runCmd('git checkout main');
-      if (stashed) {
-        await runCmd('git stash pop');
+      if (fs.existsSync(tmpDir)) {
+        fs.rmSync(tmpDir, { recursive: true, force: true });
       }
     } catch (cleanupErr) {
       console.error('Clean up error after build failure:', cleanupErr);
