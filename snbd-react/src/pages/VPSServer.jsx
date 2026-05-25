@@ -39,11 +39,11 @@ export default function VPSServer() {
   ];
 
   const usaPlans = [
-    { name: 'USA VPS 2G', desc: 'Ideal for lightweight automation and US-based proxy/VPN needs.', priceM: 897, priceY: 10797, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '1 TB' },
-    { name: 'USA VPS 4G', desc: 'Great for small application hosting and dev environments.', priceM: 1697, priceY: 20397, cpu: 3, ram: '4 GB', disk: '80 GB', bw: '2 TB', popular: true },
-    { name: 'USA VPS 8G', desc: 'Optimized for production-grade web apps and databases.', priceM: 2997, priceY: 35997, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '3 TB' },
-    { name: 'USA VPS 16G', desc: 'High-performance computing for intensive data processing.', priceM: 5497, priceY: 65997, cpu: 8, ram: '16 GB', disk: '240 GB', bw: '4 TB' },
-    { name: 'USA VPS 32G', desc: 'Maximum power for massive databases and enterprise scale.', priceM: 10897, priceY: 130797, cpu: 16, ram: '32 GB', disk: '360 GB', bw: '5 TB' },
+    { name: 'USA VPS 2G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-2g', desc: 'Ideal for lightweight automation and US-based proxy/VPN needs.', priceM: 897, priceY: 10797, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '1 TB' },
+    { name: 'USA VPS 4G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-4g', desc: 'Great for small application hosting and dev environments.', priceM: 1697, priceY: 20397, cpu: 3, ram: '4 GB', disk: '80 GB', bw: '2 TB', popular: true },
+    { name: 'USA VPS 8G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-8g', desc: 'Optimized for production-grade web apps and databases.', priceM: 2997, priceY: 35997, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '3 TB' },
+    { name: 'USA VPS 16G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-16g', desc: 'High-performance computing for intensive data processing.', priceM: 5497, priceY: 65997, cpu: 8, ram: '16 GB', disk: '240 GB', bw: '4 TB' },
+    { name: 'USA VPS 32G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-32g', desc: 'Maximum power for massive databases and enterprise scale.', priceM: 10897, priceY: 130797, cpu: 16, ram: '32 GB', disk: '360 GB', bw: '5 TB' },
   ];
 
   const activePlans = location === 'sg' ? sgPlans : usaPlans;
