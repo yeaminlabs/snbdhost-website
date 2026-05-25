@@ -1,5 +1,6 @@
 const express = require('express');
 const slugify = require('slugify');
+const jwt = require('jsonwebtoken');
 const { getDb, all, get, run, saveDb } = require('../db/database');
 const requireAuth = require('../middleware/auth');
 const router = express.Router();
@@ -11,7 +12,14 @@ router.get('/', async (req, res) => {
     const { page = 1, limit = 10, category, status } = req.query;
     const offset = (Number(page) - 1) * Number(limit);
 
-    const showAll = status === 'all' && req.headers.authorization;
+    // Security: verify the JWT token before showing drafts, not just check header presence
+    let showAll = false;
+    if (status === 'all' && req.headers.authorization) {
+      try {
+        jwt.verify(req.headers.authorization.slice(7), process.env.JWT_SECRET, { algorithms: ['HS256'] });
+        showAll = true;
+      } catch { /* invalid token — treat as unauthenticated */ }
+    }
 
     let where = showAll ? '1=1' : "status = 'published'";
     const params = [];

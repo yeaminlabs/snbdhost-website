@@ -6,7 +6,7 @@ module.exports = (req, res, next) => {
     return res.status(401).json({ error: 'No token provided' });
   }
   try {
-    req.admin = jwt.verify(auth.slice(7), process.env.JWT_SECRET);
+    req.admin = jwt.verify(auth.slice(7), process.env.JWT_SECRET, { algorithms: ['HS256'] });
     next();
   } catch {
     res.status(401).json({ error: 'Invalid or expired token' });

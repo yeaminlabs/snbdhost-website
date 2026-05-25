@@ -29,6 +29,12 @@ async function fetchCommits() {
 }
 
 async function buildCommit(commitSha) {
+  // Security: validate commit SHA to prevent command injection
+  const SHA_REGEX = /^[0-9a-f]{7,40}$/i;
+  if (!commitSha || !SHA_REGEX.test(commitSha)) {
+    throw new Error('Invalid commit SHA format. Must be a 7-40 character hex string.');
+  }
+
   const runCmd = (cmd) => execPromise(cmd, { cwd: PROJECT_ROOT });
 
   let stashed = false;

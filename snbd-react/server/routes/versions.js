@@ -83,6 +83,12 @@ router.post('/', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'Invalid version format. Use semver format, e.g. v1.0.2' });
     }
 
+    // Security: validate commitSha format to prevent command injection
+    const shaRegex = /^[0-9a-f]{7,40}$/i;
+    if (!shaRegex.test(commitSha)) {
+      return res.status(400).json({ error: 'Invalid commit SHA format.' });
+    }
+
     const db = await getDb();
     const existing = get(db, 'SELECT id FROM versions WHERE version = ?', [version]);
     if (existing) {

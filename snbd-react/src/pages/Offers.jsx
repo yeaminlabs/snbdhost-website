@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext';
 
 export default function Offers() {
+  const { formatPrice } = useCurrency();
   const [billingTab, setBillingTab] = useState('monthly');
   const [openFaq, setOpenFaq] = useState(0);
   const [openDiscountTab, setOpenDiscountTab] = useState(0);
@@ -195,8 +197,8 @@ export default function Offers() {
               <p className="text-sm text-gray-500 mb-6">Everything you need to create your first website.</p>
               
               <div className="mb-6">
-                <span className="text-sm text-gray-400 line-through block mb-1">৳{billingTab === 'monthly' ? '129' : '129'}/mo</span>
-                <span className="text-4xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? '99' : '79'}</span>
+                <span className="text-sm text-gray-400 line-through block mb-1">{formatPrice(129)}/mo</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(billingTab === 'monthly' ? 99 : 79)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               
@@ -222,8 +224,8 @@ export default function Offers() {
               <p className="text-sm text-gray-500 mb-6">Level up with more power and enhanced features.</p>
               
               <div className="mb-6">
-                <span className="text-sm text-gray-400 line-through block mb-1">৳{billingTab === 'monthly' ? '249' : '249'}/mo</span>
-                <span className="text-4xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? '187' : '149'}</span>
+                <span className="text-sm text-gray-400 line-through block mb-1">{formatPrice(249)}/mo</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(billingTab === 'monthly' ? 187 : 149)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               
@@ -247,8 +249,8 @@ export default function Offers() {
               <p className="text-sm text-gray-500 mb-6">Optimized for small businesses and growing agencies.</p>
               
               <div className="mb-6">
-                <span className="text-sm text-gray-400 line-through block mb-1">৳{billingTab === 'monthly' ? '449' : '449'}/mo</span>
-                <span className="text-4xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? '349' : '279'}</span>
+                <span className="text-sm text-gray-400 line-through block mb-1">{formatPrice(449)}/mo</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(billingTab === 'monthly' ? 349 : 279)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               

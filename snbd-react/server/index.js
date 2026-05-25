@@ -178,14 +178,27 @@ function buildGtmBodyTag(cfg) {
   return '';
 }
 
+// Security: escape HTML special characters to prevent XSS in meta tag injection
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str)
+    .replace(/&/g, '&amp;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#39;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;');
+}
+
 function injectMeta(html, { title, description, image, urlPath }) {
   const img = image || DEFAULT_IMAGE;
   const url = `${BASE_URL}${urlPath || '/'}`;
+  const safeTitle = escapeHtml(title);
+  const safeDesc = escapeHtml(description);
   const tags = `
-    <title>${title}</title>
-    <meta name="description" content="${description}">
-    <meta property="og:title" content="${title}">
-    <meta property="og:description" content="${description}">
+    <title>${safeTitle}</title>
+    <meta name="description" content="${safeDesc}">
+    <meta property="og:title" content="${safeTitle}">
+    <meta property="og:description" content="${safeDesc}">
     <meta property="og:image" content="${img}">
     <meta property="og:image:width" content="1200">
     <meta property="og:image:height" content="630">
@@ -193,8 +206,8 @@ function injectMeta(html, { title, description, image, urlPath }) {
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="SNBD HOST">
     <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="${title}">
-    <meta name="twitter:description" content="${description}">
+    <meta name="twitter:title" content="${safeTitle}">
+    <meta name="twitter:description" content="${safeDesc}">
     <meta name="twitter:image" content="${img}">`;
 
   return html.replace(/<title>.*?<\/title>/, '').replace('<head>', `<head>${tags}`);
@@ -213,7 +226,13 @@ app.use((req, res, next) => {
   }
 
   const activePath = getActiveVersionPath();
-  const filePath = path.join(activePath, req.path);
+  const resolvedBase = path.resolve(activePath);
+  const filePath = path.resolve(activePath, req.path.slice(1));
+
+  // Security: prevent directory traversal
+  if (!filePath.startsWith(resolvedBase)) {
+    return res.status(403).send('Forbidden');
+  }
 
   fs.stat(filePath, (err, stats) => {
     if (!err && stats.isFile()) {
