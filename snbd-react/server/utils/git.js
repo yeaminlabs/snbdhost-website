@@ -1,23 +1,36 @@
-const { exec } = require('child_process');
+const { exec, execSync } = require('child_process');
 const util = require('util');
 const path = require('path');
 
 const execPromise = util.promisify(exec);
+
+// PROJECT_ROOT = the snbd-react/ folder (where package.json lives)
 const PROJECT_ROOT = path.join(__dirname, '../../');
+
+// GIT_ROOT = the true git repository root (may be parent of PROJECT_ROOT in a monorepo)
+let GIT_ROOT;
+try {
+  GIT_ROOT = execSync('git rev-parse --show-toplevel', { cwd: PROJECT_ROOT }).toString().trim();
+} catch {
+  GIT_ROOT = PROJECT_ROOT;
+}
+
+// Relative path from git root to the React app folder (e.g. "snbd-react" or "")
+const REACT_SUBDIR = path.relative(GIT_ROOT, PROJECT_ROOT);
 
 async function fetchCommits() {
   try {
     // Fetch latest info from remote repository
-    await execPromise('git fetch origin main', { cwd: PROJECT_ROOT });
-    
+    await execPromise('git fetch origin main', { cwd: GIT_ROOT });
+
     // Retrieve last 10 commits with standard format: Hash|Author|Date|Subject
     const { stdout } = await execPromise(
       'git log origin/main -n 10 --date=iso --pretty=format:"%H|%an|%ad|%s"',
-      { cwd: PROJECT_ROOT }
+      { cwd: GIT_ROOT }
     );
-    
+
     if (!stdout.trim()) return [];
-    
+
     return stdout.trim().split('\n').map(line => {
       const [hash, author, date, message] = line.split('|');
       return { hash, author, date, message };
@@ -40,41 +53,44 @@ async function buildCommit(commitSha) {
 
   // Create a temporary directory for the build process
   const tmpDir = path.join(os.tmpdir(), `snbd-build-${commitSha}-${Date.now()}`);
-  const runCmd = (cmd, cwd = tmpDir) => execPromise(cmd, { cwd });
 
   try {
-    console.log(`[VersionControl] Creating temporary build directory at: ${tmpDir}`);
-    // 1. Create a local clone of the repository in the temporary directory
-    // This isolates the build process from the live server files to prevent 502 errors
-    await execPromise(`git clone "${PROJECT_ROOT}" "${tmpDir}"`);
+    console.log(`[VersionControl] Cloning git root (${GIT_ROOT}) into temp dir: ${tmpDir}`);
 
-    // 2. Checkout target commit
-    await runCmd(`git checkout ${commitSha}`);
+    // 1. Clone the TRUE git root (not a subfolder) — git requires this
+    await execPromise(`git clone "${GIT_ROOT}" "${tmpDir}"`);
 
-    // 3. Install packages
-    await runCmd('npm install --legacy-peer-deps');
+    // 2. Checkout the specific target commit
+    await execPromise(`git checkout ${commitSha}`, { cwd: tmpDir });
 
-    // 4. Compile the React build using Vite
-    await runCmd('npm run build');
+    // 3. Navigate into the React app subfolder (e.g. snbd-react/) if this is a monorepo
+    //    If REACT_SUBDIR is empty the React app IS the git root — no subdirectory needed
+    const reactDir = REACT_SUBDIR ? path.join(tmpDir, REACT_SUBDIR) : tmpDir;
+    console.log(`[VersionControl] Building from: ${reactDir}`);
 
-    // 5. Copy the built dist folder back to the project root
-    const sourceDist = path.join(tmpDir, 'dist');
+    const runInReact = (cmd) => execPromise(cmd, { cwd: reactDir });
+
+    // 4. Install dependencies
+    await runInReact('npm install --legacy-peer-deps');
+
+    // 5. Compile the React/Vite build
+    await runInReact('npm run build');
+
+    // 6. Copy the new dist/ back to PROJECT_ROOT/dist/
+    const sourceDist = path.join(reactDir, 'dist');
     const targetDist = path.join(PROJECT_ROOT, 'dist');
-    
-    // Clear the existing dist folder if it exists
+
     if (fs.existsSync(targetDist)) {
       fs.rmSync(targetDist, { recursive: true, force: true });
     }
-    
-    // Copy the new dist folder
     fs.cpSync(sourceDist, targetDist, { recursive: true });
 
-    // 6. Cleanup temporary directory
+    // 7. Cleanup temporary directory
     fs.rmSync(tmpDir, { recursive: true, force: true });
 
   } catch (err) {
     console.error('Git build compile error:', err);
-    
+
     // Attempt cleanup on failure
     try {
       if (fs.existsSync(tmpDir)) {
@@ -83,7 +99,7 @@ async function buildCommit(commitSha) {
     } catch (cleanupErr) {
       console.error('Clean up error after build failure:', cleanupErr);
     }
-    
+
     throw new Error(`Compilation failed: ${err.message}`);
   }
 }
