@@ -10,7 +10,12 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "server": "node server/index.js",
-    "server:dev": "cd server && nodemon index.js"
+    "server:dev": "cd server && nodemon index.js",
+    "api:start": "pm2 start ecosystem.config.cjs",
+    "api:stop": "pm2 stop snbd-blog-api",
+    "api:restart": "pm2 restart snbd-blog-api",
+    "api:logs": "pm2 logs snbd-blog-api",
+    "api:status": "pm2 status"
   },
   "dependencies": {
     "@carlos8a/react-whatsapp-floating-button": "^1.1.5",
