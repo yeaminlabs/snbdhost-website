@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 // Animated terminal lines
 const TERMINAL_LINES = [
@@ -264,7 +265,7 @@ export default function BDIXServers() {
                   <a href="#pricing" className="inline-flex items-center gap-3 bg-red-600 hover:bg-red-700 text-white font-extrabold px-8 py-4 rounded-xl shadow-lg transition-all hover:-translate-y-0.5" style={{ fontSize: '1rem', boxShadow: '0 8px 24px rgba(220,38,38,0.35)' }}>
                     <i className="fa-solid fa-rocket"></i> View Plans &amp; Pricing
                   </a>
-                  <span className="text-gray-500 text-sm">From <strong className="text-white text-xl">৳500</strong><span className="text-gray-600">/mo</span></span>
+                  <span className="text-gray-500 text-sm">From <strong className="text-white text-xl">{formatPrice(500)}</strong><span className="text-gray-600">/mo</span></span>
                 </div>
               </div>
 
@@ -305,7 +306,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Starter</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">Perfect for small local sites.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">৳500</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(500)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -323,7 +324,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Pro</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">For growing businesses.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">৳900</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(900)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -341,7 +342,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1 mt-2">BDIX Business</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">High traffic web applications.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">৳1,600</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice('1,600')}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-200 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -359,7 +360,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Ultra</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">Enterprise resource demands.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">৳2,800</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice('2,800')}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>

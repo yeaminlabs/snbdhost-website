@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react'
 import { Link } from 'react-router-dom'
+import { useCurrency } from '../context/CurrencyContext.jsx'
 
 const CURRENCIES = [
   { code: 'BDT', symbol: '৳', flag: '🇧🇩', label: 'Bangladeshi Taka' },
@@ -8,9 +9,11 @@ const CURRENCIES = [
 ]
 
 function CurrencySwitcher() {
+  const { currency, setCurrency } = useCurrency()
   const [open, setOpen] = useState(false)
-  const [selected, setSelected] = useState(CURRENCIES[0])
   const ref = useRef(null)
+
+  const selected = CURRENCIES.find(c => c.code === currency) || CURRENCIES[0]
 
   useEffect(() => {
     function handleClick(e) {
@@ -39,7 +42,7 @@ function CurrencySwitcher() {
           {CURRENCIES.map(c => (
             <button
               key={c.code}
-              onClick={() => { setSelected(c); setOpen(false) }}
+              onClick={() => { setCurrency(c.code); setOpen(false) }}
               className={`w-full flex items-center gap-3 px-3 py-2.5 text-sm transition-colors hover:bg-gray-50 ${selected.code === c.code ? 'bg-red-50 text-red-700 font-semibold' : 'text-gray-700'}`}
             >
               <span className="text-lg leading-none">{c.flag}</span>
@@ -53,7 +56,7 @@ function CurrencySwitcher() {
             </button>
           ))}
           <div className="px-3 pt-2 pb-1.5 mt-1 border-t border-gray-100">
-            <span className="text-[10px] text-gray-400 leading-tight block">💡 Prices shown for display only. Billing in BDT.</span>
+            <span className="text-[10px] text-gray-400 leading-tight block">💡 Display updates instantly. Note: Checkout might process in base currency depending on the gateway.</span>
           </div>
         </div>
       )}

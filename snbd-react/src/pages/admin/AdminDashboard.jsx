@@ -63,33 +63,50 @@ export default function AdminDashboard() {
       <div className="min-h-screen bg-gray-950 text-gray-200">
 
         {/* Top bar */}
-        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between">
+        <header className="bg-gray-900 border-b border-gray-800 px-6 py-4 flex items-center justify-between flex-wrap gap-3">
           <div className="flex items-center gap-3">
             <img src="/logo.png" alt="SNBD HOST" className="h-7" />
-            <span className="text-sm font-bold text-gray-300">Blog Admin</span>
+            <span className="text-sm font-bold text-gray-300">Admin</span>
           </div>
-          <div className="flex items-center gap-3">
-            <Link to="/blog" target="_blank" className="text-xs text-gray-400 hover:text-white transition-colors">
-              <i className="fa-solid fa-arrow-up-right-from-square mr-1"></i> View Blog
+          <nav className="flex items-center gap-1 flex-wrap">
+            <Link to="/admin/seo-checklist" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-list-check text-[#CC0000]"></i> SEO Checklist
+            </Link>
+            <Link to="/admin/marketing" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-chart-line text-amber-400"></i> Marketing Tools
+            </Link>
+            <Link to="/admin/versions" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-code-branch text-blue-400"></i> Version Control
+            </Link>
+            <Link to="/blog" target="_blank" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-arrow-up-right-from-square"></i> View Blog
             </Link>
             <button
               onClick={logout}
-              className="text-xs text-gray-400 hover:text-red-400 transition-colors"
+              className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-red-400 hover:bg-red-900/20 transition-colors px-3 py-1.5 rounded-lg"
             >
-              <i className="fa-solid fa-right-from-bracket mr-1"></i> Logout
+              <i className="fa-solid fa-right-from-bracket"></i> Logout
             </button>
-          </div>
+          </nav>
         </header>
 
         <main className="max-w-6xl mx-auto px-6 py-8">
-          <div className="flex items-center justify-between mb-8">
+          <div className="flex items-center justify-between mb-6">
             <h1 className="text-xl font-bold text-white">Posts</h1>
-            <Link
-              to="/admin/posts/new"
-              className="flex items-center gap-2 bg-[#CC0000] hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors"
-            >
-              <i className="fa-solid fa-plus"></i> New Post
-            </Link>
+            <div className="flex items-center gap-2">
+              <Link
+                to="/admin/seo-checklist"
+                className="flex items-center gap-2 bg-gray-800 hover:bg-gray-700 text-gray-300 hover:text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors border border-gray-700"
+              >
+                <i className="fa-solid fa-list-check text-[#CC0000]"></i> SEO Checklist
+              </Link>
+              <Link
+                to="/admin/posts/new"
+                className="flex items-center gap-2 bg-[#CC0000] hover:bg-red-700 text-white text-sm font-bold px-4 py-2 rounded-lg transition-colors"
+              >
+                <i className="fa-solid fa-plus"></i> New Post
+              </Link>
+            </div>
           </div>
 
           {error && (

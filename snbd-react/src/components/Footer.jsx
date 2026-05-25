@@ -28,6 +28,17 @@ export default function Footer() {
                 <i className="fa-brands fa-youtube text-sm"></i>
               </a>
             </div>
+            <div className="mt-8 pt-6 border-t border-[#E5E7EB]">
+              <p className="text-[#9CA3AF] text-xs font-bold uppercase tracking-wider mb-3 flex items-center gap-2">
+                <i className="fa-solid fa-lock text-[#E31414]"></i> Secure Payments
+              </p>
+              <div className="flex items-center gap-4 text-3xl">
+                <i className="fa-brands fa-stripe text-[#635BFF] cursor-pointer" title="Stripe"></i>
+                <i className="fa-brands fa-cc-visa text-[#1A1F71] cursor-pointer" title="Visa"></i>
+                <i className="fa-brands fa-cc-mastercard text-[#EB001B] cursor-pointer" title="Mastercard"></i>
+                <img src="https://1000logos.net/wp-content/uploads/2021/02/Bkash-logo.png" alt="bKash" className="h-6 object-contain cursor-pointer" title="bKash" />
+              </div>
+            </div>
           </div>
 
           {/* My Account */}

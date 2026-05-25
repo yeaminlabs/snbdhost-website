@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import SEOHead from '../components/SEOHead';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 const packages = [
   {
@@ -192,6 +193,7 @@ const packages = [
 ];
 
 export default function HostingPage() {
+  const { formatPrice } = useCurrency();
   const [billingTab, setBillingTab] = useState('annual');
   const [locationTab, setLocationTab] = useState('usa'); // 'usa' or 'bdix'
 
@@ -219,14 +221,14 @@ export default function HostingPage() {
             {locationTab.toUpperCase()} {pkg.name}
           </div>
           <div className="flex items-end gap-2 mb-1">
-            <span className={`text-4xl xl:text-5xl font-extrabold ${isRecommended ? 'text-white' : 'text-gray-900'}`}>৳{price.toLocaleString()}</span>
+            <span className={`text-4xl xl:text-5xl font-extrabold ${isRecommended ? 'text-white' : 'text-gray-900'}`}>{formatPrice(price)}</span>
             <span className={`font-medium mb-2 ${isRecommended ? 'text-red-200' : 'text-gray-500'}`}>
               /{billingTab === 'annual' ? 'yr' : 'mo'}
             </span>
           </div>
           {billingTab === 'annual' ? (
             <div className={`text-sm mb-6 ${isRecommended ? 'text-red-200' : 'text-[#9CA3AF]'}`}>
-              Was <span className="line-through">৳{originalPrice.toLocaleString()}</span>
+              Was <span className="line-through">{formatPrice(originalPrice)}</span>
             </div>
           ) : (
             <div className={`text-sm mb-6 ${isRecommended ? 'text-red-200' : 'text-[#9CA3AF]'}`}>

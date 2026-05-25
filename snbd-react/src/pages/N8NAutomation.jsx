@@ -3,10 +3,21 @@ import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function N8NAutomation() {
-  const [billingCycle, setBillingCycle] = useState('yearly');
+  const { formatPrice } = useCurrency();
+  const [billingCycle, setBillingCycle] = useState('monthly');
   const [openFaq, setOpenFaq] = useState(null);
+
+  const packages = [
+    { name: 'n8n 1G', priceM: '200', priceY: '2,400', desc: 'Ideal for personal use and simple API automations.', cpu: '1 Core CPU', ram: '1 GB RAM', ssd: '10 GB NVMe Storage', db: 'Database SQLite', mode: 'n8n Standard Mode', backup: 'Daily (1x) Backup Included', link: 'https://portal.snbdhost.com/store/n8n/n8n-1g' },
+    { name: 'n8n 2G', priceM: '400', priceY: '4,800', desc: 'Perfect for n8n learners.', cpu: '1 Core CPU', ram: '2 GB RAM', ssd: '20 GB NVMe Storage', db: 'Database SQLite', mode: 'n8n Standard Mode', backup: 'Daily (1x) Backup Included', link: 'https://portal.snbdhost.com/store/n8n/n8n-2g' },
+    { name: 'n8n 3G', priceM: '600', priceY: '7,200', desc: 'Recommended for production environments requiring stability.', cpu: '1.5 Core CPU', ram: '3 GB RAM', ssd: '30 GB NVMe Storage', db: 'Database PostgreSQL', mode: 'n8n Standard Mode', backup: 'Daily (1x) Backup Included', popular: true, link: 'https://portal.snbdhost.com/store/n8n/n8n-3g-2' },
+    { name: 'n8n 4G', priceM: '800', priceY: '9,600', desc: 'Built for power users and more complex workflows.', cpu: '2 Core CPU', ram: '4 GB RAM', ssd: '40 GB NVMe Storage', db: 'Database PostgreSQL', mode: 'n8n Standard Mode', backup: 'Daily (1x) Backup Included', link: 'https://portal.snbdhost.com/store/n8n/n8n-4gb' },
+    { name: 'n8n 6G', priceM: '1,200', priceY: '14,400', desc: 'Optimized for high-volume concurrent tasks using Queue Mode.', cpu: '3 Core CPU', ram: '6 GB RAM', worker: '10 Worker', ssd: '60 GB NVMe Storage', db: 'Database PostgreSQL', mode: 'n8n Queue Mode', backup: 'Daily (1x) Backup Included', link: 'https://portal.snbdhost.com/store/n8n/n8n-6g' },
+    { name: 'n8n 8G', priceM: '1,600', priceY: '19,200', desc: 'Enterprise-grade hosting for mission-critical automation.', cpu: '4 Core CPU', ram: '8 GB RAM', worker: '20 Worker', ssd: '80 GB NVMe Storage', db: 'Database PostgreSQL', mode: 'n8n Queue Mode', backup: 'Daily (1x) Backup Included', link: 'https://portal.snbdhost.com/store/n8n/n8n-8g' }
+  ];
 
   useEffect(() => {
     if (window.tsParticles) {
@@ -148,93 +159,44 @@ export default function N8NAutomation() {
           </div>
 
           {/* Pricing Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-10 w-full xl:w-[110%] xl:-ml-[5%]">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 relative z-10 w-full xl:w-[110%] xl:-ml-[5%]">
             
-            {/* Starter (n8n 1G) */}
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/20 transition-colors shadow-2xl">
-              <h3 className="text-xl font-semibold text-white mb-1">Starter (1G)</h3>
-              <p className="text-sm text-[#71717a] mb-6">Perfect for basic automations and small projects.</p>
-              
-              <div className="mb-6 h-16">
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-bold text-white tracking-tight">৳{billingCycle === 'yearly' ? '2400' : '250'}</span>
-                  <span className="text-[#71717a] text-sm mb-1">/{billingCycle === 'yearly' ? 'year' : 'mo'}</span>
+            {packages.map((pkg, idx) => (
+              <div key={idx} className={`bg-[#111111] border ${pkg.popular ? 'border-brand-red/50 shadow-[0_0_40px_rgba(204,0,0,0.15)] md:-translate-y-4' : 'border-white/10 hover:border-white/20 shadow-2xl'} rounded-2xl p-6 md:p-8 flex flex-col transition-all relative`}>
+                
+                {pkg.popular && (
+                  <div className="absolute top-0 right-6 -translate-y-1/2 bg-gradient-to-r from-brand-red to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
+                    Recommended
+                  </div>
+                )}
+
+                <h3 className="text-xl font-semibold text-white mb-1">{pkg.name}</h3>
+                <p className="text-sm text-[#71717a] mb-6 min-h-[40px]">{pkg.desc}</p>
+                
+                <div className="mb-6 h-16">
+                  <div className="flex items-end gap-1">
+                    <span className="text-4xl font-bold text-white tracking-tight">{formatPrice(billingCycle === 'yearly' ? pkg.priceY : pkg.priceM)}</span>
+                    <span className="text-[#71717a] text-sm mb-1">/{billingCycle === 'yearly' ? 'year' : 'mo'}</span>
+                  </div>
+                  {billingCycle === 'yearly' && <p className="text-sm text-[#a1a1aa] mt-1">~{formatPrice(pkg.priceM)} per month</p>}
                 </div>
-                {billingCycle === 'yearly' && <p className="text-sm text-[#a1a1aa] mt-1">~৳200 per month</p>}
+                
+                <a href={pkg.link} className={`w-full block text-center px-6 py-3.5 font-semibold rounded-xl transition-all mb-8 ${pkg.popular ? 'bg-brand-red hover:bg-[#a30000] text-white shadow-lg shadow-brand-red/30' : 'bg-[#222222] border border-white/10 hover:bg-[#333333] text-white shadow-md'}`}>
+                  Deploy Now
+                </a>
+
+                <p className="text-xs uppercase tracking-widest font-semibold text-[#71717a] mb-4">Instance Specs</p>
+                <ul className="space-y-4 text-sm text-[#a1a1aa] flex-1">
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-microchip text-brand-red mt-1 text-[10px]"></i> {pkg.cpu}</li>
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-memory text-brand-red mt-1 text-[10px]"></i> <strong className={pkg.popular ? 'text-white' : ''}>{pkg.ram}</strong></li>
+                  {pkg.worker && <li className="flex items-start gap-3"><i className="fa-solid fa-network-wired text-brand-red mt-1 text-[10px]"></i> {pkg.worker}</li>}
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-hard-drive text-brand-red mt-1 text-[10px]"></i> {pkg.ssd}</li>
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-database text-brand-red mt-1 text-[10px]"></i> {pkg.db}</li>
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-bolt text-brand-red mt-1 text-[10px]"></i> {pkg.mode}</li>
+                  <li className="flex items-start gap-3"><i className="fa-solid fa-clock-rotate-left text-brand-red mt-1 text-[10px]"></i> {pkg.backup}</li>
+                </ul>
               </div>
-              
-              <a href="#" className="w-full block text-center px-6 py-3.5 bg-[#222222] border border-white/10 hover:bg-[#333333] text-white font-semibold rounded-xl transition-all shadow-md mb-8">
-                Get Started
-              </a>
-
-              <p className="text-xs uppercase tracking-widest font-semibold text-[#71717a] mb-4">Top Features</p>
-              <ul className="space-y-4 text-sm text-[#a1a1aa] flex-1">
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> 1 Core vCPU (Shared)</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> 1 GB Dedicated RAM</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> Unlimited Workflows</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> Community Edition</li>
-              </ul>
-            </div>
-
-            {/* Popular (n8n 2G) */}
-            <div className="bg-[#1a0a0a] border-2 border-red-500/50 rounded-2xl p-6 md:p-8 flex flex-col shadow-[0_0_40px_rgba(204,0,0,0.2)] relative transform md:-translate-y-4">
-              <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-brand-red/5 to-transparent rounded-2xl pointer-events-none"></div>
-              
-              <div className="absolute top-0 right-6 -translate-y-1/2">
-                <span className="bg-gradient-to-r from-brand-red to-orange-500 text-white text-xs font-bold px-3 py-1 rounded-full shadow-lg">
-                  Most Popular
-                </span>
-              </div>
-
-              <h3 className="text-xl font-semibold text-white mb-1">Power (2G)</h3>
-              <p className="text-sm text-[#71717a] mb-6">Designed for growing business logic.</p>
-              
-              <div className="mb-6 h-16">
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-bold text-white tracking-tight">৳{billingCycle === 'yearly' ? '4800' : '450'}</span>
-                  <span className="text-[#71717a] text-sm mb-1">/{billingCycle === 'yearly' ? 'year' : 'mo'}</span>
-                </div>
-                {billingCycle === 'yearly' && <p className="text-sm text-[#a1a1aa] mt-1">~৳400 per month</p>}
-              </div>
-              
-              <a href="#" className="w-full block text-center px-6 py-3.5 bg-brand-red hover:bg-[#a30000] shadow-lg shadow-brand-red/30 text-white font-semibold rounded-xl transition-all mb-8">
-                Get Started
-              </a>
-
-              <p className="text-xs uppercase tracking-widest font-semibold text-[#71717a] mb-4">Top Features</p>
-              <ul className="space-y-4 text-sm text-[#a1a1aa] flex-1">
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> 1 Core vCPU (Shared)</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> <strong>2 GB Dedicated RAM</strong></li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> Unlimited Workflows</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> Priority Support</li>
-              </ul>
-            </div>
-
-            {/* Premium (n8n 4G) */}
-            <div className="bg-[#111111] border border-white/10 rounded-2xl p-6 md:p-8 flex flex-col hover:border-white/20 transition-colors shadow-2xl">
-              <h3 className="text-xl font-semibold text-white mb-1">Ultimate (4G)</h3>
-              <p className="text-sm text-[#71717a] mb-6">Heavy workloads & advanced integrations.</p>
-              
-              <div className="mb-6 h-16">
-                <div className="flex items-end gap-1">
-                  <span className="text-4xl font-bold text-white tracking-tight">৳{billingCycle === 'yearly' ? '9600' : '900'}</span>
-                  <span className="text-[#71717a] text-sm mb-1">/{billingCycle === 'yearly' ? 'year' : 'mo'}</span>
-                </div>
-                {billingCycle === 'yearly' && <p className="text-sm text-[#a1a1aa] mt-1">~৳800 per month</p>}
-              </div>
-              
-              <a href="#" className="w-full block text-center px-6 py-3.5 bg-[#222222] border border-white/10 hover:bg-[#333333] text-white font-semibold rounded-xl transition-all shadow-md mb-8">
-                Get Started
-              </a>
-
-              <p className="text-xs uppercase tracking-widest font-semibold text-[#71717a] mb-4">Top Features</p>
-              <ul className="space-y-4 text-sm text-[#a1a1aa] flex-1">
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> <strong>2 Core vCPU (Shared)</strong></li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> <strong>4 GB Dedicated RAM</strong></li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> Complex Workflow Capable</li>
-                <li className="flex items-start gap-3"><i className="fa-solid fa-check text-brand-red mt-1 text-[10px]"></i> AI Modules Supported</li>
-              </ul>
-            </div>
+            ))}
 
           </div>
         </div>
@@ -275,93 +237,73 @@ export default function N8NAutomation() {
             <table className="w-full text-left border-collapse min-w-[700px]">
               <thead>
                 <tr className="border-b border-white/5">
-                  <th className="py-6 px-6 font-semibold text-[#a1a1aa] text-sm w-1/3">Feature details</th>
-                  <th className="py-6 px-4 font-semibold text-white text-center text-sm w-[22%]">1G</th>
-                  <th className="py-6 px-4 font-semibold text-white text-center text-sm w-[22%] bg-brand-red/5">2G</th>
-                  <th className="py-6 px-4 font-semibold text-white text-center text-sm w-[22%]">4G</th>
+                  <th className="py-6 px-6 font-semibold text-[#a1a1aa] text-sm sticky left-0 bg-[#111111] min-w-[200px]">Feature details</th>
+                  {packages.map(pkg => (
+                    <th key={pkg.name} className={`py-6 px-4 font-semibold text-white text-center text-sm min-w-[120px] ${pkg.popular ? 'bg-brand-red/5' : ''}`}>
+                      {pkg.name.replace('n8n ', '')}
+                    </th>
+                  ))}
                 </tr>
               </thead>
               <tbody className="divide-y divide-white/5 text-sm text-[#d4d4d8]">
                 
                 {/* Category: Hardware */}
                 <tr>
-                  <td colSpan="4" className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Hardware & Resources</td>
+                  <td colSpan={packages.length + 1} className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Hardware & Resources</td>
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">vCPU Cores</td>
-                  <td className="py-4 px-4 text-center">1</td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5">1</td>
-                  <td className="py-4 px-4 text-center">2</td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">vCPU Cores</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.cpu.split(' ')[0]}</td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Dedicated RAM</td>
-                  <td className="py-4 px-4 text-center">1 GB</td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5">2 GB</td>
-                  <td className="py-4 px-4 text-center">4 GB</td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Dedicated RAM</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.ram}</td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Network Speed</td>
-                  <td className="py-4 px-4 text-center">BDIX Peered</td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5">BDIX Peered</td>
-                  <td className="py-4 px-4 text-center">BDIX Peered</td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">NVMe Storage</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.ssd}</td>)}
+                </tr>
+                <tr className="hover:bg-[#222222] transition-colors">
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Workers</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.worker ? pkg.worker : 'None'}</td>)}
                 </tr>
 
                 {/* Category: Software */}
                 <tr>
-                  <td colSpan="4" className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Software & Core n8n Features</td>
+                  <td colSpan={packages.length + 1} className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Software & Core Features</td>
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">n8n Community Edition</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Database</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.db.replace('Database ', '')}</td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Unlimited Workflows</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">n8n Mode</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}>{pkg.mode.replace('n8n ', '')}</td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Unlimited Executions</td>
-                  <td className="py-4 px-4 text-center">Hardware Limit</td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5">Hardware Limit</td>
-                  <td className="py-4 px-4 text-center">Hardware Limit</td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Unlimited Workflows</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}><i className="fa-solid fa-check text-green-500"></i></td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Custom Node Integrations</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Custom Node Integrations</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}><i className="fa-solid fa-check text-green-500"></i></td>)}
                 </tr>
 
                 {/* Category: Support */}
                 <tr>
-                  <td colSpan="4" className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Installation & Support</td>
+                  <td colSpan={packages.length + 1} className="py-4 px-6 text-xs uppercase tracking-widest font-semibold text-[#71717a] bg-[#1a1a1a]/50">Installation & Support</td>
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Free Docker Installation</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Free Docker Installation</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}><i className="fa-solid fa-check text-green-500"></i></td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Managed OS Environment</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">Managed OS Environment</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}><i className="fa-solid fa-check text-green-500"></i></td>)}
                 </tr>
                 <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">24/7 Chat Support</td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5"><i className="fa-solid fa-check text-green-500"></i></td>
-                  <td className="py-4 px-4 text-center"><i className="fa-solid fa-check text-green-500"></i></td>
-                </tr>
-                <tr className="hover:bg-[#222222] transition-colors">
-                  <td className="py-4 px-6 font-medium">Manual Version Updates</td>
-                  <td className="py-4 px-4 text-center">On Request</td>
-                  <td className="py-4 px-4 text-center bg-brand-red/5">On Request</td>
-                  <td className="py-4 px-4 text-center">On Request</td>
+                  <td className="py-4 px-6 font-medium sticky left-0 bg-[#111111]">24/7 Chat Support</td>
+                  {packages.map(pkg => <td key={pkg.name} className={`py-4 px-4 text-center ${pkg.popular ? 'bg-brand-red/5' : ''}`}><i className="fa-solid fa-check text-green-500"></i></td>)}
                 </tr>
 
               </tbody>

@@ -1,15 +1,59 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import SEOHead from '../components/SEOHead';
 import { pageMeta } from '../seo/pageMeta';
+import JsonLd from '../components/JsonLd';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function DomainPage() {
+  const { formatPrice } = useCurrency();
   const [query, setQuery] = useState('')
   const [ext, setExt] = useState('.com')
   const [searched, setSearched] = useState(false)
   const [searchedQuery, setSearchedQuery] = useState('')
+  
+  const [showBdModal, setShowBdModal] = useState(false)
+  const [bdFormDetails, setBdFormDetails] = useState({ domain: '', name: '', email: '', phone: '' })
+  const [isSubmitted, setIsSubmitted] = useState(false)
+  const [selectedBdDomain, setSelectedBdDomain] = useState('')
 
-  const extPrices = {'.com':'৳1,200','.xyz':'৳99','.net':'৳1,400','.org':'৳1,300','.io':'৳4,500','.com.bd':'৳800','.bd':'৳800'}
+  const [livePrices, setLivePrices] = useState(null)
+
+  useEffect(() => {
+    fetch('https://portal.snbdhost.com/pricing.json')
+      .then(res => res.json())
+      .then(data => {
+        // Automatically detect if WHMCS exported in USD instead of BDT
+        const isUsd = data['.com'] && parseFloat(data['.com'].reg) < 50;
+        const exchangeRate = 123; // 1 / 0.00813
+        
+        if (isUsd) {
+          const convertedData = {};
+          for (let key in data) {
+            convertedData[key] = {
+              ext: data[key].ext,
+              reg: parseFloat(data[key].reg) * exchangeRate,
+              ren: parseFloat(data[key].ren) * exchangeRate,
+              tra: parseFloat(data[key].tra) * exchangeRate,
+            };
+          }
+          setLivePrices(convertedData);
+        } else {
+          setLivePrices(data);
+        }
+      })
+      .catch(err => console.log('Failed to load dynamic pricing, using fallback.', err));
+  }, []);
+
+  const defaultExtPrices = {'.com':1200,'.xyz':99,'.net':1400,'.org':1300,'.io':4500,'.com.bd':800,'.bd':800}
+  
+  // Create an active set of prices for the badges at the top
+  const activeExtPrices = livePrices 
+    ? Object.keys(defaultExtPrices).reduce((acc, key) => ({
+        ...acc, 
+        [key]: livePrices[key] ? livePrices[key].reg : defaultExtPrices[key]
+      }), {})
+    : defaultExtPrices;
 
   function handleSearch() {
     if (query.trim()) {
@@ -20,6 +64,26 @@ export default function DomainPage() {
 
   function selectExt(e) {
     setExt(e)
+  }
+
+  function handleRegisterClick(e, domainName, extension) {
+    e.preventDefault();
+    const bdDomains = ['.bd', '.com.bd', '.net.bd', '.org.bd'];
+    
+    if (bdDomains.includes(extension)) {
+      setSelectedBdDomain(domainName + extension);
+      setIsSubmitted(false);
+      const initialDomain = (domainName === 'yourbrand' || domainName === 'yourdomain') ? extension : domainName + extension;
+      setBdFormDetails({ domain: initialDomain, name: '', email: '', phone: '' });
+      setShowBdModal(true);
+    } else {
+      window.location.href = `https://portal.snbdhost.com/cart.php?a=add&domain=register&query=${domainName}${extension}`;
+    }
+  }
+
+  function handleBdSubmit(e) {
+    e.preventDefault();
+    setIsSubmitted(true);
   }
 
   return (
@@ -63,20 +127,20 @@ export default function DomainPage() {
               </select>
               <button
                 onClick={handleSearch}
-                className="bg-brand-red hover:bg-[var(--brand-red-dark)] text-white font-bold px-6 py-3 rounded-xl transition-colors whitespace-nowrap flex items-center gap-2 justify-center"
+                className="bg-brand-red hover:bg-[#a30000] text-white font-bold px-6 py-3 rounded-xl transition-colors whitespace-nowrap flex items-center gap-2 justify-center"
               >
                 <i className="fa-solid fa-magnifying-glass text-sm"></i>
                 Search Domain
               </button>
             </div>
             <div className="flex flex-wrap gap-2 mt-4 justify-center">
-              {Object.entries(extPrices).map(([e, price]) => (
+              {Object.entries(activeExtPrices).map(([e, price]) => (
                 <button
                   key={e}
                   onClick={() => selectExt(e)}
                   className={`ext-badge text-xs font-semibold px-3 py-1.5 rounded-full border transition-colors ${ext === e ? 'bg-red-50 text-red-700 border-red-200' : 'bg-[#F8F9FB] text-gray-500 border-[#E5E7EB] hover:bg-red-50 hover:text-red-700 hover:border-red-200'}`}
                 >
-                  {e} <span className="text-[#9CA3AF]">{price}/yr</span>
+                  {e} <span className="text-[#9CA3AF]">{formatPrice(price)}/yr</span>
                 </button>
               ))}
             </div>
@@ -90,7 +154,9 @@ export default function DomainPage() {
                   <span className="text-xs text-[#9CA3AF]">Showing 3 results</span>
                 </div>
                 <div className="divide-y divide-gray-100">
-                  {[{ext:'.com',price:'৳1,200'},{ext:'.net',price:'৳1,400'},{ext:'.xyz',price:'৳99'}].map(({ext:e,price}) => (
+                  {['.com', '.net', '.xyz'].map((e) => {
+                    const price = livePrices && livePrices[e] ? livePrices[e].reg : defaultExtPrices[e] || 99;
+                    return (
                     <div key={e} className="flex items-center justify-between px-5 py-4">
                       <div className="flex items-center gap-3">
                         <span className="font-bold text-gray-900 text-base">{searchedQuery}{e}</span>
@@ -99,11 +165,11 @@ export default function DomainPage() {
                         </span>
                       </div>
                       <div className="flex items-center gap-4">
-                        <span className="font-bold text-gray-800">{price}<span className="text-xs font-normal text-[#9CA3AF]">/yr</span></span>
-                        <a href="#" className="bg-brand-red hover:bg-[var(--brand-red-dark)] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">Register</a>
+                        <span className="font-bold text-gray-800">{formatPrice(price)}<span className="text-xs font-normal text-[#9CA3AF]">/yr</span></span>
+                        <button onClick={(event) => handleRegisterClick(event, searchedQuery, e)} className="bg-brand-red hover:bg-[#a30000] text-white text-xs font-bold px-4 py-2 rounded-lg transition-colors">Register</button>
                       </div>
                     </div>
-                  ))}
+                  )})}
                 </div>
               </div>
             </div>
@@ -133,32 +199,36 @@ export default function DomainPage() {
                 </thead>
                 <tbody className="divide-y divide-gray-100">
                   {[
-                    {ext:'.com',reg:'৳1,200',ren:'৳1,400',tra:'৳1,200',pop:'Business, personal brands',hot:false,bd:false},
-                    {ext:'.net',reg:'৳1,400',ren:'৳1,600',tra:'৳1,400',pop:'Tech, networks',hot:false,bd:false},
-                    {ext:'.org',reg:'৳1,300',ren:'৳1,500',tra:'৳1,300',pop:'NGOs, nonprofits',hot:false,bd:false},
-                    {ext:'.xyz',reg:'৳99',ren:'৳599',tra:'৳499',pop:'Startups, portfolios',hot:true,bd:false},
-                    {ext:'.io',reg:'৳4,500',ren:'৳5,000',tra:'৳4,500',pop:'Tech startups, SaaS',hot:false,bd:false},
-                    {ext:'.info',reg:'৳700',ren:'৳900',tra:'৳700',pop:'Informational sites',hot:false,bd:false},
-                    {ext:'.online',reg:'৳199',ren:'৳899',tra:'৳699',pop:'Online businesses',hot:false,bd:false},
-                    {ext:'.store',reg:'৳299',ren:'৳1,299',tra:'৳999',pop:'eCommerce stores',hot:false,bd:false},
-                    {ext:'.tech',reg:'৳599',ren:'৳1,999',tra:'৳1,499',pop:'Tech companies',hot:false,bd:false},
-                    {ext:'.com.bd',reg:'৳800',ren:'৳800',tra:'৳800',pop:'Bangladesh businesses',hot:false,bd:true},
-                    {ext:'.bd',reg:'৳800',ren:'৳800',tra:'৳800',pop:'Bangladesh brands',hot:false,bd:true},
-                    {ext:'.net.bd',reg:'৳800',ren:'৳800',tra:'৳800',pop:'Bangladesh networks',hot:false,bd:true},
-                  ].map(({ext:e,reg,ren,tra,pop,hot,bd}) => (
+                    {ext:'.com',dreg:1200,dren:1400,dtra:1200,pop:'Business, personal brands',hot:false,bd:false},
+                    {ext:'.net',dreg:1400,dren:1600,dtra:1400,pop:'Tech, networks',hot:false,bd:false},
+                    {ext:'.org',dreg:1300,dren:1500,dtra:1300,pop:'NGOs, nonprofits',hot:false,bd:false},
+                    {ext:'.xyz',dreg:99,dren:599,dtra:499,pop:'Startups, portfolios',hot:true,bd:false},
+                    {ext:'.io',dreg:4500,dren:5000,dtra:4500,pop:'Tech startups, SaaS',hot:false,bd:false},
+                    {ext:'.info',dreg:700,dren:900,dtra:700,pop:'Informational sites',hot:false,bd:false},
+                    {ext:'.online',dreg:199,dren:899,dtra:699,pop:'Online businesses',hot:false,bd:false},
+                    {ext:'.store',dreg:299,dren:1299,dtra:999,pop:'eCommerce stores',hot:false,bd:false},
+                    {ext:'.tech',dreg:599,dren:1999,dtra:1499,pop:'Tech companies',hot:false,bd:false},
+                    {ext:'.com.bd',dreg:800,dren:800,dtra:800,pop:'Bangladesh businesses',hot:false,bd:true},
+                    {ext:'.bd',dreg:800,dren:800,dtra:800,pop:'Bangladesh brands',hot:false,bd:true},
+                    {ext:'.net.bd',dreg:800,dren:800,dtra:800,pop:'Bangladesh networks',hot:false,bd:true},
+                  ].map(({ext:e,dreg,dren,dtra,pop,hot,bd}) => {
+                    const reg = livePrices && livePrices[e] ? livePrices[e].reg : dreg;
+                    const ren = livePrices && livePrices[e] ? livePrices[e].ren : dren;
+                    const tra = livePrices && livePrices[e] ? livePrices[e].tra : dtra;
+                    return (
                     <tr key={e} className={`${bd ? 'bg-red-50 hover:bg-red-100' : 'hover:bg-[#F0F1F4]'} transition-colors`}>
                       <td className="px-6 py-4">
                         <span className="font-extrabold text-gray-900 text-base">{e}</span>
                         {hot && <span className="ml-2 bg-yellow-100 text-yellow-700 text-xs font-bold px-1.5 py-0.5 rounded">HOT</span>}
                         {bd && <span className="ml-2 text-sm">⭐</span>}
                       </td>
-                      <td className={`px-6 py-4 text-center ${hot||bd ? 'font-bold text-[var(--brand-red)]' : 'font-semibold text-gray-800'}`}>{reg}</td>
-                      <td className="px-6 py-4 text-center text-gray-500">{ren}</td>
-                      <td className="px-6 py-4 text-center text-gray-500">{tra}</td>
+                      <td className={`px-6 py-4 text-center ${hot||bd ? 'font-bold text-[var(--brand-red)]' : 'font-semibold text-gray-800'}`}>{formatPrice(reg)}</td>
+                      <td className="px-6 py-4 text-center text-gray-500">{formatPrice(ren)}</td>
+                      <td className="px-6 py-4 text-center text-gray-500">{formatPrice(tra)}</td>
                       <td className={`px-6 py-4 hidden md:table-cell ${bd ? 'text-gray-500 font-medium' : 'text-gray-500'}`}>{pop}</td>
-                      <td className="px-6 py-4 text-center"><a href="#" className="text-[var(--brand-red)] font-semibold hover:underline text-xs">Register</a></td>
+                      <td className="px-6 py-4 text-center"><button onClick={(event) => handleRegisterClick(event, 'yourdomain', e)} className="text-[var(--brand-red)] font-semibold hover:underline text-xs cursor-pointer">Register</button></td>
                     </tr>
-                  ))}
+                  )})}
                 </tbody>
               </table>
             </div>
@@ -214,7 +284,7 @@ export default function DomainPage() {
                   </li>
                 ))}
               </ul>
-              <a href="#" className="inline-flex items-center gap-2 bg-brand-red hover:bg-[var(--brand-red-dark)] text-white font-bold px-6 py-3 rounded-xl transition-colors">
+              <a href="#" className="inline-flex items-center gap-2 bg-brand-red hover:bg-[#a30000] text-white font-bold px-6 py-3 rounded-xl transition-colors">
                 Start Transfer <i className="fa-solid fa-arrow-right text-sm"></i>
               </a>
             </div>
@@ -303,7 +373,7 @@ export default function DomainPage() {
                   <span className="text-3xl font-extrabold text-gray-900">{e}</span>
                   <span className="text-2xl">🇧🇩</span>
                 </div>
-                <div className="text-2xl font-extrabold text-[var(--brand-red)] mb-1">৳800<span className="text-sm font-normal text-[#9CA3AF]">/yr</span></div>
+                <div className="text-2xl font-extrabold text-[var(--brand-red)] mb-1">{formatPrice(livePrices && livePrices[e] ? livePrices[e].reg : 800)}<span className="text-sm font-normal text-[#9CA3AF]">/yr</span></div>
                 <p className="text-sm text-gray-500 mb-5 leading-relaxed">{desc}</p>
                 <div className="space-y-2 mb-5">
                   {['Free WHOIS Privacy','DNS Management Included','Same Renewal Price'].map(f => (
@@ -312,13 +382,69 @@ export default function DomainPage() {
                     </div>
                   ))}
                 </div>
-                <a href="#" className="block text-center bg-brand-red hover:bg-[var(--brand-red-dark)] text-white font-bold text-sm px-4 py-3 rounded-xl transition-colors">Register Now</a>
+                <button onClick={(event) => handleRegisterClick(event, 'yourbrand', e)} className="w-full block text-center bg-brand-red hover:bg-[#a30000] text-white font-bold text-sm px-4 py-3 rounded-xl transition-colors cursor-pointer">Register Now</button>
               </div>
             ))}
           </div>
           <p className="text-center text-xs text-[#9CA3AF] mt-6">Bangladesh country-code domain registrations may require valid local business documentation. Our team will guide you through the process.</p>
         </div>
       </section>
+
+      {/* BD DOMAIN MODAL */}
+      {showBdModal && (
+        <div className="fixed inset-0 z-[100] flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+          <div className="bg-white rounded-2xl shadow-2xl max-w-md w-full overflow-hidden animate-in fade-in zoom-in-95 duration-200">
+            <div className="bg-red-50 border-b border-red-100 px-6 py-4 flex items-center justify-between">
+              <h3 className="font-bold text-red-900 text-lg flex items-center gap-2">
+                <span>🇧🇩</span> BD Domain Request
+              </h3>
+              <button onClick={() => setShowBdModal(false)} className="text-red-400 hover:text-red-700 transition-colors">
+                <i className="fa-solid fa-xmark text-xl"></i>
+              </button>
+            </div>
+            <div className="p-6">
+              {isSubmitted ? (
+                <div className="text-center py-6">
+                  <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i className="fa-solid fa-check text-2xl text-green-600"></i>
+                  </div>
+                  <h4 className="text-xl font-bold text-gray-900 mb-2">Request Received!</h4>
+                  <p className="text-gray-600">You will get a call in the next hour for details. Your domain order for <strong className="text-gray-900">{selectedBdDomain}</strong> has been booked.</p>
+                  <button onClick={() => setShowBdModal(false)} className="mt-6 w-full bg-gray-100 hover:bg-gray-200 text-gray-800 font-bold py-3 rounded-xl transition-colors">Close</button>
+                </div>
+              ) : (
+                <form onSubmit={handleBdSubmit}>
+                  <p className="text-sm text-gray-500 mb-5">
+                    Bangladesh country-code domains require manual processing. Please fill out the form below.
+                  </p>
+                  <div className="space-y-4">
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">What domain did you choose?</label>
+                      <input required type="text" value={bdFormDetails.domain} onChange={e => setBdFormDetails({...bdFormDetails, domain: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900" placeholder="e.g. mycompany.com.bd" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Your Name</label>
+                      <input required type="text" value={bdFormDetails.name} onChange={e => setBdFormDetails({...bdFormDetails, name: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900" placeholder="John Doe" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Phone Number</label>
+                      <input required type="tel" value={bdFormDetails.phone} onChange={e => setBdFormDetails({...bdFormDetails, phone: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900" placeholder="+88017XXXXXXXX" />
+                    </div>
+                    <div>
+                      <label className="block text-sm font-semibold text-gray-700 mb-1">Email Address</label>
+                      <input required type="email" value={bdFormDetails.email} onChange={e => setBdFormDetails({...bdFormDetails, email: e.target.value})} className="w-full px-4 py-2.5 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-brand-red focus:border-transparent text-gray-900" placeholder="john@example.com" />
+                    </div>
+                  </div>
+                  <div className="mt-8 flex gap-3">
+                    <button type="button" onClick={() => setShowBdModal(false)} className="flex-1 bg-white border border-gray-300 hover:bg-gray-50 text-gray-700 font-bold py-3 rounded-xl transition-colors">Cancel</button>
+                    <button type="submit" className="flex-1 bg-brand-red hover:bg-[#a30000] text-white font-bold py-3 rounded-xl transition-colors">Submit Request</button>
+                  </div>
+                </form>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </>
   )
 }

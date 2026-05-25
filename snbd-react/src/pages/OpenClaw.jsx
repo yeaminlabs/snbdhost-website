@@ -3,8 +3,10 @@ import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function OpenClaw() {
+  const { formatPrice } = useCurrency();
   const [billingTab, setBillingTab] = useState('monthly');
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -199,7 +201,7 @@ export default function OpenClaw() {
                 <h3 className={`text-xl font-bold mb-4 ${plan.popular ? 'text-primary' : 'text-gray-900'}`}>{plan.name}</h3>
                 
                 <div className="mb-6 border-b border-gray-100 pb-6">
-                  <span className="text-3xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? plan.priceM : plan.priceY}</span>
+                  <span className="text-3xl font-extrabold text-gray-900">{formatPrice(billingTab === 'monthly' ? plan.priceM : plan.priceY)}</span>
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
                 

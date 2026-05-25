@@ -1,4 +1,4 @@
-require('dotenv').config();
+require('dotenv').config({ path: require('path').join(__dirname, '.env') });
 const express = require('express');
 const cors = require('cors');
 const path = require('path');
@@ -16,6 +16,28 @@ app.use(express.json({ limit: '2mb' }));
 // API routes
 app.use('/api/auth', require('./routes/auth'));
 app.use('/api/posts', require('./routes/posts'));
+app.use('/api/marketing-config', require('./routes/marketing'));
+app.use('/api/versions', require('./routes/versions'));
+
+// Initialize active version state on server start
+const { setActiveVersion, getActiveVersionPath } = require('./utils/versionState');
+
+async function initActiveVersion() {
+  try {
+    const { getDb, get } = require('./db/database');
+    const db = await getDb();
+    const activeVer = get(db, "SELECT version FROM versions WHERE status = 'active'");
+    if (activeVer) {
+      setActiveVersion(activeVer.version);
+    } else {
+      setActiveVersion(null);
+    }
+  } catch (err) {
+    console.error('Failed to initialize active version at startup:', err);
+    setActiveVersion(null);
+  }
+}
+initActiveVersion();
 
 app.get('/health', (req, res) => res.json({ status: 'ok' }));
 
@@ -86,6 +108,65 @@ const staticMeta = {
   },
 };
 
+function buildMarketingHeadScripts(cfg) {
+  let scripts = '';
+  if (!cfg) return scripts;
+
+  // Google Tag Manager (head snippet)
+  if (cfg.gtm?.enabled && cfg.gtm.id) {
+    scripts += `<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);})(window,document,'script','dataLayer','${cfg.gtm.id}');</script>`;
+  }
+
+  // GA4
+  if (cfg.ga4?.enabled && cfg.ga4.id) {
+    scripts += `<script async src="https://www.googletagmanager.com/gtag/js?id=${cfg.ga4.id}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${cfg.ga4.id}');</script>`;
+  }
+
+  // Google Ads
+  if (cfg.gads?.enabled && cfg.gads.id) {
+    scripts += `<script async src="https://www.googletagmanager.com/gtag/js?id=${cfg.gads.id}"></script><script>window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments)}gtag('js',new Date());gtag('config','${cfg.gads.id}');</script>`;
+  }
+
+  // Facebook Pixel
+  if (cfg.fbpixel?.enabled && cfg.fbpixel.id) {
+    scripts += `<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${cfg.fbpixel.id}');fbq('track','PageView');</script><noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=${cfg.fbpixel.id}&ev=PageView&noscript=1"/></noscript>`;
+  }
+
+  // Microsoft Clarity
+  if (cfg.clarity?.enabled && cfg.clarity.id) {
+    scripts += `<script type="text/javascript">(function(c,l,a,r,i,t,y){c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);})(window,document,"clarity","script","${cfg.clarity.id}");</script>`;
+  }
+
+  // Hotjar
+  if (cfg.hotjar?.enabled && cfg.hotjar.id) {
+    scripts += `<script>(function(h,o,t,j,a,r){h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};h._hjSettings={hjid:${cfg.hotjar.id},hjsv:6};a=o.getElementsByTagName('head')[0];r=o.createElement('script');r.async=1;r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;a.appendChild(r);})(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');</script>`;
+  }
+
+  // LinkedIn Insight Tag
+  if (cfg.linkedin?.enabled && cfg.linkedin.id) {
+    scripts += `<script type="text/javascript">_linkedin_partner_id="${cfg.linkedin.id}";window._linkedin_data_partner_ids=window._linkedin_data_partner_ids||[];window._linkedin_data_partner_ids.push(_linkedin_partner_id);(function(l){if(!l){window.lintrk=function(a,b){window.lintrk.q.push([a,b])};window.lintrk.q=[]}var s=document.getElementsByTagName("script")[0];var b=document.createElement("script");b.type="text/javascript";b.async=true;b.src="https://snap.licdn.com/li.lms-analytics/insight.min.js";s.parentNode.insertBefore(b,s)})(window.lintrk);</script>`;
+  }
+
+  // TikTok Pixel
+  if (cfg.tiktok?.enabled && cfg.tiktok.id) {
+    scripts += `<script>!function(w,d,t){w.TiktokAnalyticsObject=t;var ttq=w[t]=w[t]||[];ttq.methods=["page","track","identify","instances","debug","on","off","once","ready","alias","group","enableCookie","disableCookie"],ttq.setAndDefer=function(t,e){t[e]=function(){t.push([e].concat(Array.prototype.slice.call(arguments,0)))}};for(var i=0;i<ttq.methods.length;i++)ttq.setAndDefer(ttq,ttq.methods[i]);ttq.instance=function(t){for(var e=ttq._i[t]||[],n=0;n<ttq.methods.length;n++)ttq.setAndDefer(e,ttq.methods[n]);return e},ttq.load=function(e,n){var i="https://analytics.tiktok.com/i18n/pixel/events.js";ttq._i=ttq._i||{},ttq._i[e]=[],ttq._t=ttq._t||{},ttq._t[e]=+new Date,ttq._u=ttq._u||{};var r=document.createElement("script");r.type="text/javascript",r.async=!0,r.src=i+"?sdkid="+e+"&lib="+t;var a=document.getElementsByTagName("script")[0];a.parentNode.insertBefore(r,a)};ttq.load("${cfg.tiktok.id}");ttq.page();}(window,document,'ttq');</script>`;
+  }
+
+  // Custom head code
+  if (cfg.customHead?.enabled && cfg.customHead.code) {
+    scripts += cfg.customHead.code;
+  }
+
+  return scripts;
+}
+
+function buildGtmBodyTag(cfg) {
+  if (cfg?.gtm?.enabled && cfg.gtm.id) {
+    return `<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=${cfg.gtm.id}" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>`;
+  }
+  return '';
+}
+
 function injectMeta(html, { title, description, image, urlPath }) {
   const img = image || DEFAULT_IMAGE;
   const url = `${BASE_URL}${urlPath || '/'}`;
@@ -106,47 +187,86 @@ function injectMeta(html, { title, description, image, urlPath }) {
   return html.replace(/<title>.*?<\/title>/, '').replace('<head>', `<head>${tags}`);
 }
 
-// Serve static SPA in production (in dev, Vite dev server serves the frontend)
-const DIST_PATH = path.join(__dirname, '../dist');
-const INDEX_PATH = path.join(DIST_PATH, 'index.html');
+// Dynamic static SPA serving based on active version
+app.use((req, res, next) => {
+  // Skip API and health routes
+  if (req.path.startsWith('/api') || req.path === '/health') {
+    return next();
+  }
 
-if (fs.existsSync(DIST_PATH)) {
-  app.use(express.static(DIST_PATH, { index: false }));
+  // index.html and root path must fall through to the wildcard SPA route for SEO meta injection
+  if (req.path === '/' || req.path === '/index.html') {
+    return next();
+  }
 
-  app.get('*', async (req, res) => {
-    try {
-      const indexHtml = fs.readFileSync(INDEX_PATH, 'utf8');
-      const isBot = BOT_UA.test(req.headers['user-agent'] || '');
+  const activePath = getActiveVersionPath();
+  const filePath = path.join(activePath, req.path);
 
-      if (!isBot) return res.send(indexHtml);
-
-      let metaData = staticMeta[req.path];
-
-      if (req.path.startsWith('/blog/') && !staticMeta[req.path]) {
-        try {
-          const { getDb, get } = require('./db/database');
-          const db = await getDb();
-          const slug = req.path.replace('/blog/', '');
-          const post = get(db, "SELECT * FROM posts WHERE slug = ? AND status = 'published'", [slug]);
-          if (post) {
-            metaData = {
-              title: `${post.meta_title || post.title} | SNBD HOST Blog`,
-              description: post.meta_description || post.excerpt || '',
-              image: post.og_image || post.featured_image_url,
-            };
-          }
-        } catch {}
-      }
-
-      if (!metaData) {
-        metaData = { title: 'SNBD HOST', description: 'Bangladesh\'s leading web hosting provider.' };
-      }
-
-      res.send(injectMeta(indexHtml, { ...metaData, urlPath: req.path }));
-    } catch (err) {
-      res.status(500).send('Server error');
+  fs.stat(filePath, (err, stats) => {
+    if (!err && stats.isFile()) {
+      return res.sendFile(filePath);
     }
+    next();
   });
-}
+});
+
+app.get('*', async (req, res) => {
+  try {
+    const activePath = getActiveVersionPath();
+    const indexPath = path.join(activePath, 'index.html');
+    
+    let resolvedIndexPath = indexPath;
+    if (!fs.existsSync(resolvedIndexPath)) {
+      resolvedIndexPath = path.join(__dirname, '../dist/index.html');
+    }
+
+    if (!fs.existsSync(resolvedIndexPath)) {
+      return res.status(404).send('Application build files not found.');
+    }
+
+    const indexHtml = fs.readFileSync(resolvedIndexPath, 'utf8');
+    const isBot = BOT_UA.test(req.headers['user-agent'] || '');
+    const mktCfg = require('./routes/marketing').readConfig();
+    const headScripts = buildMarketingHeadScripts(mktCfg);
+    const bodyTag    = buildGtmBodyTag(mktCfg);
+
+    if (!isBot) {
+      // Still inject marketing scripts for real users
+      let html = indexHtml;
+      if (headScripts) html = html.replace('</head>', `${headScripts}</head>`);
+      if (bodyTag)    html = html.replace('<body>', `<body>${bodyTag}`);
+      return res.send(html);
+    }
+
+    let metaData = staticMeta[req.path];
+
+    if (req.path.startsWith('/blog/') && !staticMeta[req.path]) {
+      try {
+        const { getDb, get } = require('./db/database');
+        const db = await getDb();
+        const slug = req.path.replace('/blog/', '');
+        const post = get(db, "SELECT * FROM posts WHERE slug = ? AND status = 'published'", [slug]);
+        if (post) {
+          metaData = {
+            title: `${post.meta_title || post.title} | SNBD HOST Blog`,
+            description: post.meta_description || post.excerpt || '',
+            image: post.og_image || post.featured_image_url,
+          };
+        }
+      } catch {}
+    }
+
+    if (!metaData) {
+      metaData = { title: 'SNBD HOST', description: 'Bangladesh\'s leading web hosting provider.' };
+    }
+
+    let finalHtml = injectMeta(indexHtml, { ...metaData, urlPath: req.path });
+    if (headScripts) finalHtml = finalHtml.replace('</head>', `${headScripts}</head>`);
+    if (bodyTag)     finalHtml = finalHtml.replace('<body>', `<body>${bodyTag}`);
+    res.send(finalHtml);
+  } catch (err) {
+    res.status(500).send('Server error');
+  }
+});
 
 app.listen(PORT, () => console.log(`SNBD HOST Blog API running on port ${PORT}`));

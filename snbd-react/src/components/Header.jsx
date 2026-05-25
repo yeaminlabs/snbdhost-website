@@ -1,7 +1,9 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function Header() {
+  const { currency, setCurrency } = useCurrency();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [serversMobileOpen, setServersMobileOpen] = useState(false);
 
@@ -70,19 +72,26 @@ export default function Header() {
 
           {/* Right: Currency + Dashboard Button + Hamburger */}
           <div className="flex items-center gap-3 relative">
-            {/* Currency Switcher (Design only) */}
+            {/* Currency Switcher */}
             <div className="relative group hidden sm:inline-block">
               <button type="button" className="flex items-center gap-1.5 px-3 py-2 bg-gray-50 hover:bg-gray-100 border border-gray-200 rounded-lg text-sm font-bold text-gray-700 transition-colors cursor-pointer">
-                <span>৳ BDT</span>
+                <span>{currency === 'BDT' ? '৳ BDT' : '$ USD'}</span>
                 <i className="fa-solid fa-chevron-down text-[10px] text-gray-500"></i>
               </button>
               <div className="absolute top-full right-0 mt-2 w-28 bg-white border border-gray-100 shadow-xl rounded-xl opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200 py-1 z-50 overflow-hidden transform origin-top-right group-hover:scale-100 scale-95">
-                <button type="button" className="w-full text-left px-4 py-2.5 text-sm font-bold text-brand-red bg-red-50 flex justify-between items-center cursor-pointer">
+                <button 
+                  onClick={() => setCurrency('BDT')}
+                  type="button" 
+                  className={`w-full text-left px-4 py-2.5 text-sm flex justify-between items-center cursor-pointer transition-colors ${currency === 'BDT' ? 'font-bold text-brand-red bg-red-50' : 'font-semibold text-gray-600 hover:bg-gray-50'}`}>
                   <span>৳ BDT</span>
-                  <i className="fa-solid fa-check text-xs"></i>
+                  {currency === 'BDT' && <i className="fa-solid fa-check text-xs"></i>}
                 </button>
-                <button type="button" className="w-full text-left px-4 py-2.5 text-sm font-semibold text-gray-600 hover:bg-gray-50 flex justify-between items-center cursor-pointer transition-colors">
+                <button 
+                  onClick={() => setCurrency('USD')}
+                  type="button" 
+                  className={`w-full text-left px-4 py-2.5 text-sm flex justify-between items-center cursor-pointer transition-colors ${currency === 'USD' ? 'font-bold text-brand-red bg-red-50' : 'font-semibold text-gray-600 hover:bg-gray-50'}`}>
                   <span>$ USD</span>
+                  {currency === 'USD' && <i className="fa-solid fa-check text-xs"></i>}
                 </button>
               </div>
             </div>
@@ -169,8 +178,16 @@ export default function Header() {
           
           <div className="pt-2 pb-1 border-t border-gray-100 flex items-center justify-between gap-4 mt-2 mb-4">
             <div className="flex items-center bg-gray-100 rounded-lg p-1 w-full max-w-[140px]">
-              <button className="flex-1 py-1.5 text-xs font-bold bg-white text-brand-red rounded-md shadow-sm">৳ BDT</button>
-              <button className="flex-1 py-1.5 text-xs font-semibold text-gray-500 hover:text-gray-800">USD</button>
+              <button 
+                onClick={() => setCurrency('BDT')}
+                className={`flex-1 py-1.5 text-xs rounded-md shadow-sm transition-colors ${currency === 'BDT' ? 'font-bold bg-white text-brand-red' : 'font-semibold text-gray-500 hover:text-gray-800 bg-transparent shadow-none'}`}>
+                ৳ BDT
+              </button>
+              <button 
+                onClick={() => setCurrency('USD')}
+                className={`flex-1 py-1.5 text-xs rounded-md shadow-sm transition-colors ${currency === 'USD' ? 'font-bold bg-white text-brand-red' : 'font-semibold text-gray-500 hover:text-gray-800 bg-transparent shadow-none'}`}>
+                USD
+              </button>
             </div>
           </div>
           

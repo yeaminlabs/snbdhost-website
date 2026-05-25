@@ -46,6 +46,16 @@ async function getDb() {
     CREATE INDEX IF NOT EXISTS idx_posts_slug ON posts(slug);
     CREATE INDEX IF NOT EXISTS idx_posts_status ON posts(status);
     CREATE INDEX IF NOT EXISTS idx_posts_published_at ON posts(published_at DESC);
+
+    CREATE TABLE IF NOT EXISTS versions (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      version TEXT NOT NULL UNIQUE,
+      commit_sha TEXT NOT NULL,
+      description TEXT,
+      status TEXT NOT NULL DEFAULT 'inactive' CHECK(status IN ('active','inactive')),
+      created_at TEXT NOT NULL DEFAULT (datetime('now')),
+      updated_at TEXT NOT NULL DEFAULT (datetime('now'))
+    );
   `);
 
   saveDb();

@@ -2,8 +2,10 @@ import { useState } from 'react';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function VPSServer() {
+  const { formatPrice } = useCurrency();
   const [billingTab, setBillingTab] = useState('monthly');
   const [location, setLocation] = useState('sg');
   const [openFaq, setOpenFaq] = useState(0);
@@ -180,7 +182,7 @@ export default function VPSServer() {
                 <p className="text-xs text-gray-500 mb-4 h-8">{plan.desc}</p>
 
                 <div className="mb-6 border-b border-gray-800 pb-6">
-                  <span className="text-3xl font-extrabold text-white">৳{billingTab === 'monthly' ? plan.priceM.toLocaleString() : plan.priceY.toLocaleString()}</span>
+                  <span className="text-3xl font-extrabold text-white">{formatPrice(billingTab === 'monthly' ? plan.priceM : plan.priceY)}</span>
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
                 

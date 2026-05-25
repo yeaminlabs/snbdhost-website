@@ -1,8 +1,11 @@
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
+import { useState } from 'react';
 
 export default function HomePage() {
+  const { formatPrice } = useCurrency();
   return (
     <>
       <SEOHead {...pageMeta.home} />
@@ -353,7 +356,7 @@ export default function HomePage() {
                 </span>
                 <h3 className="text-2xl font-extrabold text-gray-900 mb-1">USA Shared</h3>
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="text-5xl font-extrabold text-gray-900">৳187</span>
+                  <span className="text-5xl font-extrabold text-gray-900">{formatPrice(187)}</span>
                   <span className="text-gray-400 font-medium">/mo</span>
                 </div>
                 <p className="text-sm text-gray-500 font-bold mt-2">Reliable hosting for global audiences</p>
@@ -383,7 +386,7 @@ export default function HomePage() {
                 </span>
                 <h3 className="text-2xl font-extrabold text-gray-900 mb-1">BDIX Shared</h3>
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="text-5xl font-extrabold text-gray-900">৳187</span>
+                  <span className="text-5xl font-extrabold text-gray-900">{formatPrice(187)}</span>
                   <span className="text-gray-400 font-medium">/mo</span>
                 </div>
                 <p className="text-sm text-primary font-bold mt-2">Ultra-low latency for Bangladesh</p>
@@ -410,7 +413,7 @@ export default function HomePage() {
                 </span>
                 <h3 className="text-2xl font-extrabold text-white mb-1">SG VPS 2G</h3>
                 <div className="flex items-baseline gap-1 mt-3">
-                  <span className="text-5xl font-extrabold text-white">৳1547</span>
+                  <span className="text-5xl font-extrabold text-white">{formatPrice(1547)}</span>
                   <span className="text-gray-500 font-medium">/mo</span>
                 </div>
                 <p className="text-sm text-gray-400 font-bold mt-2">Instant deploy Linux VPS with root access</p>

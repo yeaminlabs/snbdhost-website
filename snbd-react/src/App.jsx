@@ -4,6 +4,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import JsonLd from './components/JsonLd';
 import { organizationSchema } from './seo/pageMeta';
+import { FloatingWhatsApp } from '@carlos8a/react-whatsapp-floating-button';
 
 // Pages
 import Home from './pages/Home';
@@ -27,6 +28,9 @@ import BlogPost from './pages/blog/BlogPost';
 import AdminLogin from './pages/admin/AdminLogin';
 import AdminDashboard from './pages/admin/AdminDashboard';
 import PostEditor from './pages/admin/PostEditor';
+import SeoChecklist from './pages/admin/SeoChecklist';
+import MarketingTools from './pages/admin/MarketingTools';
+import VersionControl from './pages/admin/VersionControl';
 import ProtectedRoute from './pages/admin/ProtectedRoute';
 
 function App() {
@@ -82,10 +86,47 @@ function App() {
                   </ProtectedRoute>
                 }
               />
+              <Route
+                path="/admin/seo-checklist"
+                element={
+                  <ProtectedRoute>
+                    <SeoChecklist />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/marketing"
+                element={
+                  <ProtectedRoute>
+                    <MarketingTools />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/versions"
+                element={
+                  <ProtectedRoute>
+                    <VersionControl />
+                  </ProtectedRoute>
+                }
+              />
             </Routes>
           </main>
 
           <Footer />
+
+          <FloatingWhatsApp
+            phoneNumber='8801841528073'
+            accountName='SNBD HOST Support'
+            avatar='/logo.png'
+            initialMessageByServer='Hi there! How can we help you today?'
+            initialMessageByClient='Hello! I need some help with SNBD HOST services.'
+            statusMessage='Typically replies instantly'
+            startChatText='Start chat with us'
+            tooltipText='Need help? Click to chat!'
+            allowEsc={true}
+            allowClickAway={true}
+          />
         </div>
       </Router>
     </HelmetProvider>

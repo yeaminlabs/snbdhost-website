@@ -1,0 +1,123 @@
+{
+  "generated": "2026-05-25",
+  "base_url": "https://snbdhost.com",
+  "pages": {
+    "home": {
+      "title_raw": "SNBD HOST — Bangladesh's #1 Web Hosting",
+      "title_final": "SNBD HOST — Bangladesh's #1 Web Hosting | SNBD HOST",
+      "title_len": 51,
+      "desc_len": 145,
+      "og_image": "https://snbdhost.com/og/home.jpg",
+      "og_path": "/og/home.jpg",
+      "canonical": "https://snbdhost.com/"
+    },
+    "hosting": {
+      "title_raw": "Shared Hosting Bangladesh — NVMe SSD & cPanel",
+      "title_final": "Shared Hosting Bangladesh — NVMe SSD & cPanel | SNBD HOST",
+      "title_len": 57,
+      "desc_len": 142,
+      "og_image": "https://snbdhost.com/og/hosting.jpg",
+      "og_path": "/og/hosting.jpg",
+      "canonical": "https://snbdhost.com/hosting"
+    },
+    "reseller": {
+      "title_raw": "Reseller Hosting Bangladesh — White Label WHM",
+      "title_final": "Reseller Hosting Bangladesh — White Label WHM | SNBD HOST",
+      "title_len": 57,
+      "desc_len": 140,
+      "og_image": "https://snbdhost.com/og/reseller.jpg",
+      "og_path": "/og/reseller.jpg",
+      "canonical": "https://snbdhost.com/reseller-hosting"
+    },
+    "domain": {
+      "title_raw": "Domain Registration Bangladesh — .com .bd .xyz",
+      "title_final": "Domain Registration Bangladesh — .com .bd .xyz | SNBD HOST",
+      "title_len": 58,
+      "desc_len": 144,
+      "og_image": "https://snbdhost.com/og/domain.jpg",
+      "og_path": "/og/domain.jpg",
+      "canonical": "https://snbdhost.com/domain"
+    },
+    "vpsServer": {
+      "title_raw": "VPS Server Bangladesh — KVM Linux VPS Hosting",
+      "title_final": "VPS Server Bangladesh — KVM Linux VPS Hosting | SNBD HOST",
+      "title_len": 57,
+      "desc_len": 149,
+      "og_image": "https://snbdhost.com/og/vps.jpg",
+      "og_path": "/og/vps.jpg",
+      "canonical": "https://snbdhost.com/vps-server"
+    },
+    "bdixServers": {
+      "title_raw": "BDIX Server Bangladesh — Ultra-Fast Local VPS",
+      "title_final": "BDIX Server Bangladesh — Ultra-Fast Local VPS | SNBD HOST",
+      "title_len": 57,
+      "desc_len": 142,
+      "og_image": "https://snbdhost.com/og/bdix.jpg",
+      "og_path": "/og/bdix.jpg",
+      "canonical": "https://snbdhost.com/bdix-servers"
+    },
+    "openclaw": {
+      "title_raw": "OpenClaw — Deploy Your Own Private AI Agent",
+      "title_final": "OpenClaw — Deploy Your Own Private AI Agent | SNBD HOST",
+      "title_len": 55,
+      "desc_len": 158,
+      "og_image": "https://snbdhost.com/og/openclaw.jpg",
+      "og_path": "/og/openclaw.jpg",
+      "canonical": "https://snbdhost.com/openclaw"
+    },
+    "n8n": {
+      "title_raw": "n8n Automation Hosting Bangladesh — Managed n8n",
+      "title_final": "n8n Automation Hosting Bangladesh — Managed n8n | SNBD HOST",
+      "title_len": 59,
+      "desc_len": 144,
+      "og_image": "https://snbdhost.com/og/n8n.jpg",
+      "og_path": "/og/n8n.jpg",
+      "canonical": "https://snbdhost.com/n8n-automation"
+    },
+    "offers": {
+      "title_raw": "Web Hosting Offers & Discount Codes Bangladesh",
+      "title_final": "Web Hosting Offers & Discount Codes Bangladesh | SNBD HOST",
+      "title_len": 58,
+      "desc_len": 141,
+      "og_image": "https://snbdhost.com/og/offers.jpg",
+      "og_path": "/og/offers.jpg",
+      "canonical": "https://snbdhost.com/offers"
+    },
+    "support": {
+      "title_raw": "Customer Support — SNBD HOST Help Center",
+      "title_final": "Customer Support — SNBD HOST Help Center | SNBD HOST",
+      "title_len": 52,
+      "desc_len": 152,
+      "og_image": "https://snbdhost.com/og/support.jpg",
+      "og_path": "/og/support.jpg",
+      "canonical": "https://snbdhost.com/support"
+    },
+    "blog": {
+      "title_raw": "Blog — Web Hosting Tips & Bangladesh Tech News",
+      "title_final": "Blog — Web Hosting Tips & Bangladesh Tech News | SNBD HOST",
+      "title_len": 58,
+      "desc_len": 134,
+      "og_image": "https://snbdhost.com/og/blog.jpg",
+      "og_path": "/og/blog.jpg",
+      "canonical": "https://snbdhost.com/blog"
+    },
+    "privacy": {
+      "title_raw": "Privacy Policy — SNBD HOST",
+      "title_final": "Privacy Policy — SNBD HOST | SNBD HOST",
+      "title_len": 38,
+      "desc_len": 133,
+      "og_image": null,
+      "og_path": null,
+      "canonical": "https://snbdhost.com/privacy"
+    },
+    "terms": {
+      "title_raw": "Terms of Service — SNBD HOST",
+      "title_final": "Terms of Service — SNBD HOST | SNBD HOST",
+      "title_len": 40,
+      "desc_len": 131,
+      "og_image": null,
+      "og_path": null,
+      "canonical": "https://snbdhost.com/terms"
+    }
+  }
+}

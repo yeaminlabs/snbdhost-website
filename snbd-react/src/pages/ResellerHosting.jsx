@@ -3,9 +3,11 @@ import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
+import { useCurrency } from '../context/CurrencyContext.jsx';
 
 export default function ResellerHosting() {
-  const [billingTab, setBillingTab] = useState('monthly');
+  const { formatPrice } = useCurrency();
+  const [billingTab, setBillingTab] = useState('annual');
   const [locationTab, setLocationTab] = useState('usa');
   const [openFaq, setOpenFaq] = useState(0);
 
@@ -110,7 +112,7 @@ export default function ResellerHosting() {
                 )}
                 <h3 className="text-xl font-bold text-gray-900 mb-4">{locationTab === 'usa' ? pkg.usaName : pkg.bdixName}</h3>
                 <div className="mb-6 border-b border-gray-100 pb-6">
-                  <span className="text-4xl font-extrabold text-gray-900">৳{billingTab === 'monthly' ? pkg.priceM : pkg.priceY}</span>
+                  <span className="text-4xl font-extrabold text-gray-900">{formatPrice(billingTab === 'monthly' ? pkg.priceM : pkg.priceY)}</span>
                   <span className="text-gray-500 font-medium">/{billingTab === 'monthly' ? 'mo' : 'yr'}</span>
                 </div>
                 <a href={locationTab === 'usa' ? pkg.usaLink : pkg.bdixLink} className={`block w-full text-center font-bold py-3.5 rounded-xl transition-colors mb-6 border ${pkg.popular ? (locationTab === 'usa' ? 'bg-blue-600 hover:bg-blue-700 text-white border-transparent shadow-md shadow-blue-200' : 'bg-primary hover:bg-primary-dark text-white border-transparent shadow-md shadow-red-200') : 'bg-[#F4F5F7] hover:bg-gray-200 text-gray-900 border-gray-200'}`}>
@@ -205,7 +207,7 @@ export default function ResellerHosting() {
                   <p className="text-xs text-gray-500 mb-4 leading-relaxed">{addon.desc}</p>
                 </div>
                 <div className="pt-4 border-t border-gray-100 flex justify-between items-center">
-                  <span className="font-extrabold text-gray-900">৳{addon.priceM} <span className="text-xs text-gray-500 font-medium">/mo</span></span>
+                  <span className="font-extrabold text-gray-900">{addon.priceM === 'Quote' ? 'Quote' : formatPrice(addon.priceM)} {addon.priceM !== 'Quote' && <span className="text-xs text-gray-500 font-medium">/mo</span>}</span>
                   <button className="text-xs font-bold text-primary hover:text-primary-dark">Add to cart <i className="fa-solid fa-arrow-right ml-1"></i></button>
                 </div>
               </div>
