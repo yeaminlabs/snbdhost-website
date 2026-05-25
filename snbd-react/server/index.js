@@ -57,46 +57,57 @@ const staticMeta = {
   '/': {
     title: "SNBD HOST — Bangladesh's #1 Web Hosting Provider",
     description: 'NVMe SSD web hosting, VPS servers, and domain registration in Bangladesh. BDIX-optimized, 99.9% uptime, 24/7 support.',
+    image: `${BASE_URL}/og/home.jpg`,
   },
   '/hosting': {
     title: 'Shared Web Hosting Bangladesh — NVMe SSD cPanel Hosting | SNBD HOST',
     description: 'Fast shared web hosting with NVMe SSD, LiteSpeed, cPanel, and free SSL. Plans from ৳99/mo.',
+    image: `${BASE_URL}/og/hosting.jpg`,
   },
   '/reseller-hosting': {
     title: 'Reseller Hosting Bangladesh — White Label cPanel Hosting | SNBD HOST',
     description: 'Start your hosting business with SNBD HOST. WHM, CloudLinux isolation, unlimited cPanel accounts.',
+    image: `${BASE_URL}/og/reseller.jpg`,
   },
   '/domain': {
     title: 'Domain Registration Bangladesh — .com .bd .xyz | SNBD HOST',
     description: 'Register .com, .bd, .xyz and 50+ domain extensions at the lowest prices in Bangladesh.',
+    image: `${BASE_URL}/og/domain.jpg`,
   },
   '/vps-server': {
     title: 'VPS Server Bangladesh — KVM Linux VPS Singapore & USA | SNBD HOST',
     description: 'High-performance KVM Linux VPS with AMD EPYC CPUs and NVMe SSD from ৳897/mo.',
+    image: `${BASE_URL}/og/vps.jpg`,
   },
   '/bdix-servers': {
     title: 'BDIX Server Bangladesh — Ultra-Fast Local VPS | SNBD HOST',
     description: 'BDIX-peered servers with sub-millisecond ping in Dhaka, Bangladesh. From ৳500/mo.',
+    image: `${BASE_URL}/og/bdix.jpg`,
   },
   '/openclaw': {
     title: 'OpenClaw — Deploy Your Own AI Agent in 60 Seconds | SNBD HOST',
     description: 'Private, always-on AI agent platform hosted on SNBD HOST. Live in 60 seconds.',
+    image: `${BASE_URL}/og/openclaw.jpg`,
   },
   '/n8n-automation': {
     title: 'n8n Automation Hosting Bangladesh — Managed n8n Server | SNBD HOST',
     description: 'Managed n8n workflow automation hosting. Instant setup, unlimited workflows from ৳250/mo.',
+    image: `${BASE_URL}/og/n8n.jpg`,
   },
   '/offers': {
     title: 'Web Hosting Offers & Discount Codes Bangladesh | SNBD HOST',
     description: 'Latest SNBD HOST promo codes and limited-time offers. Save up to 75%.',
+    image: `${BASE_URL}/og/offers.jpg`,
   },
   '/support': {
     title: 'Customer Support — SNBD HOST Help Center',
     description: 'Get 24/7 support from SNBD HOST. Browse our knowledge base or chat live.',
+    image: `${BASE_URL}/og/support.jpg`,
   },
   '/blog': {
     title: 'Blog — Web Hosting Tips, Tutorials & Bangladesh Tech News | SNBD HOST',
     description: 'The SNBD HOST blog: hosting tutorials, server guides, and Bangladesh tech news.',
+    image: `${BASE_URL}/og/blog.jpg`,
   },
   '/privacy': {
     title: 'Privacy Policy — SNBD HOST',
@@ -176,6 +187,8 @@ function injectMeta(html, { title, description, image, urlPath }) {
     <meta property="og:title" content="${title}">
     <meta property="og:description" content="${description}">
     <meta property="og:image" content="${img}">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
     <meta property="og:url" content="${url}">
     <meta property="og:type" content="website">
     <meta property="og:site_name" content="SNBD HOST">
