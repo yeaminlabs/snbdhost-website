@@ -189,11 +189,113 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
-function injectMeta(html, { title, description, image, urlPath }) {
+// ─── Per-page JSON-LD schemas injected server-side for crawlers ───────────────
+// React components render these client-side, but schema.org / Google Rich Results
+// validator and social bots don't run JS. We duplicate the schema data here so
+// crawlers always see full structured data in raw HTML.
+
+const PAGE_SCHEMAS = {
+  '/vps-server': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Do I get full root access?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, all our Linux VPS plans come with full root access, giving you complete control over your server environment and the ability to install any custom software.' } },
+        { '@type': 'Question', name: 'Which operating systems do you support?', acceptedAnswer: { '@type': 'Answer', text: 'We support a wide range of Linux distributions including Ubuntu, Debian, CentOS, AlmaLinux, and Rocky Linux. You can install or reinstall them in 1-click from the dashboard.' } },
+        { '@type': 'Question', name: 'Are the resources dedicated?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, our KVM virtualization ensures that your RAM, CPU cores, and NVMe storage are strictly dedicated to your virtual server and never oversold.' } },
+        { '@type': 'Question', name: 'Do you provide automated backups?', acceptedAnswer: { '@type': 'Answer', text: 'We provide automated weekly backups by default. You can also create manual snapshots instantly before making major changes to your server.' } },
+      ],
+    },
+  ],
+  '/bdix-servers': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'What is BDIX and why do I need it?', acceptedAnswer: { '@type': 'Answer', text: 'BDIX (Bangladesh Internet Exchange) is a local peering network. It allows inter-ISP traffic to stay within Bangladesh instead of routing internationally. This results in ultra-low latency (usually <1ms) and much faster download/upload speeds for local users.' } },
+        { '@type': 'Question', name: 'Do these servers come with Root Access?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, all BDIX VPS plans come with full administrator/root access. You have complete freedom to install any software, operating system (Ubuntu, CentOS, Debian, etc.), and control panel you desire.' } },
+        { '@type': 'Question', name: 'Can I upgrade my plan later?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! You can easily scale up your CPU, RAM, and Storage at any time directly from our client portal without any data loss or significant downtime.' } },
+        { '@type': 'Question', name: 'Which Control Panels do you support?', acceptedAnswer: { '@type': 'Answer', text: 'We support all major control panels including cPanel/WHM, DirectAdmin, CyberPanel, and Webuzo. You can purchase a license alongside your server or install a free panel.' } },
+      ],
+    },
+  ],
+  '/n8n-automation': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Can n8n help reduce time spent managing social media?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Automatically schedule posts, reply to DMs, or track mentions across platforms using workflows. You can connect Instagram, Facebook, Twitter/X, LinkedIn and more through n8n\'s integrations and trigger actions based on events or schedules.' } },
+        { '@type': 'Question', name: 'Is it possible to automate follow-up emails to customers who didn\'t complete checkout?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely! n8n can integrate with your WooCommerce or custom store, detect abandoned carts, and automatically send personalized follow-up emails via Gmail, SMTP, or any email service. You can set delays, conditions, and personalization — all without code.' } },
+        { '@type': 'Question', name: 'Do I need coding skills to use n8n?', acceptedAnswer: { '@type': 'Answer', text: 'No coding skills required for most workflows! n8n has a visual drag-and-drop editor where you connect nodes to build workflows. However, if you want advanced logic, you can optionally write small JavaScript snippets for maximum flexibility.' } },
+        { '@type': 'Question', name: 'How is this better than Zapier or other tools?', acceptedAnswer: { '@type': 'Answer', text: 'Unlike Zapier, n8n is self-hosted — meaning your data stays on YOUR server, not a third-party cloud. You also get unlimited workflows, no per-task pricing, and far more flexibility with custom logic. SNBD HOST provides fully managed n8n instances so you get all benefits without server management headaches.' } },
+        { '@type': 'Question', name: 'What happens if something goes wrong in my workflow?', acceptedAnswer: { '@type': 'Answer', text: 'n8n has built-in error handling with retry logic, error workflows, and execution logs. You can see exactly what happened at each step. Our 24/7 support team is also available to help troubleshoot any workflow issues.' } },
+      ],
+    },
+  ],
+  '/offers': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Do many hosting and domain promo codes are currently available?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, we regularly update our active promo codes. You can find the best current deals directly on this page or applied automatically at checkout.' } },
+        { '@type': 'Question', name: 'Are there any special discounts for new clients signing up?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely. All our first-time customers receive our introductory pricing, which is up to 75% off the regular renewal rate.' } },
+        { '@type': 'Question', name: 'What is the maximum discount I can get with a SNBD HOST coupon?', acceptedAnswer: { '@type': 'Answer', text: 'During special sales events, you can save up to 80% on long-term hosting plans, plus get a free domain name for the first year.' } },
+        { '@type': 'Question', name: 'Can I use multiple coupon codes on a single order?', acceptedAnswer: { '@type': 'Answer', text: 'No, our system only accepts one coupon code per transaction. We recommend choosing the code that provides the highest overall discount for your cart.' } },
+        { '@type': 'Question', name: 'Do you have any discount for students or non-profits?', acceptedAnswer: { '@type': 'Answer', text: 'We occasionally run student promotions. Please contact our support team with your .edu email or non-profit documentation for custom pricing.' } },
+      ],
+    },
+  ],
+  '/reseller-hosting': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Is it completely white-labeled?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, our reseller hosting is 100% white-labeled. You get your own private nameservers (ns1.yourdomain.com), and the control panel uses generic branding so your clients will never know about SNBD HOST.' } },
+        { '@type': 'Question', name: 'Can I oversell resources?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, overselling is allowed on all our reseller packages. You can allocate more disk space and bandwidth to your clients than what is actually included in your master plan, allowing you to maximize profits.' } },
+        { '@type': 'Question', name: 'Do you help with migration?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! We offer free conditional migrations for standard cPanel to cPanel transfers. For highly complex or massive server migrations, we have premium migration add-ons available.' } },
+        { '@type': 'Question', name: 'Are my clients isolated from each other?', acceptedAnswer: { '@type': 'Answer', text: 'Absolutely. We use CloudLinux LVE to strictly isolate each cPanel account you create. If one of your clients gets a traffic spike or runs a bad script, it will not affect the performance of your other clients.' } },
+      ],
+    },
+  ],
+  '/support': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'How do I open a support ticket?', acceptedAnswer: { '@type': 'Answer', text: 'Log in to your SNBD HOST client area, navigate to Support → Tickets, and click "Open New Ticket". Choose the appropriate department and describe your issue. Our team typically responds within 15 minutes.' } },
+        { '@type': 'Question', name: 'Do you offer 24/7 support?', acceptedAnswer: { '@type': 'Answer', text: 'Yes, our technical support team is available 24 hours a day, 7 days a week, 365 days a year. You can reach us via live chat, support ticket, or WhatsApp for urgent issues.' } },
+        { '@type': 'Question', name: 'What is the average response time?', acceptedAnswer: { '@type': 'Answer', text: 'Our average first response time is under 15 minutes for tickets and instant for live chat during business hours. Critical server issues are escalated immediately to senior engineers.' } },
+        { '@type': 'Question', name: 'Can I get support in Bengali?', acceptedAnswer: { '@type': 'Answer', text: 'Yes! Our support team is based in Bangladesh and fluent in both Bengali and English. You are welcome to submit tickets and chat in whichever language you are more comfortable with.' } },
+      ],
+    },
+  ],
+  '/openclaw': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'FAQPage',
+      mainEntity: [
+        { '@type': 'Question', name: 'Do I need technical skills to use OpenClaw?', acceptedAnswer: { '@type': 'Answer', text: 'Not at all. With SNBD HOST\'s 1-click deployment, OpenClaw is installed and configured automatically. You simply log in and connect your apps via the visual interface.' } },
+        { '@type': 'Question', name: 'Can I use OpenClaw with my own local LLM models?', acceptedAnswer: { '@type': 'Answer', text: 'Yes. OpenClaw supports direct API connections to locally hosted models (like Llama 3) or external providers (OpenAI, Anthropic, etc.).' } },
+        { '@type': 'Question', name: 'Is my data completely secure and private?', acceptedAnswer: { '@type': 'Answer', text: '100%. Unlike hosted SaaS platforms, your OpenClaw instance runs entirely on your SNBD HOST server. Your prompts, customer data, and API keys never leave your node.' } },
+        { '@type': 'Question', name: 'What happens if my agent needs more resources?', acceptedAnswer: { '@type': 'Answer', text: 'You can seamlessly scale your VPS up from the SNBD HOST dashboard without any data loss. Upgrades take less than 60 seconds.' } },
+      ],
+    },
+  ],
+};
+
+function buildJsonLdTags(schemas) {
+  if (!schemas || schemas.length === 0) return '';
+  return schemas
+    .map(s => `<script type="application/ld+json">${JSON.stringify(s)}</script>`)
+    .join('\n');
+}
+
+function injectMeta(html, { title, description, image, urlPath, extraSchemas }) {
   const img = image || DEFAULT_IMAGE;
   const url = `${BASE_URL}${urlPath || '/'}`;
   const safeTitle = escapeHtml(title);
   const safeDesc = escapeHtml(description);
+  const ldJson = buildJsonLdTags(extraSchemas);
   const tags = `
     <title>${safeTitle}</title>
     <meta name="description" content="${safeDesc}">
@@ -208,7 +310,8 @@ function injectMeta(html, { title, description, image, urlPath }) {
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:title" content="${safeTitle}">
     <meta name="twitter:description" content="${safeDesc}">
-    <meta name="twitter:image" content="${img}">`;
+    <meta name="twitter:image" content="${img}">
+    ${ldJson}`;
 
   return html.replace(/<title>.*?<\/title>/, '').replace('<head>', `<head>${tags}`);
 }
@@ -271,6 +374,7 @@ app.get('*', async (req, res) => {
     }
 
     let metaData = staticMeta[req.path];
+    let extraSchemas = PAGE_SCHEMAS[req.path] || [];
 
     if (req.path.startsWith('/blog/') && !staticMeta[req.path]) {
       try {
@@ -284,6 +388,29 @@ app.get('*', async (req, res) => {
             description: post.meta_description || post.excerpt || '',
             image: post.og_image || post.featured_image_url,
           };
+          // BlogPosting structured data for Google rich results
+          extraSchemas = [{
+            '@context': 'https://schema.org',
+            '@type': 'BlogPosting',
+            headline: post.meta_title || post.title,
+            description: post.meta_description || post.excerpt || '',
+            image: post.og_image || post.featured_image_url || DEFAULT_IMAGE,
+            url: `${BASE_URL}/blog/${post.slug}`,
+            datePublished: post.published_at || post.created_at,
+            dateModified: post.updated_at || post.published_at || post.created_at,
+            author: {
+              '@type': 'Organization',
+              name: post.author || 'SNBD HOST Team',
+              url: BASE_URL,
+            },
+            publisher: {
+              '@type': 'Organization',
+              name: 'SNBD HOST',
+              url: BASE_URL,
+              logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo.png` },
+            },
+            mainEntityOfPage: { '@type': 'WebPage', '@id': `${BASE_URL}/blog/${post.slug}` },
+          }];
         }
       } catch {}
     }
@@ -292,7 +419,7 @@ app.get('*', async (req, res) => {
       metaData = { title: 'SNBD HOST', description: 'Bangladesh\'s leading web hosting provider.' };
     }
 
-    let finalHtml = injectMeta(indexHtml, { ...metaData, urlPath: req.path });
+    let finalHtml = injectMeta(indexHtml, { ...metaData, urlPath: req.path, extraSchemas });
     if (headScripts) finalHtml = finalHtml.replace('</head>', `${headScripts}</head>`);
     if (bodyTag)     finalHtml = finalHtml.replace('<body>', `<body>${bodyTag}`);
     res.send(finalHtml);
