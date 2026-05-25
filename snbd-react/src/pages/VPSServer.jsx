@@ -39,11 +39,11 @@ export default function VPSServer() {
   ];
 
   const usaPlans = [
-    { name: 'USA VPS 2G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-2g', desc: 'Ideal for lightweight automation and US-based proxy/VPN needs.', priceM: 1167, priceY: 14037, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '1 TB' },
-    { name: 'USA VPS 4G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-4g', desc: 'Great for small application hosting and dev environments.', priceM: 2247, priceY: 26997, cpu: 3, ram: '4 GB', disk: '80 GB', bw: '2 TB', popular: true },
-    { name: 'USA VPS 8G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-8g', desc: 'Optimized for production-grade web apps and databases.', priceM: 3937, priceY: 47277, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '3 TB' },
-    { name: 'USA VPS 16G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-16g', desc: 'High-performance computing for intensive data processing.', priceM: 7237, priceY: 86877, cpu: 8, ram: '16 GB', disk: '240 GB', bw: '4 TB' },
-    { name: 'USA VPS 32G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-32g', desc: 'Maximum power for massive databases and enterprise scale.', priceM: 14387, priceY: 172677, cpu: 16, ram: '32 GB', disk: '640 GB', bw: '5 TB' },
+    { name: 'USA VPS 2G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-2g', desc: 'Ideal for lightweight automation and US-based proxy/VPN needs.', priceM: 1050, priceY: 12600, cpu: 2, ram: '2 GB', disk: '40 GB', bw: '1 TB' },
+    { name: 'USA VPS 4G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-4g', desc: 'Great for small application hosting and dev environments.', priceM: 2022, priceY: 24264, cpu: 3, ram: '4 GB', disk: '80 GB', bw: '2 TB', popular: true },
+    { name: 'USA VPS 8G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-8g', desc: 'Optimized for production-grade web apps and databases.', priceM: 3543, priceY: 42516, cpu: 4, ram: '8 GB', disk: '160 GB', bw: '3 TB' },
+    { name: 'USA VPS 16G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-16g', desc: 'High-performance computing for intensive data processing.', priceM: 6513, priceY: 78156, cpu: 8, ram: '16 GB', disk: '240 GB', bw: '4 TB' },
+    { name: 'USA VPS 32G', link: 'https://portal.snbdhost.com/store/usa-vps/usa-vps-32g', desc: 'Maximum power for massive databases and enterprise scale.', priceM: 12948, priceY: 155376, cpu: 16, ram: '32 GB', disk: '640 GB', bw: '5 TB' },
   ];
 
   const activePlans = location === 'sg' ? sgPlans : usaPlans;
