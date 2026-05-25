@@ -343,7 +343,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1 mt-2">BDIX Business</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">High traffic web applications.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">{formatPrice('1,600')}</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(1600)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-600 hover:bg-red-700 text-white shadow-md shadow-red-200 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
@@ -361,7 +361,7 @@ export default function BDIXServers() {
               <h3 className="text-xl font-extrabold text-gray-900 mb-1">BDIX Ultra</h3>
               <p className="text-sm text-gray-500 font-medium mb-6">Enterprise resource demands.</p>
               <div className="flex items-baseline gap-1 mb-8">
-                <span className="text-4xl font-extrabold text-gray-900">{formatPrice('2,800')}</span>
+                <span className="text-4xl font-extrabold text-gray-900">{formatPrice(2800)}</span>
                 <span className="text-gray-500 font-medium">/mo</span>
               </div>
               <a href="#" className="w-full block text-center bg-red-50 hover:bg-red-600 hover:text-white text-red-700 font-bold py-3.5 rounded-xl transition-colors mb-8">Deploy Now</a>
