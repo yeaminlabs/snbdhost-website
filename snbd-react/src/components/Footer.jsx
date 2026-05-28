@@ -75,6 +75,7 @@ export default function Footer() {
               </li>
               <li><a href="https://portal.snbdhost.com/submitticket.php" className="text-[#555555] text-sm hover:text-brand-red transition-colors">Open a Ticket</a></li>
               <li><a href="https://portal.snbdhost.com/contact.php" className="text-[#555555] text-sm hover:text-brand-red transition-colors">Contact Us</a></li>
+              <li><Link to="/dev-updates" className="text-[#555555] text-sm hover:text-brand-red transition-colors">Developer Updates</Link></li>
             </ul>
             
             <div className="bg-[#ECEEF2] border border-[#E5E7EB] rounded-xl p-4">

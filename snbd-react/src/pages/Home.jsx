@@ -51,10 +51,10 @@ export default function HomePage() {
                   Start Hosting Now
                   <i className="fa-solid fa-arrow-right text-sm"></i>
                 </a>
-                <Link to="/offers" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 text-lg font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-sm">
+                <a href="#products" className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-white hover:bg-gray-50 text-gray-900 border border-gray-200 text-lg font-bold px-8 py-4 rounded-xl transition-all duration-300 shadow-sm">
                   Explore Products
                   <i className="fa-solid fa-arrow-right text-sm text-gray-400"></i>
-                </Link>
+                </a>
               </div>
 
               {/* 2 Feature Badges */}
@@ -232,7 +232,7 @@ export default function HomePage() {
       </section>
 
       {/* ========== EVERYTHING YOU NEED GRID ========== */}
-      <section className="py-16 bg-[#F9FAFB] border-t border-gray-100">
+      <section id="products" className="py-16 bg-[#F9FAFB] border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12 flex items-center justify-center gap-3">
             <h2 className="text-2xl md:text-3xl font-extrabold text-gray-900">Everything You Need. All in One Place.</h2>

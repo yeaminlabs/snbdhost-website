@@ -121,7 +121,7 @@ export default function BDIXServers() {
   const faqs = [
     {
       question: "What is BDIX and why do I need it?",
-      answer: "BDIX (Bangladesh Internet Exchange) is a local peering network. It allows inter-ISP traffic to stay within Bangladesh instead of routing internationally. This results in ultra-low latency (usually <1ms) and much faster download/upload speeds for local users."
+      answer: "BDIX (Bangladesh Internet Exchange) is a local peering network. It allows inter-ISP traffic to stay within Bangladesh instead of routing internationally. This results in ultra-low latency (usually less than 1ms) and much faster download/upload speeds for local users."
     },
     {
       question: "Do these servers come with Root Access?",
