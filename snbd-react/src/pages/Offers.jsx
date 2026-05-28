@@ -13,7 +13,7 @@ export default function Offers() {
 
   const faqs = [
     {
-      question: "Do many hosting and domain promo codes are currently available?",
+      question: "Are hosting and domain promo codes currently available?",
       answer: "Yes, we regularly update our active promo codes. You can find the best current deals directly on this page or applied automatically at checkout."
     },
     {
