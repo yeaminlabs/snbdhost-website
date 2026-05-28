@@ -7,13 +7,19 @@ const execPromise = util.promisify(exec);
 // PROJECT_ROOT = the snbd-react/ folder (where package.json lives)
 const PROJECT_ROOT = path.join(__dirname, '../../');
 
-// GIT_ROOT = the true git repository root (may be parent of PROJECT_ROOT in a monorepo)
-let GIT_ROOT;
-try {
-  GIT_ROOT = execSync('git rev-parse --show-toplevel', { cwd: PROJECT_ROOT }).toString().trim();
-} catch {
-  GIT_ROOT = PROJECT_ROOT;
+// Find the true git repository root by walking up directories
+function findGitRoot(startPath) {
+  let currentDir = startPath;
+  while (currentDir !== path.parse(currentDir).root) {
+    if (require('fs').existsSync(path.join(currentDir, '.git'))) {
+      return currentDir;
+    }
+    currentDir = path.dirname(currentDir);
+  }
+  return startPath;
 }
+
+const GIT_ROOT = findGitRoot(PROJECT_ROOT);
 
 // Relative path from git root to the React app folder (e.g. "snbd-react" or "")
 const REACT_SUBDIR = path.relative(GIT_ROOT, PROJECT_ROOT);
