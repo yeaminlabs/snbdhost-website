@@ -89,7 +89,7 @@ export default function N8NAutomation() {
     },
     {
       question: "Is it possible to automate follow-up emails to customers who didn't complete checkout?",
-      answer: "Absolutely! n8n can integrate with your WooCommerce or custom store, detect abandoned carts, and automatically send personalized follow-up emails via Gmail, SMTP, or any email service. You can set delays, conditions, and personalization — all without code."
+      answer: "Absolutely! n8n can integrate with your WooCommerce or custom store, detect abandoned carts, and automatically send personalized follow-up emails via Gmail, SMTP, or any email service. You can set delays, conditions, and personalization - all without code."
     },
     {
       question: "Do I need coding skills to use n8n?",
@@ -97,7 +97,7 @@ export default function N8NAutomation() {
     },
     {
       question: "How is this better than Zapier or other tools?",
-      answer: "Unlike Zapier, n8n is self-hosted — meaning your data stays on YOUR server, not a third-party cloud. You also get unlimited workflows, no per-task pricing, and far more flexibility with custom logic. SNBD HOST provides fully managed n8n instances so you get all benefits without server management headaches."
+      answer: "Unlike Zapier, n8n is self-hosted, meaning your data stays on YOUR server, not a third-party cloud. You also get unlimited workflows, no per-task pricing, and far more flexibility with custom logic. SNBD HOST provides fully managed n8n instances so you get all benefits without server management headaches."
     },
     {
       question: "What happens if something goes wrong in my workflow?",

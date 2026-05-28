@@ -19,6 +19,7 @@ import Offers from './pages/Offers';
 import Support from './pages/Support';
 import Privacy from './pages/Privacy';
 import Terms from './pages/Terms';
+import DevUpdates from './pages/DevUpdates';
 
 // Blog
 import BlogList from './pages/blog/BlogList';
@@ -55,6 +56,7 @@ function App() {
               <Route path="/support" element={<Support />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
+              <Route path="/dev-updates" element={<DevUpdates />} />
 
               {/* Blog */}
               <Route path="/blog" element={<BlogList />} />

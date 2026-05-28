@@ -38,6 +38,10 @@
   --shadow-red: 0 6px 24px rgba(208,2,27,0.22);
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   font-family: var(--font-body), system-ui, sans-serif;
   color: var(--color-dark);
