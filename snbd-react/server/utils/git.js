@@ -76,8 +76,8 @@ async function buildCommit(commitSha) {
 
     const runInReact = (cmd) => execPromise(cmd, { cwd: reactDir });
 
-    // 4. Install dependencies
-    await runInReact('npm install --legacy-peer-deps');
+    // 4. Install dependencies (force dev dependencies for Vite build)
+    await runInReact('npm install --legacy-peer-deps --include=dev');
 
     // 5. Compile the React/Vite build
     await runInReact('npm run build');
