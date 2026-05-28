@@ -47,21 +47,41 @@ export default function BlogPost() {
     );
   }
 
+  const getAbsoluteImageUrl = (url) => {
+    if (!url) return `${BASE_URL}/logo.png`;
+    if (url.startsWith('http://') || url.startsWith('https://')) return url;
+    return `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+  };
+
+  const authorType = (post.author && post.author.toLowerCase().includes('team')) ? 'Organization' : 'Person';
+
   const articleSchema = {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
     headline: post.title,
     description: post.excerpt || '',
-    image: post.og_image || post.featured_image_url || `${BASE_URL}/logo.png`,
-    author: { '@type': 'Person', name: post.author || 'SNBD HOST Team' },
+    image: getAbsoluteImageUrl(post.og_image || post.featured_image_url),
+    author: {
+      '@type': authorType,
+      name: post.author || 'SNBD HOST Team',
+      url: `${BASE_URL}/`,
+    },
     publisher: {
       '@type': 'Organization',
       name: 'SNBD HOST',
-      logo: { '@type': 'ImageObject', url: `${BASE_URL}/logo.png` },
+      url: BASE_URL,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${BASE_URL}/logo.png`,
+      },
     },
     datePublished: post.published_at,
     dateModified: post.updated_at || post.published_at,
-    mainEntityOfPage: `${BASE_URL}/blog/${post.slug}`,
+    mainEntityOfPage: {
+      '@type': 'WebPage',
+      '@id': `${BASE_URL}/blog/${post.slug}`,
+    },
+    url: `${BASE_URL}/blog/${post.slug}`,
   };
 
   const htmlContent = DOMPurify.sanitize(marked.parse(post.content || ''));

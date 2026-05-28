@@ -189,6 +189,12 @@ function escapeHtml(str) {
     .replace(/>/g, '&gt;');
 }
 
+function getAbsoluteImageUrl(url) {
+  if (!url) return DEFAULT_IMAGE;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  return `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+}
+
 // ─── Per-page JSON-LD schemas injected server-side for crawlers ───────────────
 // React components render these client-side, but schema.org / Google Rich Results
 // validator and social bots don't run JS. We duplicate the schema data here so
@@ -386,22 +392,25 @@ app.get('*', async (req, res) => {
           metaData = {
             title: `${post.meta_title || post.title} | SNBD HOST Blog`,
             description: post.meta_description || post.excerpt || '',
-            image: post.og_image || post.featured_image_url,
+            image: getAbsoluteImageUrl(post.og_image || post.featured_image_url),
           };
+          
+          const authorType = (post.author && post.author.toLowerCase().includes('team')) ? 'Organization' : 'Person';
+
           // BlogPosting structured data for Google rich results
           extraSchemas = [{
             '@context': 'https://schema.org',
             '@type': 'BlogPosting',
-            headline: post.meta_title || post.title,
-            description: post.meta_description || post.excerpt || '',
-            image: post.og_image || post.featured_image_url || DEFAULT_IMAGE,
+            headline: post.title,
+            description: post.excerpt || '',
+            image: getAbsoluteImageUrl(post.og_image || post.featured_image_url),
             url: `${BASE_URL}/blog/${post.slug}`,
             datePublished: post.published_at || post.created_at,
             dateModified: post.updated_at || post.published_at || post.created_at,
             author: {
-              '@type': 'Organization',
+              '@type': authorType,
               name: post.author || 'SNBD HOST Team',
-              url: BASE_URL,
+              url: `${BASE_URL}/`,
             },
             publisher: {
               '@type': 'Organization',
