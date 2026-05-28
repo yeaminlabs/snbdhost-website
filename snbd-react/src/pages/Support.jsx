@@ -13,22 +13,22 @@ export default function Support() {
   const faqs = [
     {
       q: "I Can't Connect to My Server/My Server is Unreachable, What Do I Do?",
-      a: "There are a few things that are recommended to try if you're having trouble accessing your server including: checking the Server Status page here to see if there are any wider issues at SNBD Host, restarting the server via the Customer Control Panel, connecting to your server via VNC, using the 'Can't reach server' form, and watching our video about how to get your server back online here."
+      a: "There are a few things that are recommended to try if you're having trouble accessing your server including: checking the Server Status page here to see if there are any wider issues at SNBD HOST, restarting the server via the Customer Control Panel, connecting to your server via VNC, using the 'Can't reach server' form, and watching our video about how to get your server back online here."
     },
     {
       q: "How Can I Check The Status of My Order?",
-      a: "You can track your order status directly from the SNBD Host client portal under the 'Invoices' or 'Services' tab. Most VPS and Shared hosting plans are activated instantly upon payment."
+      a: "You can track your order status directly from the SNBD HOST client portal under the 'Invoices' or 'Services' tab. Most VPS and Shared hosting plans are activated instantly upon payment."
     },
     {
       q: "How Do I Connect to My Server for the First Time?",
       a: "For Linux VPS, you can connect using SSH via Terminal (Mac/Linux) or PuTTY (Windows) using the credentials sent to your email. For Windows Servers, use the Remote Desktop Connection (RDP) application."
     },
     {
-      q: "I Have Forgotten My Servers Password, How Do I Reset It?",
-      a: "If you lose your root or admin password, you can easily reset it directly from the 'Server Management' section of your SNBD Host Control Panel without opening a ticket."
+      q: "I Have Forgotten My Server's Password, How Do I Reset It?",
+      a: "If you lose your root or admin password, you can easily reset it directly from the 'Server Management' section of your SNBD HOST Control Panel without opening a ticket."
     },
     {
-      q: "How Can I Close My SNBD Host Account or Cancel a Service?",
+      q: "How Can I Close My SNBD HOST Account or Cancel a Service?",
       a: "To cancel an active service, navigate to your client portal, select the specific product or service, and click 'Request Cancellation'. You can choose immediate cancellation or cancellation at the end of the billing cycle."
     },
     {
@@ -36,15 +36,15 @@ export default function Support() {
       a: "We offer a 7-day money-back guarantee strictly on Shared and Premium web hosting services. VPS and Dedicated Server setups are non-refundable once deployed due to the instant provisioning of dedicated resources."
     },
     {
-      q: "Need Help With Billing or Service Management?",
+      q: "How Do I Get Help With Billing or Service Management?",
       a: "For questions about invoices, payment methods like bKash/Nagad, or upgrading your plan, please browse our Billing Knowledge Base or submit a Sales ticket."
     },
     {
-      q: "Need Help With Basic Server Management?",
-      a: "We have extensive tutorials on installing cPanel, changing Linux kernels, setting up Python environments, and securing apache. Check the 'Troubleshooting' guides below."
+      q: "How Do I Get Help With Basic Server Management?",
+      a: "We have extensive tutorials on installing cPanel, changing Linux kernels, setting up Python environments, and securing Apache. Check the 'Troubleshooting' guides below."
     },
     {
-      q: "Explore more server troubleshooting options",
+      q: "Where Can I Explore More Server Troubleshooting Options?",
       a: "Visit our dedicated Troubleshooting documentation hub for deep-dives into Nginx failures, DNS propagation delays, and memory leak diagnosis."
     }
   ];
