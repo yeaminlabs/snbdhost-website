@@ -73,7 +73,7 @@ router.post('/', requireAuth, async (req, res) => {
   try {
     const db = await getDb();
     const {
-      title, content, excerpt, author, category, tags,
+      title, slug: customSlug, content, excerpt, author, category, tags,
       featured_image_url, status, meta_title, meta_description, og_image,
     } = req.body;
 
@@ -81,10 +81,13 @@ router.post('/', requireAuth, async (req, res) => {
       return res.status(400).json({ error: 'title and content are required' });
     }
 
-    const slug = slugify(title, { lower: true, strict: true });
+    const slug = customSlug
+      ? slugify(customSlug, { lower: true, strict: true })
+      : slugify(title, { lower: true, strict: true });
+
     const existing = get(db, 'SELECT id FROM posts WHERE slug = ?', [slug]);
     if (existing) {
-      return res.status(409).json({ error: 'A post with this title already exists' });
+      return res.status(409).json({ error: 'A post with this slug or title already exists' });
     }
 
     const published_at = status === 'published' ? new Date().toISOString() : null;
@@ -106,6 +109,7 @@ router.post('/', requireAuth, async (req, res) => {
     );
 
     saveDb();
+    triggerSitemapGeneration();
     res.status(201).json({ id: result.lastInsertRowid, slug });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -120,9 +124,18 @@ router.put('/:id', requireAuth, async (req, res) => {
     if (!existing) return res.status(404).json({ error: 'Post not found' });
 
     const {
-      title, content, excerpt, author, category, tags,
+      title, slug: customSlug, content, excerpt, author, category, tags,
       featured_image_url, status, meta_title, meta_description, og_image,
     } = req.body;
+
+    const slug = customSlug
+      ? slugify(customSlug, { lower: true, strict: true })
+      : (existing.slug || slugify(title, { lower: true, strict: true }));
+
+    const duplicate = get(db, 'SELECT id FROM posts WHERE slug = ? AND id != ?', [slug, req.params.id]);
+    if (duplicate) {
+      return res.status(409).json({ error: 'A post with this slug already exists' });
+    }
 
     const published_at =
       status === 'published' && !existing.published_at
@@ -131,12 +144,12 @@ router.put('/:id', requireAuth, async (req, res) => {
 
     run(db, `
       UPDATE posts SET
-        title = ?, content = ?, excerpt = ?, author = ?, category = ?, tags = ?,
+        title = ?, slug = ?, content = ?, excerpt = ?, author = ?, category = ?, tags = ?,
         featured_image_url = ?, status = ?, meta_title = ?, meta_description = ?,
         og_image = ?, published_at = ?, updated_at = datetime('now')
       WHERE id = ?`,
       [
-        title, content, excerpt || null,
+        title, slug, content, excerpt || null,
         author || 'SNBD HOST Team', category || null,
         tags ? JSON.stringify(tags) : null,
         featured_image_url || null,
@@ -147,7 +160,8 @@ router.put('/:id', requireAuth, async (req, res) => {
     );
 
     saveDb();
-    res.json({ success: true });
+    triggerSitemapGeneration();
+    res.json({ success: true, slug });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -162,10 +176,27 @@ router.delete('/:id', requireAuth, async (req, res) => {
 
     run(db, 'DELETE FROM posts WHERE id = ?', [req.params.id]);
     saveDb();
+    triggerSitemapGeneration();
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
+
+const { exec } = require('child_process');
+const path = require('path');
+
+function triggerSitemapGeneration() {
+  const scriptPath = path.join(__dirname, '../../scripts/generate-sitemap.cjs');
+  const cmd = `node "${scriptPath}"`;
+  exec(cmd, { env: { ...process.env, API_URL: `http://localhost:${process.env.PORT || 3001}` } }, (error, stdout, stderr) => {
+    if (error) {
+      console.error(`Sitemap generation failed: ${error.message}`);
+      return;
+    }
+    if (stderr) console.error(`Sitemap stderr: ${stderr}`);
+    console.log(`Sitemap generated successfully:\n${stdout}`);
+  });
+}
 
 module.exports = router;

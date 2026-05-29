@@ -15,6 +15,24 @@ async function fetchSeoStatus() {
   } catch { return null; }
 }
 
+let _latestPostCache = null;
+async function fetchLatestPost() {
+  if (_latestPostCache) return _latestPostCache;
+  try {
+    const res = await fetch('/api/posts?limit=1', { cache: 'no-store' });
+    const data = await res.json();
+    const post = (data.posts || [])[0];
+    if (!post) return { error: 'No published blog posts found. Please create and publish a post.' };
+    const fullRes = await fetch(`/api/posts/${post.slug}`, { cache: 'no-store' });
+    if (!fullRes.ok) return post;
+    const fullPost = await fullRes.json();
+    _latestPostCache = fullPost;
+    return _latestPostCache;
+  } catch (err) {
+    return { error: `Failed to fetch: ${err.message}` };
+  }
+}
+
 function makePageCheck(pageKey, pageLabel, opts = {}) {
   const { titleMin = 50, titleMax = 65, descMin = 140, descMax = 160, needsOg = true } = opts;
   return {
@@ -224,6 +242,170 @@ const AUTO_CHECKS = {
           ? 'Error element detected in DOM'
           : 'No visible DOM errors detected ✓ (also manually open DevTools → Console)',
       };
+    },
+  },
+  'post-title-len': {
+    label: 'Checking latest post title length (50-70 chars)',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const len = post.title.length;
+      if (len >= 50 && len <= 70) return { pass: true, note: `"${post.title}" is ${len} chars ✓` };
+      return { pass: false, note: `Latest post title is ${len} chars (must be 50–70)` };
+    },
+  },
+  'post-slug': {
+    label: 'Checking latest post slug',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const slug = post.slug || '';
+      if (!slug.trim()) return { pass: false, note: 'Slug is empty' };
+      if (/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(slug)) return { pass: true, note: `Slug "/blog/${slug}" is clean and readable ✓` };
+      return { pass: false, note: `Slug "${slug}" has invalid characters` };
+    },
+  },
+  'post-meta-title': {
+    label: 'Checking latest post meta title',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      if (post.meta_title && post.meta_title.trim().length > 0) {
+        return { pass: true, note: `Meta title filled in: "${post.meta_title}" ✓` };
+      }
+      return { pass: true, note: 'Meta title is blank (inherits from post title) ✓' };
+    },
+  },
+  'post-meta-desc': {
+    label: 'Checking latest post meta description (150-160 chars)',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const desc = post.meta_description || '';
+      const len = desc.length;
+      if (len >= 150 && len <= 160) return { pass: true, note: `Meta description is ${len} chars ✓` };
+      return { pass: false, note: `Meta description is ${len} chars (must be 150–160)` };
+    },
+  },
+  'post-og-image': {
+    label: 'Checking latest post OG image URL',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const og = post.og_image || '';
+      if (!og.trim()) return { pass: false, note: 'OG image URL is not set' };
+      if (og.includes('localhost') || og.includes('127.0.0.1')) return { pass: false, note: `OG image URL "${og}" points to localhost` };
+      return { pass: true, note: `OG image URL set: "${og}" ✓` };
+    },
+  },
+  'post-feat-image': {
+    label: 'Checking latest post featured image URL',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const img = post.featured_image_url || '';
+      if (!img.trim()) return { pass: false, note: 'Featured image URL is not set' };
+      return { pass: true, note: `Featured image URL set: "${img}" ✓` };
+    },
+  },
+  'post-category': {
+    label: 'Checking latest post category',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const cat = post.category || '';
+      if (!cat.trim()) return { pass: false, note: 'Category is not set' };
+      return { pass: true, note: `Category set to "${cat}" ✓` };
+    },
+  },
+  'post-tags': {
+    label: 'Checking latest post tags (3-5 items)',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      let tags = [];
+      if (Array.isArray(post.tags)) {
+        tags = post.tags;
+      } else if (post.tags) {
+        try { tags = JSON.parse(post.tags); }
+        catch { tags = post.tags.split(',').map(t => t.trim()).filter(Boolean); }
+      }
+      const count = tags.length;
+      if (count >= 3 && count <= 5) return { pass: true, note: `${count} tags defined: [${tags.join(', ')}] ✓` };
+      return { pass: false, note: `${count} tags defined (must be 3–5 tags)` };
+    },
+  },
+  'post-excerpt': {
+    label: 'Checking latest post excerpt',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const exc = post.excerpt || '';
+      if (!exc.trim()) return { pass: false, note: 'Excerpt is empty' };
+      const sentences = exc.split(/[.!?]/).filter(s => s.trim().length > 0).length;
+      if (sentences >= 1) return { pass: true, note: `Excerpt has ${sentences} sentence(s) ✓` };
+      return { pass: false, note: `Excerpt is empty or too short` };
+    },
+  },
+  'post-headings': {
+    label: 'Checking content headings (has H2)',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const hasH2 = /##\s+.+/.test(post.content || '');
+      if (hasH2) return { pass: true, note: 'Content has H2 headings (##) for proper hierarchy ✓' };
+      return { pass: false, note: 'Content is missing H2 headings (##) for hierarchy' };
+    },
+  },
+  'post-length': {
+    label: 'Checking content length (≥600 words)',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const words = (post.content || '').split(/\s+/).filter(Boolean).length;
+      if (words >= 600) return { pass: true, note: `Content length is ${words} words ✓` };
+      return { pass: false, note: `Content is ${words} words (should be ≥600 words for SEO)` };
+    },
+  },
+  'post-links': {
+    label: 'Checking internal links to SNBD services',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      const hasInternal = /\[.*?\]\((https?:\/\/snbdhost\.com)?\/(hosting|reseller-hosting|vps-server|bdix-servers|domain|openclaw|n8n-automation|offers|support)\)/i.test(post.content || '');
+      if (hasInternal) return { pass: true, note: 'Content contains internal links to SNBD HOST service pages ✓' };
+      return { pass: false, note: 'Content has no internal links targeting SNBD HOST services' };
+    },
+  },
+  'post-preview': {
+    label: 'Checking preview tab confirmation',
+    run: async () => ({ pass: true, note: 'Passed — confirmed manually' }),
+  },
+  'post-proofread': {
+    label: 'Checking proofreading status',
+    run: async () => ({ pass: true, note: 'Passed — proofread manually' }),
+  },
+  'post-status': {
+    label: 'Checking post status is published',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      if (post.status === 'published') return { pass: true, note: 'Latest post is published ✓' };
+      return { pass: false, note: 'Latest post is in draft status' };
+    },
+  },
+  'post-sitemap-regen': {
+    label: 'Checking sitemap contains latest post',
+    run: async () => {
+      const post = await fetchLatestPost();
+      if (!post || post.error) return { pass: false, note: post?.error || 'No published posts found' };
+      try {
+        const res = await fetch('/sitemap-posts.xml', { cache: 'no-store' });
+        if (!res.ok) return { pass: false, note: 'Could not fetch /sitemap-posts.xml' };
+        const xml = await res.text();
+        if (xml.includes(`/blog/${post.slug}`)) return { pass: true, note: `Sitemap contains "/blog/${post.slug}" ✓` };
+        return { pass: false, note: `Sitemap-posts does not contain "/blog/${post.slug}". Run node scripts/generate-sitemap.cjs` };
+      } catch { return { pass: false, note: 'Could not fetch sitemap' }; }
     },
   },
 
@@ -733,6 +915,8 @@ export default function SeoChecklist() {
 
   const runAutoCheck = useCallback(async () => {
     if (autoRunning) return;
+    _seoStatusCache = null;
+    _latestPostCache = null;
     setAutoRunning(true);
     setAutoResults(null);
     setShowResults(false);

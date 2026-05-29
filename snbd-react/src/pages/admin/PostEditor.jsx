@@ -8,6 +8,7 @@ marked.setOptions({ breaks: true, gfm: true });
 
 const emptyForm = {
   title: '',
+  slug: '',
   excerpt: '',
   content: '',
   author: 'SNBD HOST Team',
@@ -43,6 +44,7 @@ export default function PostEditor() {
         if (post) {
           setForm({
             title: post.title || '',
+            slug: post.slug || '',
             excerpt: post.excerpt || '',
             content: post.content || '',
             author: post.author || 'SNBD HOST Team',
@@ -60,9 +62,46 @@ export default function PostEditor() {
       .catch(() => setLoading(false));
   }, [id]);
 
+  const slugify = (text) => {
+    return text
+      .toString()
+      .toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^\w\-]+/g, '')
+      .replace(/\-\-+/g, '-')
+      .replace(/^-+/, '')
+      .replace(/-+$/, '');
+  };
+
   function update(field, value) {
-    setForm(f => ({ ...f, [field]: value }));
+    setForm(f => {
+      const next = { ...f, [field]: value };
+      if (field === 'title' && !isEditing) {
+        next.slug = slugify(value);
+      }
+      return next;
+    });
   }
+
+  // Calculate live checklist checks
+  const wordCount = form.content.split(/\s+/).filter(Boolean).length;
+  const tagCount = form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean).length : 0;
+  const hasH2 = /##\s+.+/.test(form.content);
+  const hasInternalLink = /\[.*?\]\((https?:\/\/snbdhost\.com)?\/(hosting|reseller-hosting|vps-server|bdix-servers|domain|openclaw|n8n-automation|offers|support)\)/i.test(form.content);
+
+  const checks = [
+    { id: 'title-len', label: `Title: 50–70 chars (currently ${form.title.length})`, pass: form.title.length >= 50 && form.title.length <= 70 },
+    { id: 'slug', label: 'Slug is keyword-rich & clean', pass: form.slug.trim().length > 0 },
+    { id: 'meta-desc', label: `Meta desc: 150–160 chars (currently ${form.meta_description.length})`, pass: form.meta_description.length >= 150 && form.meta_description.length <= 160 },
+    { id: 'og-image', label: 'OG Image URL set (no localhost)', pass: form.og_image.trim().length > 0 && !form.og_image.includes('localhost') },
+    { id: 'feat-image', label: 'Featured Image URL set', pass: !!form.featured_image_url.trim() },
+    { id: 'category', label: 'Category set', pass: !!form.category.trim() },
+    { id: 'tags', label: `Tags: 3–5 items (currently ${tagCount})`, pass: tagCount >= 3 && tagCount <= 5 },
+    { id: 'excerpt', label: 'Excerpt filled in (1–2 sentences)', pass: !!form.excerpt.trim() },
+    { id: 'length', label: `Length: ≥600 words (currently ${wordCount})`, pass: wordCount >= 600 },
+    { id: 'headings', label: 'Content has H2 heading (##)', pass: hasH2 },
+    { id: 'links', label: 'Content has 1+ SNBD service link', pass: hasInternalLink },
+  ];
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -70,11 +109,19 @@ export default function PostEditor() {
       setError('Title and content are required');
       return;
     }
+
+    const allChecksPass = checks.every(c => c.pass);
+    if (form.status === 'published' && !allChecksPass) {
+      setError('Cannot publish: Please complete all critical SEO checks in the sidebar checklist before changing status to Published.');
+      return;
+    }
+
     setError('');
     setSaving(true);
 
     const payload = {
       ...form,
+      slug: slugify(form.slug || form.title),
       tags: form.tags ? form.tags.split(',').map(t => t.trim()).filter(Boolean) : [],
     };
 
@@ -221,36 +268,72 @@ code block
 
           {/* Sidebar */}
           <aside className="w-72 border-l border-gray-800 bg-gray-900 overflow-y-auto flex-shrink-0 p-5 space-y-5">
-            <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">Post details</h3>
+            <div>
+              <div className="flex justify-between items-center mb-3">
+                <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider">SEO Checklist</h3>
+                <span className={`text-[10px] font-bold px-2 py-0.5 rounded ${
+                  checks.every(c => c.pass) ? 'bg-green-900/40 text-green-400' : 'bg-gray-800 text-gray-300'
+                }`}>
+                  {checks.filter(c => c.pass).length} / {checks.length} Passed
+                </span>
+              </div>
+              <div className="space-y-2 bg-gray-950/40 border border-gray-800 p-3 rounded-lg text-xs leading-relaxed max-h-56 overflow-y-auto">
+                {checks.map(c => (
+                  <div key={c.id} className="flex items-start gap-2">
+                    {c.pass ? (
+                      <i className="fa-solid fa-circle-check text-green-500 mt-0.5 shrink-0"></i>
+                    ) : (
+                      <i className="fa-solid fa-circle-xmark text-red-500/60 mt-0.5 shrink-0"></i>
+                    )}
+                    <span className={c.pass ? 'text-gray-300 animate-pulse-once' : 'text-gray-500'}>{c.label}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
 
-            {[
-              { label: 'Author', field: 'author', type: 'text', placeholder: 'SNBD HOST Team' },
-              { label: 'Category', field: 'category', type: 'text', placeholder: 'e.g. WordPress, VPS, Tutorials' },
-              { label: 'Tags', field: 'tags', type: 'text', placeholder: 'Comma-separated tags' },
-              { label: 'Featured image URL', field: 'featured_image_url', type: 'url', placeholder: 'https://…' },
-            ].map(({ label, field, type, placeholder }) => (
-              <div key={field}>
-                <label className="block text-xs font-medium text-gray-400 mb-1">{label}</label>
+            <div className="border-t border-gray-800 pt-4">
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Post details</h3>
+
+              {[
+                { label: 'Author', field: 'author', type: 'text', placeholder: 'SNBD HOST Team' },
+                { label: 'Category', field: 'category', type: 'text', placeholder: 'e.g. WordPress, VPS, Tutorials' },
+                { label: 'Tags (comma-separated)', field: 'tags', type: 'text', placeholder: 'e.g. hosting, speed, guide' },
+                { label: 'Featured image URL', field: 'featured_image_url', type: 'url', placeholder: 'https://…' },
+              ].map(({ label, field, type, placeholder }) => (
+                <div key={field} className="mb-3">
+                  <label className="block text-[10px] font-medium text-gray-400 mb-1">{label}</label>
+                  <input
+                    type={type}
+                    value={form[field]}
+                    onChange={e => update(field, e.target.value)}
+                    placeholder={placeholder}
+                    className="w-full bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-[#CC0000] transition-colors"
+                  />
+                </div>
+              ))}
+            </div>
+
+            <div className="border-t border-gray-800 pt-4">
+              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">SEO & Metadata</h3>
+
+              <div className="mb-3">
+                <label className="block text-[10px] font-medium text-gray-400 mb-1">Slug / URL Path</label>
                 <input
-                  type={type}
-                  value={form[field]}
-                  onChange={e => update(field, e.target.value)}
-                  placeholder={placeholder}
+                  type="text"
+                  value={form.slug}
+                  onChange={e => update('slug', e.target.value)}
+                  placeholder="post-url-slug"
                   className="w-full bg-gray-800 border border-gray-700 text-gray-200 rounded-lg px-3 py-2 text-xs focus:outline-none focus:border-[#CC0000] transition-colors"
                 />
               </div>
-            ))}
-
-            <div className="border-t border-gray-800 pt-4">
-              <h3 className="text-xs font-bold text-gray-400 uppercase tracking-wider mb-4">SEO</h3>
 
               {[
                 { label: 'Meta title', field: 'meta_title', placeholder: 'Overrides post title in search results' },
                 { label: 'Meta description', field: 'meta_description', placeholder: '150–160 char description for Google', isTextarea: true },
                 { label: 'OG image URL', field: 'og_image', placeholder: 'Social share preview image URL' },
               ].map(({ label, field, placeholder, isTextarea }) => (
-                <div key={field} className="mb-4">
-                  <label className="block text-xs font-medium text-gray-400 mb-1">{label}</label>
+                <div key={field} className="mb-3">
+                  <label className="block text-[10px] font-medium text-gray-400 mb-1">{label}</label>
                   {isTextarea ? (
                     <textarea
                       value={form[field]}
@@ -271,9 +354,13 @@ code block
                 </div>
               ))}
 
-              {form.meta_description && (
-                <p className={`text-xs mt-1 ${form.meta_description.length > 160 ? 'text-red-400' : 'text-gray-500'}`}>
-                  {form.meta_description.length} / 160 chars
+              {form.meta_description !== undefined && (
+                <p className={`text-[10px] mt-1 font-bold ${
+                  form.meta_description.length >= 150 && form.meta_description.length <= 160
+                    ? 'text-green-400'
+                    : 'text-amber-400'
+                }`}>
+                  {form.meta_description.length} / 160 chars (aim for 150–160)
                 </p>
               )}
             </div>
