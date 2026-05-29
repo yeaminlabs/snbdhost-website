@@ -118,3 +118,11 @@ export const organizationSchema = {
     'https://twitter.com/snbdhost',
   ],
 };
+
+export const websiteSchema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'SNBD HOST',
+  alternateName: ['snbdhost', 'snbd host', 'snbdhost.com'],
+  url: BASE_URL,
+};

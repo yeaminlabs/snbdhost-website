@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
-import { pageMeta } from '../seo/pageMeta';
+import { pageMeta, websiteSchema } from '../seo/pageMeta';
+import JsonLd from '../components/JsonLd';
 import { useCurrency } from '../context/CurrencyContext.jsx';
 import { useState } from 'react';
 
@@ -9,6 +10,7 @@ export default function HomePage() {
   return (
     <>
       <SEOHead {...pageMeta.home} />
+      <JsonLd data={websiteSchema} />
       {/* ========== HERO SECTION ========== */}
       <section className="bg-white relative pt-16 pb-20 lg:pt-24 lg:pb-24 overflow-hidden">
         {/* Subtle background glow */}

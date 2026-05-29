@@ -201,6 +201,37 @@ function getAbsoluteImageUrl(url) {
 // crawlers always see full structured data in raw HTML.
 
 const PAGE_SCHEMAS = {
+  '/': [
+    {
+      '@context': 'https://schema.org',
+      '@type': 'WebSite',
+      name: 'SNBD HOST',
+      alternateName: ['snbdhost', 'snbd host', 'snbdhost.com'],
+      url: BASE_URL,
+    },
+    {
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: 'SNBD HOST',
+      url: BASE_URL,
+      logo: `${BASE_URL}/logo.png`,
+      description: "Bangladesh's leading web hosting provider with NVMe SSD servers, BDIX connectivity, and 24/7 local support.",
+      address: {
+        '@type': 'PostalAddress',
+        addressCountry: 'BD',
+        addressLocality: 'Dhaka',
+      },
+      contactPoint: {
+        '@type': 'ContactPoint',
+        contactType: 'customer support',
+        availableLanguage: ['English', 'Bengali'],
+      },
+      sameAs: [
+        'https://www.facebook.com/snbdhost',
+        'https://twitter.com/snbdhost',
+      ],
+    },
+  ],
   '/vps-server': [
     {
       '@context': 'https://schema.org',
