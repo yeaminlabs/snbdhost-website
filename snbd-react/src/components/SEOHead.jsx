@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
 const SITE_NAME = 'SNBD HOST';
-const DEFAULT_IMAGE = 'https://snbdhost.com/logo.png';
+const DEFAULT_IMAGE = 'https://snbdhost.com/og/home.jpg';
 
 export default function SEOHead({
   title,

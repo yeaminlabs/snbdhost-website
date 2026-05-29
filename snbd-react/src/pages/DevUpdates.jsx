@@ -5,7 +5,7 @@ export default function DevUpdates() {
   const meta = {
     title: 'SNBD HOST | Developer Updates & Changelog',
     description: 'Keep track of the latest features, bug fixes, and improvements made to the SNBD HOST platform.',
-    url: 'https://snbdhost.com/dev-updates',
+    canonical: 'https://snbdhost.com/dev-updates',
   };
 
   const updates = [

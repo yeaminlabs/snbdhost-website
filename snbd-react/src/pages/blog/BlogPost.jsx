@@ -48,7 +48,7 @@ export default function BlogPost() {
   }
 
   const getAbsoluteImageUrl = (url) => {
-    if (!url) return `${BASE_URL}/logo.png`;
+    if (!url) return `${BASE_URL}/og/home.jpg`;
     if (url.startsWith('http://') || url.startsWith('https://')) return url;
     return `${BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
   };

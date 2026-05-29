@@ -51,7 +51,7 @@ app.get('/health', (req, res) => res.json({ status: 'ok' }));
 const BOT_UA = /bot|crawl|slurp|spider|facebookexternalhit|twitterbot|linkedinbot|whatsapp|telegram|discord|slack|pinterest|applebot/i;
 
 const BASE_URL = 'https://snbdhost.com';
-const DEFAULT_IMAGE = `${BASE_URL}/logo.png`;
+const DEFAULT_IMAGE = `${BASE_URL}/og/home.jpg`;
 
 const staticMeta = {
   '/': {
