@@ -151,28 +151,7 @@ export default function BDIXServers() {
     <>
       <SEOHead {...pageMeta.bdixServers} />
       <JsonLd data={faqSchema} />
-      <style>{`
-        @keyframes floatUp {
-          0%   { transform: translateY(0) scale(1); opacity: 0; }
-          10%  { opacity: 0.6; }
-          90%  { opacity: 0.2; }
-          100% { transform: translateY(-420px) scale(0.4); opacity: 0; }
-        }
-        @keyframes blink {
-          0%, 100% { opacity: 1; }
-          50%       { opacity: 0; }
-        }
-        @keyframes gridPulse {
-          0%, 100% { opacity: 0.05; }
-          50%       { opacity: 0.1; }
-        }
-        @keyframes scanline {
-          0%   { transform: translateY(-100%); opacity: 0; }
-          10%  { opacity: 0.4; }
-          90%  { opacity: 0.1; }
-          100% { transform: translateY(700px); opacity: 0; }
-        }
-      `}</style>
+      {/* Keyframes now globally defined in index.css */}
 
       <div className="bg-[#F4F5F7] min-h-screen">
 
