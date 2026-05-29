@@ -66,6 +66,7 @@ async function generate() {
 
   // 3. Generate sitemap-pages.xml
   const pagesXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${staticRoutes
   .map(
@@ -82,6 +83,7 @@ ${staticRoutes
 
   // 4. Generate sitemap-posts.xml
   const postsXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 ${blogRoutes
   .map(
@@ -98,6 +100,7 @@ ${blogRoutes
 
   // 5. Generate sitemap.xml (Sitemap Index)
   const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
 <sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <sitemap>
     <loc>${BASE_URL}/sitemap-pages.xml</loc>
