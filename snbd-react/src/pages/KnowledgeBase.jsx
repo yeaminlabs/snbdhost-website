@@ -97,7 +97,9 @@ export default function KnowledgeBase() {
   // Render markdown safely
   const renderMarkdown = (content) => {
     if (!content) return '';
-    const rawHtml = marked(content);
+    // Strip leading heading (H1, H2, etc.) at the start of the content to avoid duplicate titles
+    const cleanedContent = content.replace(/^\s*#+\s+.*(?:\r?\n|$)/, '').trim();
+    const rawHtml = marked(cleanedContent);
     return DOMPurify.sanitize(rawHtml);
   };
 

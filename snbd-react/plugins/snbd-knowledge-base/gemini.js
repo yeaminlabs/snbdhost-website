@@ -46,7 +46,7 @@ Guidelines:
 2. Price values should be formatted in BDT (৳) where applicable.
 3. Write articles in a clear, concise, and friendly manner.
 4. Each article must focus on answering a single, specific customer question or guiding them through a specific process.
-5. The 'content' field must be written in well-formatted Markdown (use headings, lists, bold text, and code blocks for instructions).
+5. The 'content' field must be written in well-formatted Markdown (use sub-headings, lists, bold text, and code blocks for instructions). Do NOT include the article title as a heading at the top of the content, as it will be rendered automatically.
 6. Categorize articles appropriately (e.g., 'Hosting', 'VPS Server', 'Domain', 'n8n Automation', 'Billing', 'General').`;
 
   const systemInstruction = customPrompt ? `${defaultSystemPrompt}\n\nAdditional Instructions:\n${customPrompt}` : defaultSystemPrompt;
