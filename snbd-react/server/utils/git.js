@@ -80,7 +80,7 @@ async function buildCommit(commitSha) {
     await runInReact('npm install --legacy-peer-deps --include=dev');
 
     // 5. Compile the React/Vite build
-    await runInReact('npm run build');
+    await runInReact('npm run build:full');
 
     // 6. Copy the new dist/ back to PROJECT_ROOT/dist/
     const sourceDist = path.join(reactDir, 'dist');
