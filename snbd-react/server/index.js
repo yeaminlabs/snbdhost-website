@@ -13,11 +13,68 @@ app.use(helmet({
   contentSecurityPolicy: {
     directives: {
       defaultSrc: ["'self'"],
-      scriptSrc: ["'self'", "'unsafe-inline'", 'https://www.googletagmanager.com', 'https://www.google-analytics.com'],
-      styleSrc: ["'self'", "'unsafe-inline'"],
+
+      // Scripts: self + analytics + marketing pixels + CDN (tsparticles, tawk)
+      scriptSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'https://www.googletagmanager.com',
+        'https://www.google-analytics.com',
+        'https://cdn.jsdelivr.net',
+        'https://embed.tawk.to',
+        'https://va.tawk.to',
+        'https://connect.facebook.net',
+        'https://static.hotjar.com',
+        'https://www.clarity.ms',
+        'https://snap.licdn.com',
+        'https://analytics.tiktok.com',
+      ],
+
+      // Styles: self + Google Fonts + Font Awesome CDN
+      styleSrc: [
+        "'self'",
+        "'unsafe-inline'",
+        'https://fonts.googleapis.com',
+        'https://cdnjs.cloudflare.com',
+      ],
+
+      // Fonts: Google Fonts static files + Font Awesome CDN
+      fontSrc: [
+        "'self'",
+        'data:',
+        'https://fonts.gstatic.com',
+        'https://cdnjs.cloudflare.com',
+      ],
+
+      // Images: self + data URIs + all HTTPS (avatars, OG, etc.)
       imgSrc: ["'self'", 'data:', 'https:'],
-      connectSrc: ["'self'", 'https://www.google-analytics.com'],
-      frameSrc: ["'none'"],
+
+      // Connections: self + analytics + portal API + Tawk.to websocket
+      connectSrc: [
+        "'self'",
+        'https://www.google-analytics.com',
+        'https://analytics.google.com',
+        'https://portal.snbdhost.com',
+        'https://embed.tawk.to',
+        'wss://embed.tawk.to',
+        'https://va.tawk.to',
+        'wss://va.tawk.to',
+        'https://www.clarity.ms',
+        'https://www.googletagmanager.com',
+      ],
+
+      // Frames: only Tawk.to chat iframe
+      frameSrc: [
+        "'self'",
+        'https://embed.tawk.to',
+        'https://www.googletagmanager.com',
+      ],
+
+      // Workers: needed by tsparticles
+      workerSrc: ["'self'", 'blob:'],
+
+      // Media
+      mediaSrc: ["'self'"],
     },
   },
   crossOriginEmbedderPolicy: false,
