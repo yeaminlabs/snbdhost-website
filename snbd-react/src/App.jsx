@@ -34,6 +34,10 @@ import MarketingTools from './pages/admin/MarketingTools';
 import VersionControl from './pages/admin/VersionControl';
 import ProtectedRoute from './pages/admin/ProtectedRoute';
 
+// Knowledge Base Plugin Pages
+import KnowledgeBase from './pages/KnowledgeBase';
+import KnowledgeBaseAdmin from './pages/admin/KnowledgeBaseAdmin';
+
 function App() {
   return (
     <HelmetProvider>
@@ -54,6 +58,8 @@ function App() {
               <Route path="/n8n-automation" element={<N8NAutomation />} />
               <Route path="/offers" element={<Offers />} />
               <Route path="/support" element={<Support />} />
+              <Route path="/support/kb" element={<KnowledgeBase />} />
+              <Route path="/support/kb/:slug" element={<KnowledgeBase />} />
               <Route path="/privacy" element={<Privacy />} />
               <Route path="/terms" element={<Terms />} />
               <Route path="/dev-updates" element={<DevUpdates />} />
@@ -109,6 +115,14 @@ function App() {
                 element={
                   <ProtectedRoute>
                     <VersionControl />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/plugins/knowledge-base"
+                element={
+                  <ProtectedRoute>
+                    <KnowledgeBaseAdmin />
                   </ProtectedRoute>
                 }
               />

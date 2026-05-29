@@ -1,10 +1,22 @@
 import { useState } from 'react';
+import { useNavigate, Link } from 'react-router-dom';
 import SEOHead from '../components/SEOHead';
 import JsonLd from '../components/JsonLd';
 import { pageMeta } from '../seo/pageMeta';
 
 export default function Support() {
   const [faqOpen, setFaqOpen] = useState(null);
+  const [searchVal, setSearchVal] = useState('');
+  const navigate = useNavigate();
+
+  const handleSearchSubmit = (e) => {
+    e.preventDefault();
+    if (searchVal.trim()) {
+      navigate(`/support/kb?search=${encodeURIComponent(searchVal.trim())}`);
+    } else {
+      navigate('/support/kb');
+    }
+  };
 
   const toggleFaq = (index) => {
     setFaqOpen(faqOpen === index ? null : index);
@@ -70,24 +82,35 @@ export default function Support() {
             Hi, how can we help you?
           </h1>
           
-          <div className="relative max-w-3xl mx-auto mb-6">
+          <form onSubmit={handleSearchSubmit} className="relative max-w-3xl mx-auto mb-6">
             <div className="absolute inset-y-0 left-0 pl-5 flex items-center pointer-events-none">
               <i className="fa-solid fa-magnifying-glass text-gray-400 text-xl"></i>
             </div>
             <input 
               type="text" 
+              value={searchVal}
+              onChange={(e) => setSearchVal(e.target.value)}
               className="w-full bg-white text-gray-900 border-none rounded-2xl pl-14 pr-6 py-5 text-lg shadow-xl focus:outline-none focus:ring-4 focus:ring-red-500/50 transition-all font-medium placeholder-gray-400" 
               placeholder="Search Questions, Keywords or Topics..."
             />
-          </div>
+          </form>
           
           <div className="flex flex-wrap items-center justify-center gap-2 text-sm">
             <span className="text-gray-400 font-medium">Search Suggestions:</span>
-            <a href="#" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">Reset Password</a>
+            <Link to="/support/kb?search=reset%20password" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">Reset Password</Link>
             <span className="text-gray-600">|</span>
-            <a href="#" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">Server Unreachable</a>
+            <Link to="/support/kb?search=server%20unreachable" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">Server Unreachable</Link>
             <span className="text-gray-600">|</span>
-            <a href="#" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">bKash Payment</a>
+            <Link to="/support/kb?search=bkash" className="text-gray-300 hover:text-white underline decoration-gray-600 hover:decoration-red-500 transition-colors">bKash Payment</Link>
+          </div>
+
+          <div className="mt-8">
+            <Link 
+              to="/support/kb" 
+              className="inline-flex items-center gap-2 bg-[#CC0000] hover:bg-red-700 text-white font-bold text-sm px-6 py-3 rounded-xl transition-all shadow-lg hover:shadow-xl"
+            >
+              <i className="fa-solid fa-brain"></i> Browse Knowledge Base
+            </Link>
           </div>
         </div>
       </section>

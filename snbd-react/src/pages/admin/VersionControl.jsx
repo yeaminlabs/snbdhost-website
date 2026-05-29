@@ -219,6 +219,9 @@ export default function VersionControl() {
             <Link to="/admin/marketing" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
               <i className="fa-solid fa-chart-line text-amber-400"></i> Marketing Tools
             </Link>
+            <Link to="/admin/plugins/knowledge-base" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-brain text-red-500"></i> Knowledge Base
+            </Link>
             <button
               onClick={logout}
               className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-red-400 hover:bg-red-900/20 transition-colors px-3 py-1.5 rounded-lg"

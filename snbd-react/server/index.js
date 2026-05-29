@@ -92,6 +92,92 @@ app.use('/api/posts', require('./routes/posts'));
 app.use('/api/marketing-config', require('./routes/marketing'));
 app.use('/api/versions', require('./routes/versions'));
 
+// ──────────────────────────────────────────────────────────────
+// Knowledge Base Plugin Integration (Integrated / Standalone)
+// ──────────────────────────────────────────────────────────────
+const KB_PLUGIN_STANDALONE = process.env.KB_PLUGIN_STANDALONE === 'true';
+const KB_PLUGIN_URL = process.env.KB_PLUGIN_URL || 'http://localhost:3002';
+
+if (KB_PLUGIN_STANDALONE) {
+  console.log(`[Plugins] Knowledge Base standalone proxy active. Target: ${KB_PLUGIN_URL}`);
+  
+  // Custom fetch-based proxy handler to avoid extra packages
+  app.all('/api/plugins/snbd-knowledge-base*', async (req, res) => {
+    // If it's an admin endpoint, enforce session auth server-side first!
+    if (req.path.includes('/admin')) {
+      const requireAuth = require('./middleware/auth');
+      let authError = false;
+      
+      // Emulate middleware call
+      await new Promise((resolve) => {
+        requireAuth(req, res, (err) => {
+          if (err) {
+            authError = true;
+          }
+          resolve();
+        });
+      });
+      
+      if (authError || res.headersSent) return;
+    }
+
+    try {
+      const url = `${KB_PLUGIN_URL}${req.originalUrl}`;
+      const method = req.method;
+      const headers = { ...req.headers };
+      
+      // Avoid host mismatch and content-length issues
+      delete headers.host;
+      
+      const fetchOptions = {
+        method,
+        headers,
+      };
+
+      if (['POST', 'PUT', 'DELETE', 'PATCH'].includes(method) && req.body && Object.keys(req.body).length > 0) {
+        fetchOptions.body = JSON.stringify(req.body);
+        fetchOptions.headers['content-type'] = 'application/json';
+      }
+
+      const response = await fetch(url, fetchOptions);
+      res.status(response.status);
+      
+      // Forward headers
+      response.headers.forEach((val, key) => {
+        if (!['content-encoding', 'transfer-encoding'].includes(key.toLowerCase())) {
+          res.setHeader(key, val);
+        }
+      });
+
+      const buffer = await response.arrayBuffer();
+      res.send(Buffer.from(buffer));
+    } catch (err) {
+      console.error('[Plugins] Standalone proxy gateway error:', err.message);
+      res.status(502).json({ error: 'Gateway Error: Standalone Knowledge Base plugin server is unreachable.' });
+    }
+  });
+} else {
+  const pluginRouterPath = path.join(__dirname, '../plugins/snbd-knowledge-base/router.js');
+  if (fs.existsSync(pluginRouterPath)) {
+    try {
+      const pluginRouter = require(pluginRouterPath);
+      const requireAuth = require('./middleware/auth');
+      
+      // Secure admin routes in integrated mode
+      app.use('/api/plugins/snbd-knowledge-base/admin', requireAuth);
+      app.use('/api/plugins/snbd-knowledge-base', pluginRouter);
+      console.log('[Plugins] Loaded snbd-knowledge-base dynamically in integrated mode.');
+    } catch (err) {
+      console.error('[Plugins] Failed to dynamically load snbd-knowledge-base:', err);
+    }
+  } else {
+    // Graceful fallback when plugin is not installed
+    app.get('/api/plugins/snbd-knowledge-base/status', (req, res) => {
+      res.json({ active: false });
+    });
+  }
+}
+
 // Initialize active version state on server start
 const { setActiveVersion, getActiveVersionPath } = require('./utils/versionState');
 

@@ -77,6 +77,9 @@ export default function AdminDashboard() {
             <Link to="/admin/versions" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
               <i className="fa-solid fa-code-branch text-blue-400"></i> Version Control
             </Link>
+            <Link to="/admin/plugins/knowledge-base" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
+              <i className="fa-solid fa-brain text-red-500"></i> Knowledge Base
+            </Link>
             <Link to="/blog" target="_blank" className="flex items-center gap-1.5 text-xs text-gray-400 hover:text-white hover:bg-gray-800 transition-colors px-3 py-1.5 rounded-lg">
               <i className="fa-solid fa-arrow-up-right-from-square"></i> View Blog
             </Link>
