@@ -1,5 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
+const path = require('path');
+const { exec } = require('child_process');
 const dbHelper = require('./db');
 const crawler = require('./crawler');
 const gemini = require('./gemini');
@@ -17,6 +19,22 @@ function slugify(text) {
     .replace(/\-\-+/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '');
+}
+
+// Helper: Trigger sitemap script regeneration asynchronously
+function regenerateSitemaps() {
+  const sitemapScript = path.resolve(__dirname, '../../scripts/generate-sitemap.cjs');
+  // Pass current active PORT so sitemap fetches from correct port
+  const port = process.env.PORT || 3001;
+  const env = { ...process.env, API_URL: `http://localhost:${port}` };
+  
+  exec(`node "${sitemapScript}"`, { env }, (err, stdout, stderr) => {
+    if (err) {
+      console.error('[Plugin:Sitemap] Failed to regenerate sitemaps:', err.message);
+    } else {
+      console.log('[Plugin:Sitemap] Sitemaps regenerated successfully:\n', stdout.trim());
+    }
+  });
 }
 
 // Authentication middleware for plugin admin routes
@@ -215,6 +233,9 @@ router.post('/admin/generate', requirePluginAuth, async (req, res) => {
       });
     }
 
+    // Trigger sitemap regeneration
+    regenerateSitemaps();
+
     res.json({ ok: true, drafts: createdDrafts });
   } catch (err) {
     res.status(500).json({ error: 'Failed to generate articles: ' + err.message });
@@ -269,6 +290,9 @@ router.post('/admin/articles', requirePluginAuth, async (req, res) => {
       [title, slug, category, summary || '', content, status || 'draft']
     );
 
+    // Trigger sitemap regeneration
+    regenerateSitemaps();
+
     res.json({ ok: true, id: result.lastInsertRowid, slug });
   } catch (err) {
     res.status(500).json({ error: 'Failed to create article: ' + err.message });
@@ -310,6 +334,9 @@ router.put('/admin/articles/:id', requirePluginAuth, async (req, res) => {
       [title, slug, category, summary || '', content, status, id]
     );
 
+    // Trigger sitemap regeneration
+    regenerateSitemaps();
+
     res.json({ ok: true, slug });
   } catch (err) {
     res.status(500).json({ error: 'Failed to update article: ' + err.message });
@@ -325,6 +352,10 @@ router.delete('/admin/articles/:id', requirePluginAuth, async (req, res) => {
       return res.status(404).json({ error: 'Article not found' });
     }
     await dbHelper.run("DELETE FROM kb_articles WHERE id = ?", [id]);
+    
+    // Trigger sitemap regeneration
+    regenerateSitemaps();
+
     res.json({ ok: true });
   } catch (err) {
     res.status(500).json({ error: 'Failed to delete article: ' + err.message });

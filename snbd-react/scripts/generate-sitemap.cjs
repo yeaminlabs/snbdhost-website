@@ -31,6 +31,7 @@ const staticRoutes = [
 async function generate() {
   const today = new Date().toISOString().split('T')[0];
   let blogRoutes = [];
+  let kbRoutes = [];
 
   // 1. Fetch published blog posts
   try {
@@ -45,6 +46,25 @@ async function generate() {
     console.log(`✓ Found ${blogRoutes.length} published blog posts`);
   } catch (e) {
     console.warn(`⚠ Could not fetch blog posts from ${API_URL}: ${e.message}`);
+  }
+
+  // 1.5 Fetch published Knowledge Base articles
+  try {
+    const res = await fetch(`${API_URL}/api/plugins/snbd-knowledge-base/articles`);
+    if (res.ok) {
+      const { articles } = await res.json();
+      kbRoutes = (articles || []).map(a => ({
+        path: `/support/kb/${a.slug}`,
+        changefreq: 'monthly',
+        priority: '0.7',
+        lastmod: a.updated_at ? a.updated_at.split(' ')[0] : today,
+      }));
+      console.log(`✓ Found ${kbRoutes.length} published Knowledge Base articles`);
+    } else {
+      console.log(`ℹ Knowledge Base sitemap skipped (endpoint returned ${res.status})`);
+    }
+  } catch (e) {
+    console.warn(`ℹ Could not fetch Knowledge Base articles from ${API_URL}: ${e.message}`);
   }
 
   // 2. Helper to write sitemap XML to both /public and /dist
@@ -98,10 +118,33 @@ ${blogRoutes
 </urlset>`;
   writeSitemapFile('sitemap-posts.xml', postsXml);
 
-  // 5. Generate sitemap.xml (Sitemap Index)
-  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
+  // 4.5 Generate sitemap-kb.xml
+  if (kbRoutes.length > 0) {
+    const kbXml = `<?xml version="1.0" encoding="UTF-8"?>
 <?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
-<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${kbRoutes
+  .map(
+    r => `  <url>
+    <loc>${BASE_URL}${r.path}</loc>
+    <lastmod>${r.lastmod}</lastmod>
+    <changefreq>${r.changefreq}</changefreq>
+    <priority>${r.priority}</priority>
+  </url>`
+  )
+  .join('\n')}
+</urlset>`;
+    writeSitemapFile('sitemap-kb.xml', kbXml);
+  } else {
+    // Delete sitemap-kb.xml if no published articles exist
+    const publicPath = path.join(__dirname, '../public/sitemap-kb.xml');
+    const distPath = path.join(__dirname, '../dist/sitemap-kb.xml');
+    if (fs.existsSync(publicPath)) fs.unlinkSync(publicPath);
+    if (fs.existsSync(distPath)) fs.unlinkSync(distPath);
+  }
+
+  // 5. Generate sitemap.xml (Sitemap Index)
+  let sitemapsList = `
   <sitemap>
     <loc>${BASE_URL}/sitemap-pages.xml</loc>
     <lastmod>${today}</lastmod>
@@ -109,7 +152,19 @@ ${blogRoutes
   <sitemap>
     <loc>${BASE_URL}/sitemap-posts.xml</loc>
     <lastmod>${today}</lastmod>
-  </sitemap>
+  </sitemap>`;
+
+  if (kbRoutes.length > 0) {
+    sitemapsList += `
+  <sitemap>
+    <loc>${BASE_URL}/sitemap-kb.xml</loc>
+    <lastmod>${today}</lastmod>
+  </sitemap>`;
+  }
+
+  const indexXml = `<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="/sitemap.xsl"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${sitemapsList}
 </sitemapindex>`;
   writeSitemapFile('sitemap.xml', indexXml);
 }
