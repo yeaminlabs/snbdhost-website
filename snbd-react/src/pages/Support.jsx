@@ -183,21 +183,25 @@ export default function Support() {
                     </Link>
                   ))
                 ) : (
-                  fallbackCategories.map(cat => (
-                    <Link
-                      key={cat.name}
-                      to="/support/kb"
-                      className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-red-200 hover:-translate-y-0.5 transition-all flex items-start gap-4 group"
-                    >
-                      <div className="w-11 h-11 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-red-50 transition-colors">
-                        <i className={`fa-solid ${getIcon(cat.key)} text-lg`}></i>
-                      </div>
-                      <div>
-                        <h3 className="font-bold text-gray-900 text-sm mb-1.5 group-hover:text-[#CC0000] transition-colors">{cat.name}</h3>
-                        <p className="text-gray-500 text-xs leading-relaxed">{cat.desc}</p>
-                      </div>
-                    </Link>
-                  ))
+                  fallbackCategories.map(cat => {
+                    const kbCategory = cat.name === 'Getting Started' ? 'General' : 
+                                       cat.name === 'Billing & Payments' ? 'Billing' : cat.name;
+                    return (
+                      <Link
+                        key={cat.name}
+                        to={`/support/kb?category=${encodeURIComponent(kbCategory)}`}
+                        className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm hover:shadow-md hover:border-red-200 hover:-translate-y-0.5 transition-all flex items-start gap-4 group"
+                      >
+                        <div className="w-11 h-11 bg-gray-50 border border-gray-100 rounded-xl flex items-center justify-center shrink-0 group-hover:bg-red-50 transition-colors">
+                          <i className={`fa-solid ${getIcon(cat.key)} text-lg`}></i>
+                        </div>
+                        <div>
+                          <h3 className="font-bold text-gray-900 text-sm mb-1.5 group-hover:text-[#CC0000] transition-colors">{cat.name}</h3>
+                          <p className="text-gray-500 text-xs leading-relaxed">{cat.desc}</p>
+                        </div>
+                      </Link>
+                    );
+                  })
                 )}
               </div>
             </div>

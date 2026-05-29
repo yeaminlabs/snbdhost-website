@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import { useParams, Link, useNavigate, useSearchParams } from 'react-router-dom';
 import { marked } from 'marked';
 import DOMPurify from 'dompurify';
 import SEOHead from '../components/SEOHead';
@@ -8,27 +8,42 @@ export default function KnowledgeBase() {
   const { slug } = useParams();
   const navigate = useNavigate();
 
+  // URL Parameters (single source of truth for filters)
+  const [searchParams, setSearchParams] = useSearchParams();
+  const selectedCategory = searchParams.get('category') || '';
+  const debouncedSearch = searchParams.get('search') || '';
+
   // Data States
   const [categories, setCategories] = useState([]);
   const [articles, setArticles] = useState([]);
   const [currentArticle, setCurrentArticle] = useState(null);
   
-  // Search & Filter States
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('');
-  const [debouncedSearch, setDebouncedSearch] = useState('');
+  // Local input state for smooth typing experience
+  const [searchQuery, setSearchQuery] = useState(searchParams.get('search') || '');
   
   // UI States
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // Debounce search query
+  // Sync URL search query changes back to local input (e.g. on back button)
+  useEffect(() => {
+    setSearchQuery(searchParams.get('search') || '');
+  }, [searchParams]);
+
+  // Debouncer: Update the URL query string 300ms after user stops typing
   useEffect(() => {
     const handler = setTimeout(() => {
-      setDebouncedSearch(searchQuery);
+      setSearchParams(prev => {
+        if (searchQuery.trim()) {
+          prev.set('search', searchQuery.trim());
+        } else {
+          prev.delete('search');
+        }
+        return prev;
+      });
     }, 300);
     return () => clearTimeout(handler);
-  }, [searchQuery]);
+  }, [searchQuery, setSearchParams]);
 
   // Load categories and initial articles
   useEffect(() => {
@@ -101,6 +116,18 @@ export default function KnowledgeBase() {
     const cleanedContent = content.replace(/^\s*#+\s+.*(?:\r?\n|$)/, '').trim();
     const rawHtml = marked(cleanedContent);
     return DOMPurify.sanitize(rawHtml);
+  };
+
+  // Helper to change URL category search parameter
+  const handleCategoryChange = (catName) => {
+    setSearchParams(prev => {
+      if (catName) {
+        prev.set('category', catName);
+      } else {
+        prev.delete('category');
+      }
+      return prev;
+    });
   };
 
   return (
@@ -228,7 +255,7 @@ export default function KnowledgeBase() {
               <h3 className="text-[10px] uppercase font-extrabold tracking-widest text-gray-400 pl-3">Categories</h3>
               <div className="flex flex-col gap-1">
                 <button
-                  onClick={() => setSelectedCategory('')}
+                  onClick={() => handleCategoryChange('')}
                   className={`w-full text-left px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-between ${
                     selectedCategory === '' 
                       ? 'bg-red-600 text-white shadow-md shadow-red-600/10' 
@@ -241,7 +268,7 @@ export default function KnowledgeBase() {
                 {categories.map((cat) => (
                   <button
                     key={cat}
-                    onClick={() => setSelectedCategory(cat)}
+                    onClick={() => handleCategoryChange(cat)}
                     className={`w-full text-left px-4 py-2.5 rounded-xl font-bold text-sm transition-all flex items-center justify-between ${
                       selectedCategory === cat 
                         ? 'bg-red-600 text-white shadow-md shadow-red-600/10' 
@@ -272,7 +299,7 @@ export default function KnowledgeBase() {
                   <h3 className="font-bold text-gray-800 text-base mb-1">No articles found</h3>
                   <p className="text-sm">We couldn't find any articles matching your filters.</p>
                   <button 
-                    onClick={() => { setSelectedCategory(''); setSearchQuery(''); }}
+                    onClick={() => { setSearchParams({}); setSearchQuery(''); }}
                     className="text-red-600 font-bold text-xs mt-3 hover:underline"
                   >
                     Reset all filters
