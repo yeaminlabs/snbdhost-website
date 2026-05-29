@@ -2,6 +2,7 @@ const express = require('express');
 const fs = require('fs');
 const path = require('path');
 const auth = require('../middleware/auth');
+const { logAudit } = require('../utils/audit');
 
 const router = express.Router();
 
@@ -48,6 +49,7 @@ router.put('/', auth, (req, res) => {
     next[key] = { ...DEFAULT_CONFIG[key], ...current[key], ...(req.body[key] || {}) };
   }
   writeConfig(next);
+  logAudit('marketing:update', { admin: req.admin?.email });
   res.json({ ok: true, config: next });
 });
 

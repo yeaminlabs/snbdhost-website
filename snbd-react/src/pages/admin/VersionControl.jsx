@@ -30,15 +30,13 @@ export default function VersionControl() {
   const [changelog, setChangelog] = useState('');
 
   const navigate = useNavigate();
-  const token = localStorage.getItem('snbd_admin_token');
-  const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+  const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
   const fetchVersions = useCallback(async () => {
     setLoadingVersions(true);
     try {
-      const res = await fetch('/api/versions', { headers });
+      const res = await fetch('/api/versions', { credentials: 'include', headers: JSON_HEADERS });
       if (res.status === 401) {
-        localStorage.removeItem('snbd_admin_token');
         navigate('/admin/login');
         return;
       }
@@ -54,7 +52,7 @@ export default function VersionControl() {
   const fetchCommits = useCallback(async () => {
     setLoadingCommits(true);
     try {
-      const res = await fetch('/api/versions/commits', { headers });
+      const res = await fetch('/api/versions/commits', { credentials: 'include', headers: JSON_HEADERS });
       if (res.status === 401) return;
       const data = await res.json();
       setCommits(data.commits || []);
@@ -71,8 +69,8 @@ export default function VersionControl() {
     fetchCommits();
   }, [fetchVersions, fetchCommits]);
 
-  function logout() {
-    localStorage.removeItem('snbd_admin_token');
+  async function logout() {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     navigate('/admin/login');
   }
 
@@ -116,7 +114,8 @@ export default function VersionControl() {
     try {
       const res = await fetch('/api/versions', {
         method: 'POST',
-        headers,
+        credentials: 'include',
+        headers: JSON_HEADERS,
         body: JSON.stringify({
           version: versionName.trim(),
           commitSha: selectedCommit.hash,
@@ -150,7 +149,8 @@ export default function VersionControl() {
     try {
       const res = await fetch(`/api/versions/${ver.id}/activate`, {
         method: 'POST',
-        headers
+        credentials: 'include',
+        headers: JSON_HEADERS,
       });
 
       const data = await res.json();
@@ -178,7 +178,8 @@ export default function VersionControl() {
     try {
       const res = await fetch(`/api/versions/${ver.id}`, {
         method: 'DELETE',
-        headers
+        credentials: 'include',
+        headers: JSON_HEADERS,
       });
 
       const data = await res.json();

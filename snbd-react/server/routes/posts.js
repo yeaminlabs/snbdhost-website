@@ -12,13 +12,13 @@ router.get('/', async (req, res) => {
     const { page = 1, limit = 10, category, status } = req.query;
     const offset = (Number(page) - 1) * Number(limit);
 
-    // Security: verify the JWT token before showing drafts, not just check header presence
+    // Only show drafts to authenticated admins (verified via session cookie)
     let showAll = false;
-    if (status === 'all' && req.headers.authorization) {
+    if (status === 'all' && req.cookies && req.cookies.snbd_admin_session) {
       try {
-        jwt.verify(req.headers.authorization.slice(7), process.env.JWT_SECRET, { algorithms: ['HS256'] });
+        jwt.verify(req.cookies.snbd_admin_session, process.env.JWT_SECRET, { algorithms: ['HS256'] });
         showAll = true;
-      } catch { /* invalid token — treat as unauthenticated */ }
+      } catch { /* invalid/expired cookie — treat as unauthenticated */ }
     }
 
     let where = showAll ? '1=1' : "status = 'published'";

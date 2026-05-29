@@ -32,12 +32,11 @@ export default function PostEditor() {
   const [error, setError] = useState('');
   const [activeTab, setActiveTab] = useState('write');
 
-  const token = localStorage.getItem('snbd_admin_token');
-  const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+  const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
   useEffect(() => {
     if (!isEditing) return;
-    fetch(`/api/posts?status=all&limit=1000`, { headers })
+    fetch(`/api/posts?status=all&limit=1000`, { credentials: 'include', headers: JSON_HEADERS })
       .then(r => r.json())
       .then(data => {
         const post = (data.posts || []).find(p => p.id === Number(id));
@@ -128,7 +127,7 @@ export default function PostEditor() {
     try {
       const url = isEditing ? `/api/posts/${id}` : '/api/posts';
       const method = isEditing ? 'PUT' : 'POST';
-      const res = await fetch(url, { method, headers, body: JSON.stringify(payload) });
+      const res = await fetch(url, { method, credentials: 'include', headers: JSON_HEADERS, body: JSON.stringify(payload) });
       const data = await res.json();
 
       if (!res.ok) {

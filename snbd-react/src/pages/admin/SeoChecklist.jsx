@@ -189,19 +189,13 @@ const AUTO_CHECKS = {
     },
   },
   'launch-admin-guard': {
-    label: 'Checking admin token',
+    label: 'Checking admin session',
     run: async () => {
-      const token = localStorage.getItem('snbd_admin_token');
-      // We're in the admin panel so we ARE logged in. Confirm the token works.
-      if (!token) return { pass: false, note: 'No token in localStorage — you are not logged in' };
       try {
-        const res = await fetch('/api/posts?status=all&limit=1', {
-          headers: { Authorization: `Bearer ${token}` },
-          cache: 'no-store',
-        });
-        if (res.status === 401) return { pass: false, note: 'Token rejected (401) — log in again' };
-        return { pass: true, note: 'JWT token is valid and accepted by API ✓' };
-      } catch { return { pass: false, note: 'Could not verify token with API' }; }
+        const res = await fetch('/api/auth/verify', { credentials: 'include', cache: 'no-store' });
+        if (res.status === 401) return { pass: false, note: 'Session rejected (401) — log in again' };
+        return { pass: true, note: 'Admin session cookie is valid and accepted by API ✓' };
+      } catch { return { pass: false, note: 'Could not verify session with API' }; }
     },
   },
   'launch-all-routes': {

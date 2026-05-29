@@ -274,8 +274,7 @@ const CHECKER_ITEMS = [
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function MarketingTools() {
-  const token   = localStorage.getItem('snbd_admin_token');
-  const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+  const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
   const [config,   setConfig]   = useState(DEFAULT_CONFIG);
   const [loading,  setLoading]  = useState(true);
@@ -309,7 +308,7 @@ export default function MarketingTools() {
     setSaving(true);
     setError('');
     try {
-      const res = await fetch('/api/marketing-config', { method: 'PUT', headers, body: JSON.stringify(config) });
+      const res = await fetch('/api/marketing-config', { method: 'PUT', credentials: 'include', headers: JSON_HEADERS, body: JSON.stringify(config) });
       if (!res.ok) throw new Error(`HTTP ${res.status}`);
       setSaved(true);
       setTimeout(() => setSaved(false), 3000);

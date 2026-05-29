@@ -18,6 +18,7 @@ export default function AdminLogin() {
       const res = await fetch('/api/auth/login', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
+        credentials: 'include',
         body: JSON.stringify({ email, password }),
       });
       const data = await res.json();
@@ -27,7 +28,6 @@ export default function AdminLogin() {
         return;
       }
 
-      localStorage.setItem('snbd_admin_token', data.token);
       navigate('/admin');
     } catch {
       setError('Network error — is the API server running?');
@@ -62,7 +62,7 @@ export default function AdminLogin() {
                 onChange={e => setEmail(e.target.value)}
                 required
                 className="w-full bg-gray-800 border border-gray-700 text-white rounded-lg px-3 py-2.5 text-sm focus:outline-none focus:border-[#CC0000] transition-colors"
-                placeholder="admin@snbdhost.com"
+                placeholder="Email address"
               />
             </div>
 

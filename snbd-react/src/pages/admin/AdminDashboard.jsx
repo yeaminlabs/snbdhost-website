@@ -13,15 +13,13 @@ export default function AdminDashboard() {
   const [error, setError] = useState('');
   const navigate = useNavigate();
 
-  const token = localStorage.getItem('snbd_admin_token');
-  const headers = { Authorization: `Bearer ${token}`, 'Content-Type': 'application/json' };
+  const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
   const fetchPosts = useCallback(async () => {
     setLoading(true);
     try {
-      const res = await fetch('/api/posts?status=all&limit=100', { headers });
+      const res = await fetch('/api/posts?status=all&limit=100', { credentials: 'include', headers: JSON_HEADERS });
       if (res.status === 401) {
-        localStorage.removeItem('snbd_admin_token');
         navigate('/admin/login');
         return;
       }
@@ -40,7 +38,8 @@ export default function AdminDashboard() {
     const newStatus = post.status === 'published' ? 'draft' : 'published';
     await fetch(`/api/posts/${post.id}`, {
       method: 'PUT',
-      headers,
+      credentials: 'include',
+      headers: JSON_HEADERS,
       body: JSON.stringify({ ...post, status: newStatus }),
     });
     fetchPosts();
@@ -48,12 +47,12 @@ export default function AdminDashboard() {
 
   async function deletePost(id) {
     if (!confirm('Delete this post permanently?')) return;
-    await fetch(`/api/posts/${id}`, { method: 'DELETE', headers });
+    await fetch(`/api/posts/${id}`, { method: 'DELETE', credentials: 'include', headers: JSON_HEADERS });
     fetchPosts();
   }
 
-  function logout() {
-    localStorage.removeItem('snbd_admin_token');
+  async function logout() {
+    await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     navigate('/admin/login');
   }
 

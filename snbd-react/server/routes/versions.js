@@ -5,6 +5,7 @@ const { getDb, all, get, run, saveDb } = require('../db/database');
 const requireAuth = require('../middleware/auth');
 const { fetchCommits, buildCommit } = require('../utils/git');
 const { setActiveVersion } = require('../utils/versionState');
+const { logAudit } = require('../utils/audit');
 
 const router = express.Router();
 const DIST_PATH = path.join(__dirname, '../../dist');
@@ -125,6 +126,7 @@ router.post('/', requireAuth, async (req, res) => {
     // 5. Update shared state path
     setActiveVersion(version);
 
+    logAudit('version:deploy', { version, commitSha, admin: req.admin?.email });
     res.status(201).json({ success: true, version });
   } catch (err) {
     console.error('[VersionControl] Deploy error:', err);
@@ -155,6 +157,7 @@ router.post('/:id/activate', requireAuth, async (req, res) => {
     // Switch dynamic files path in-memory
     setActiveVersion(targetVersion.version);
 
+    logAudit('version:activate', { version: targetVersion.version, admin: req.admin?.email });
     res.json({ success: true, version: targetVersion.version });
   } catch (err) {
     res.status(500).json({ error: err.message });
@@ -184,6 +187,7 @@ router.delete('/:id', requireAuth, async (req, res) => {
     run(db, 'DELETE FROM versions WHERE id = ?', [req.params.id]);
     saveDb();
 
+    logAudit('version:delete', { version: targetVersion.version, admin: req.admin?.email });
     res.json({ success: true });
   } catch (err) {
     res.status(500).json({ error: err.message });
