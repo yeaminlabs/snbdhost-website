@@ -34,6 +34,7 @@ export default function KnowledgeBaseAdmin() {
   
   // AI Generator States
   const [selectedSources, setSelectedSources] = useState([]);
+  const [customTopic, setCustomTopic] = useState('');
   const [generatingArticles, setGeneratingArticles] = useState(false);
 
   const navigate = useNavigate();
@@ -299,8 +300,8 @@ export default function KnowledgeBaseAdmin() {
 
   // 11. Run AI Generation
   async function runAiGeneration() {
-    if (selectedSources.length === 0) {
-      setError('Please select at least one source context for Gemini.');
+    if (selectedSources.length === 0 && !customTopic.trim()) {
+      setError('Please select at least one source context or provide a custom topic for Gemini.');
       return;
     }
 
@@ -312,7 +313,10 @@ export default function KnowledgeBaseAdmin() {
         method: 'POST',
         credentials: 'include',
         headers: JSON_HEADERS,
-        body: JSON.stringify({ sourceIds: selectedSources })
+        body: JSON.stringify({ 
+          sourceIds: selectedSources, 
+          customTopic: customTopic.trim() 
+        })
       });
       
       const data = await res.json();
@@ -320,6 +324,7 @@ export default function KnowledgeBaseAdmin() {
       
       setSuccessMsg(`Successfully generated ${data.drafts?.length || 0} articles as drafts! Check them below.`);
       setSelectedSources([]);
+      setCustomTopic('');
       setActiveTab('articles');
     } catch (err) {
       setError(err.message);
@@ -675,18 +680,37 @@ export default function KnowledgeBaseAdmin() {
                   <div className="flex items-center justify-between">
                     <div>
                       <h2 className="text-xs font-bold text-white uppercase tracking-wider">Generate Support Articles with Gemini</h2>
-                      <p className="text-[10px] text-gray-500 mt-0.5">Select scanned page/blog contents to feed as context references.</p>
+                      <p className="text-[10px] text-gray-500 mt-0.5">Write a custom topic and/or select scanned page/blog contents to feed as context references.</p>
                     </div>
                     
                     <button
                       onClick={runAiGeneration}
-                      disabled={selectedSources.length === 0 || generatingArticles}
+                      disabled={(selectedSources.length === 0 && !customTopic.trim()) || generatingArticles}
                       className="bg-amber-500 hover:bg-amber-600 disabled:bg-gray-800 disabled:text-gray-600 text-gray-950 text-xs font-black px-4 py-2 rounded-lg transition-colors inline-flex items-center gap-1.5"
                     >
                       <i className="fa-solid fa-wand-magic-sparkles"></i> 
                       {generatingArticles ? 'AI Generating...' : 'Generate with Gemini'}
                     </button>
                   </div>
+
+                  {!generatingArticles && (
+                    <div className="bg-gray-900 border border-gray-800 rounded-xl p-5">
+                      <label className="block text-[10px] uppercase font-bold tracking-wider text-gray-400 mb-1.5 flex items-center gap-1.5">
+                        <i className="fa-solid fa-pen-nib text-amber-500 text-xs"></i>
+                        <span>Custom Topic / Prompt (Write your tutorial topic here)</span>
+                      </label>
+                      <textarea
+                        value={customTopic}
+                        onChange={(e) => setCustomTopic(e.target.value)}
+                        placeholder="e.g. Write a step-by-step guide on how to configure Cloudflare CDN on cPanel hosting, point DNS, and configure SSL settings..."
+                        rows="3"
+                        className="w-full bg-gray-950 border border-gray-800 focus:border-red-500 focus:ring-1 focus:ring-red-500 rounded-lg px-3 py-2 text-xs text-white outline-none transition-colors resize-none font-sans"
+                      />
+                      <p className="text-[9px] text-gray-500 mt-1">
+                        If context sources are selected below, Gemini will also use them for branding and details. If no sources are selected, Gemini will write the article based on its general technical knowledge.
+                      </p>
+                    </div>
+                  )}
 
                   {generatingArticles && (
                     <div className="bg-gray-900 border border-amber-500/20 rounded-xl p-8 text-center flex flex-col items-center justify-center">

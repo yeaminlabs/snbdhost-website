@@ -13,22 +13,24 @@ async function getGeminiConfig() {
   return { apiKey, modelName, customPrompt };
 }
 
-async function generateArticlesFromSources(sourceIds) {
+async function generateArticlesFromSources(sourceIds, customTopic) {
   const { apiKey, modelName, customPrompt } = await getGeminiConfig();
 
   if (!apiKey) {
     throw new Error('Gemini API key is not configured. Please add it in settings.');
   }
 
-  // Load selected sources from DB
-  const placeholders = sourceIds.map(() => '?').join(',');
-  const sources = await dbHelper.all(
-    `SELECT * FROM kb_sources WHERE id IN (${placeholders})`,
-    sourceIds
-  );
+  let sources = [];
+  if (sourceIds && Array.isArray(sourceIds) && sourceIds.length > 0) {
+    const placeholders = sourceIds.map(() => '?').join(',');
+    sources = await dbHelper.all(
+      `SELECT * FROM kb_sources WHERE id IN (${placeholders})`,
+      sourceIds
+    );
+  }
 
-  if (sources.length === 0) {
-    throw new Error('No valid sources selected.');
+  if (sources.length === 0 && !customTopic) {
+    throw new Error('No valid sources selected and no custom topic provided.');
   }
 
   // Build prompt context
@@ -54,11 +56,20 @@ Guidelines:
 
   const systemInstruction = customPrompt ? `${defaultSystemPrompt}\n\nAdditional Instructions:\n${customPrompt}` : defaultSystemPrompt;
 
-  const userPrompt = `Based on the following source context, please generate a list of 3 to 6 detailed Knowledge Base articles (FAQs or how-to guides).
+  let userPrompt = '';
+  if (customTopic) {
+    userPrompt = `Please write 1 to 3 detailed, professional Knowledge Base articles (FAQs or how-to guides) specifically addressing the following topic or request:
+"${customTopic}"\n\n`;
+    if (contextText) {
+      userPrompt += `Use the following website/blog source context to extract pricing, branding details, and package features if they are relevant to the topic:\n\n${contextText}`;
+    }
+  } else {
+    userPrompt = `Based on the following source context, please generate a list of 3 to 6 detailed Knowledge Base articles (FAQs or how-to guides).
 Make sure to extract all relevant details from the sources.
 
 Source Context:
 ${contextText}`;
+  }
 
   // Initialize Gemini AI
   const genAI = new GoogleGenerativeAI(apiKey);

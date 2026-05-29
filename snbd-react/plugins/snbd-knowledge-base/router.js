@@ -195,13 +195,13 @@ router.post('/admin/scan', requirePluginAuth, async (req, res) => {
 
 // POST /api/kb/admin/generate - Generate articles using Gemini
 router.post('/admin/generate', requirePluginAuth, async (req, res) => {
-  const { sourceIds } = req.body;
-  if (!sourceIds || !Array.isArray(sourceIds) || sourceIds.length === 0) {
-    return res.status(400).json({ error: 'Please select at least one source.' });
+  const { sourceIds, customTopic } = req.body;
+  if ((!sourceIds || !Array.isArray(sourceIds) || sourceIds.length === 0) && (!customTopic || !customTopic.trim())) {
+    return res.status(400).json({ error: 'Please select at least one source or write a custom topic/prompt.' });
   }
 
   try {
-    const articles = await gemini.generateArticlesFromSources(sourceIds);
+    const articles = await gemini.generateArticlesFromSources(sourceIds, customTopic);
     const createdDrafts = [];
 
     // Save generated articles as drafts in the database
@@ -220,7 +220,7 @@ router.post('/admin/generate', requirePluginAuth, async (req, res) => {
       const result = await dbHelper.run(
         `INSERT INTO kb_articles (title, slug, category, summary, content, status, source_id, created_at, updated_at)
          VALUES (?, ?, ?, ?, ?, 'draft', ?, datetime('now'), datetime('now'))`,
-        [art.title, slug, art.category, art.summary, art.content, sourceIds[0]]
+        [art.title, slug, art.category, art.summary, art.content, (sourceIds && sourceIds.length > 0) ? sourceIds[0] : null]
       );
       
       createdDrafts.push({
