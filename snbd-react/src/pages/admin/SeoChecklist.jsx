@@ -93,9 +93,10 @@ const AUTO_CHECKS = {
         const res = await fetch('/sitemap.xml', { cache: 'no-store' });
         if (!res.ok) return { pass: false, note: `HTTP ${res.status} — run: npm run build:full` };
         const text = await res.text();
-        const count = (text.match(/<url>/g) || []).length;
-        if (count === 0) return { pass: false, note: 'File exists but contains no <url> entries' };
-        return { pass: true, note: `${count} URL${count !== 1 ? 's' : ''} found ✓` };
+        const hasSitemapIndex = text.includes('<sitemapindex');
+        const count = (text.match(/<sitemap>/g) || []).length;
+        if (!hasSitemapIndex || count === 0) return { pass: false, note: 'Sitemap index file exists but contains no sub-sitemaps' };
+        return { pass: true, note: `Sitemap index active with ${count} sub-sitemaps ✓` };
       } catch { return { pass: false, note: 'Network error' }; }
     },
   },
@@ -103,14 +104,25 @@ const AUTO_CHECKS = {
     label: 'Checking sitemap completeness',
     run: async () => {
       try {
-        const res = await fetch('/sitemap.xml', { cache: 'no-store' });
-        const text = await res.text();
-        const count   = (text.match(/<url>/g) || []).length;
-        const hasBlog = text.includes('/blog');
-        if (count < 13)  return { pass: false, note: `Only ${count} URLs — expected ≥ 13. Run: npm run build:full` };
-        if (!hasBlog)    return { pass: false, note: `${count} URLs but /blog pages missing — run: node scripts/generate-sitemap.cjs` };
-        return { pass: true, note: `${count} URLs including /blog entries ✓` };
-      } catch { return { pass: false, note: 'Could not fetch sitemap.xml' }; }
+        const resPages = await fetch('/sitemap-pages.xml', { cache: 'no-store' });
+        const resPosts = await fetch('/sitemap-posts.xml', { cache: 'no-store' });
+        if (!resPages.ok) return { pass: false, note: `Missing sitemap-pages.xml (HTTP ${resPages.status})` };
+        
+        const textPages = await resPages.text();
+        const countPages = (textPages.match(/<url>/g) || []).length;
+        
+        let countPosts = 0;
+        let hasBlog = false;
+        if (resPosts.ok) {
+          const textPosts = await resPosts.text();
+          countPosts = (textPosts.match(/<url>/g) || []).length;
+          hasBlog = textPosts.includes('/blog/');
+        }
+
+        const count = countPages + countPosts;
+        if (count < 13) return { pass: false, note: `Only ${count} URLs across sitemaps — expected ≥ 13. Run: npm run build:full` };
+        return { pass: true, note: `${count} total URLs found across pages and posts sitemaps ✓` };
+      } catch { return { pass: false, note: 'Could not verify sitemaps' }; }
     },
   },
   'https-ssl': {
