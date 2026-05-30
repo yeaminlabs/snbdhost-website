@@ -37,6 +37,10 @@ export default function KnowledgeBaseAdmin() {
   const [customTopic, setCustomTopic] = useState('');
   const [generatingArticles, setGeneratingArticles] = useState(false);
 
+  // Sitemap States
+  const [sitemapLastGenerated, setSitemapLastGenerated] = useState(null);
+  const [sitemapRegenerating, setSitemapRegenerating] = useState(false);
+
   const navigate = useNavigate();
   const JSON_HEADERS = { 'Content-Type': 'application/json' };
 
@@ -52,6 +56,7 @@ export default function KnowledgeBaseAdmin() {
       const data = await res.json();
       if (data.active) {
         setApiActive(true);
+        setSitemapLastGenerated(data.sitemapLastGenerated || null);
       } else {
         setApiActive(false);
       }
@@ -339,6 +344,33 @@ export default function KnowledgeBaseAdmin() {
     );
   };
 
+  async function forceRegenerateSitemap() {
+    setSitemapRegenerating(true);
+    setError('');
+    setSuccessMsg('');
+    try {
+      const res = await fetch('/api/plugins/snbd-knowledge-base/admin/regenerate-sitemap', {
+        method: 'POST',
+        credentials: 'include',
+        headers: JSON_HEADERS
+      });
+      const data = await res.json();
+      if (!res.ok) throw new Error(data.error || 'Failed to regenerate sitemaps.');
+      setSuccessMsg('Sitemaps regenerated successfully!');
+      
+      // Update sitemap timestamp from status check
+      const statusRes = await fetch('/api/plugins/snbd-knowledge-base/status', { credentials: 'include' });
+      const statusData = await statusRes.json();
+      if (statusData.active) {
+        setSitemapLastGenerated(statusData.sitemapLastGenerated || null);
+      }
+    } catch (err) {
+      setError(err.message);
+    } finally {
+      setSitemapRegenerating(false);
+    }
+  }
+
   async function logout() {
     await fetch('/api/auth/logout', { method: 'POST', credentials: 'include' });
     navigate('/admin/login');
@@ -385,6 +417,59 @@ export default function KnowledgeBaseAdmin() {
               Generate dynamic, high-quality, and searchable support documentation automatically using the Gemini AI API.
             </p>
           </div>
+
+          {/* Status Metrics Bar */}
+          {apiActive && !checkingApi && !editingArticle && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+              {/* Stat 1: Connection & Mode */}
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-gray-500 uppercase font-extrabold tracking-wider block">Connection & Mode</span>
+                  <div className="flex items-center gap-1.5 mt-1">
+                    <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                    <span className="text-xs font-bold text-white">Active</span>
+                    <span className="text-[9px] text-gray-400 bg-gray-800 px-1.5 py-0.5 rounded uppercase font-semibold">
+                      {settings.gemini_model || '1.5 Flash'}
+                    </span>
+                  </div>
+                </div>
+                <i className="fa-solid fa-circle-nodes text-emerald-400 text-lg opacity-40"></i>
+              </div>
+
+              {/* Stat 2: Article Count */}
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-gray-500 uppercase font-extrabold tracking-wider block">Knowledge Base Size</span>
+                  <span className="text-sm font-black text-white mt-1 block">
+                    {articles.length} {articles.length === 1 ? 'Article' : 'Articles'}
+                  </span>
+                </div>
+                <i className="fa-solid fa-file-lines text-blue-400 text-lg opacity-40"></i>
+              </div>
+
+              {/* Stat 3: Sitemap Generation Status */}
+              <div className="bg-gray-900 border border-gray-800 rounded-xl p-4 flex items-center justify-between">
+                <div>
+                  <span className="text-[10px] text-gray-500 uppercase font-extrabold tracking-wider block">XML Sitemap Index</span>
+                  <span className="text-xs text-gray-300 mt-1 block">
+                    Last Generated:{' '}
+                    <span className="font-semibold text-white">
+                      {sitemapLastGenerated ? new Date(sitemapLastGenerated).toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : 'Never'}
+                    </span>
+                  </span>
+                </div>
+                <button
+                  onClick={forceRegenerateSitemap}
+                  disabled={sitemapRegenerating}
+                  title="Force Regenerate Sitemap XML"
+                  className="bg-gray-850 hover:bg-red-900/20 border border-gray-850 hover:border-red-900/50 text-gray-300 hover:text-white px-3 py-1.5 rounded-lg text-xs font-bold transition-all inline-flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed"
+                >
+                  <i className={`fa-solid fa-arrows-rotate ${sitemapRegenerating ? 'animate-spin text-red-500' : 'text-gray-400'}`}></i>
+                  {sitemapRegenerating ? 'Regenerating...' : 'Regenerate'}
+                </button>
+              </div>
+            </div>
+          )}
 
           {/* Feedback alerts */}
           {error && (

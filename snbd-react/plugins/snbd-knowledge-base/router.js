@@ -1,6 +1,7 @@
 const express = require('express');
 const jwt = require('jsonwebtoken');
 const path = require('path');
+const fs = require('fs');
 const { exec } = require('child_process');
 const dbHelper = require('./db');
 const crawler = require('./crawler');
@@ -63,7 +64,21 @@ function requirePluginAuth(req, res, next) {
 
 // GET /api/kb/status - Check if plugin is active
 router.get('/status', (req, res) => {
-  res.json({ active: true, mode: req.admin ? 'integrated' : 'standalone' });
+  let sitemapLastGenerated = null;
+  try {
+    const sitemapPath = path.resolve(__dirname, '../../public/sitemap.xml');
+    if (fs.existsSync(sitemapPath)) {
+      const stats = fs.statSync(sitemapPath);
+      sitemapLastGenerated = stats.mtime;
+    }
+  } catch (err) {
+    console.error('[Plugin:Status] Failed to get sitemap stats:', err.message);
+  }
+  res.json({ 
+    active: true, 
+    mode: req.admin ? 'integrated' : 'standalone',
+    sitemapLastGenerated
+  });
 });
 
 // GET /api/kb/articles - Get published articles (with search & category filters)
@@ -190,6 +205,26 @@ router.post('/admin/scan', requirePluginAuth, async (req, res) => {
     res.json({ ok: true, scanned });
   } catch (err) {
     res.status(500).json({ error: 'Failed to scan website files: ' + err.message });
+  }
+});
+
+// POST /api/kb/admin/regenerate-sitemap - Force regenerate sitemaps
+router.post('/admin/regenerate-sitemap', requirePluginAuth, async (req, res) => {
+  try {
+    const sitemapScript = path.resolve(__dirname, '../../scripts/generate-sitemap.cjs');
+    const port = process.env.PORT || 3001;
+    const env = { ...process.env, API_URL: `http://localhost:${port}` };
+    
+    exec(`node "${sitemapScript}"`, { env }, (err, stdout, stderr) => {
+      if (err) {
+        console.error('[Plugin:Sitemap] Manual regeneration failed:', err.message);
+        return res.status(500).json({ error: 'Failed to regenerate sitemaps: ' + err.message });
+      }
+      console.log('[Plugin:Sitemap] Manual sitemaps regenerated successfully:\n', stdout.trim());
+      res.json({ ok: true, message: 'Sitemaps regenerated successfully.' });
+    });
+  } catch (err) {
+    res.status(500).json({ error: 'Failed to trigger sitemap regeneration: ' + err.message });
   }
 });
 
