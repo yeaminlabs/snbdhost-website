@@ -628,3 +628,31 @@ app.get('*', async (req, res) => {
 });
 
 app.listen(PORT, () => console.log(`SNBD HOST Blog API running on port ${PORT}`));
+
+// ──────────────────────────────────────────────────────────────
+// Automatic Sitemap Regeneration (Every 5 Minutes)
+// ──────────────────────────────────────────────────────────────
+const { exec } = require('child_process');
+const sitemapScriptPath = path.join(__dirname, '../scripts/generate-sitemap.cjs');
+
+function runSitemapGeneration() {
+  const env = { ...process.env, API_URL: `http://localhost:${PORT}` };
+  exec(`node "${sitemapScriptPath}"`, { env }, (err, stdout, stderr) => {
+    if (err) {
+      console.error('[Sitemap Auto-Regen] Error running sitemap generator:', err.message);
+      return;
+    }
+    if (stderr && stderr.trim()) {
+      console.warn('[Sitemap Auto-Regen] Warnings:', stderr.trim());
+    }
+    console.log('[Sitemap Auto-Regen] Successfully regenerated sitemaps:', stdout.trim());
+  });
+}
+
+// Run 10 seconds after startup (once server is up and listening) and then every 5 minutes
+setTimeout(() => {
+  console.log('[Sitemap Auto-Regen] Running initial sitemap generation...');
+  runSitemapGeneration();
+}, 10000);
+
+setInterval(runSitemapGeneration, 5 * 60 * 1000);
