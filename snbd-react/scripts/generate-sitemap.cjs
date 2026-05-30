@@ -67,7 +67,7 @@ async function generate() {
     console.warn(`ℹ Could not fetch Knowledge Base articles from ${API_URL}: ${e.message}`);
   }
 
-  // 2. Helper to write sitemap XML to both /public and /dist
+  // 2. Helper to write sitemap XML to both /public, /dist, and active versions
   const writeSitemapFile = (filename, content) => {
     const publicPath = path.join(__dirname, '../public', filename);
     const distPath = path.join(__dirname, '../dist', filename);
@@ -81,6 +81,24 @@ async function generate() {
     if (fs.existsSync(path.dirname(distPath))) {
       fs.writeFileSync(distPath, content, 'utf8');
       console.log(`✓ Written ${filename} to dist/`);
+    }
+
+    // Write to all versioned directories under data/versions/
+    const versionsDir = path.join(__dirname, '../data/versions');
+    if (fs.existsSync(versionsDir)) {
+      try {
+        const versions = fs.readdirSync(versionsDir);
+        for (const ver of versions) {
+          const verPath = path.join(versionsDir, ver);
+          if (fs.statSync(verPath).isDirectory()) {
+            const verFilePath = path.join(verPath, filename);
+            fs.writeFileSync(verFilePath, content, 'utf8');
+            console.log(`✓ Written ${filename} to version dir ${ver}`);
+          }
+        }
+      } catch (err) {
+        console.warn(`⚠ Could not write sitemaps to versioned folder: ${err.message}`);
+      }
     }
   };
 
@@ -141,6 +159,22 @@ ${kbRoutes
     const distPath = path.join(__dirname, '../dist/sitemap-kb.xml');
     if (fs.existsSync(publicPath)) fs.unlinkSync(publicPath);
     if (fs.existsSync(distPath)) fs.unlinkSync(distPath);
+
+    const versionsDir = path.join(__dirname, '../data/versions');
+    if (fs.existsSync(versionsDir)) {
+      try {
+        const versions = fs.readdirSync(versionsDir);
+        for (const ver of versions) {
+          const verPath = path.join(versionsDir, ver);
+          if (fs.statSync(verPath).isDirectory()) {
+            const verFilePath = path.join(verPath, 'sitemap-kb.xml');
+            if (fs.existsSync(verFilePath)) fs.unlinkSync(verFilePath);
+          }
+        }
+      } catch (err) {
+        console.warn(`⚠ Could not delete sitemap-kb.xml from versioned folder: ${err.message}`);
+      }
+    }
   }
 
   // 5. Generate sitemap.xml (Sitemap Index)
